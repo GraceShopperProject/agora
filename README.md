@@ -1,76 +1,135 @@
-# Boilermaker
+# Agora:The Best Way to Sell Your Products Online
 
-*Good things come in pairs*
+## DEVELOPMENT WORKFLOW (using Waffle.io)
 
-Looking to mix up a backend with express/sequelize and a frontend with react/redux? That's `boilermaker`!
+* Make a Waffle/GitHub issue for the task.
+* Assign a teammate/pair to work on the task.
 
-Follow along with the workshop to make your own! This canonical version can serve as a reference, or a starting point all on its own.
+* Assignees, branch off of master `git checkout -b myNiftyBranch#8675309` (don't forget the GitHub issue # !)
+* Continually `git commit` locally as you code (don't need to push to remote every time)
+* When ready to merge your branch with remote master, do the following:
+  1. `git checkout master` locally
+  2. `git pull origin master` to make sure your local master is up-to-date with remote master
+  3. `git checkout yourNiftyBranch#123` (whatever branch you're preparing to submit for pull request)
+  4. `git merge master` to merge the latest master with your branch (to catch any merge conflicts before requesting to merge your branch with remote master)
+  5. Fix any conflicts
 
-## Setup
+* When certain that your branch does not conflict with remote master,
+  * `git push origin myNiftyBranch#123` to the remote branch
+  * Go to GitHub repo and open a **Pull Request** to merge with Master
+  * Assign at least one teammate to review/approve the request
+  * Write any comments that could help make your reviewer's job easier
 
-To use this boilerplate, you'll need to take the following steps:
+* Reviewer:
+  * Before merging the Pull Request
+    - make sure everything looks as expected
+    - run tests (if any; if none, ask for some if appropriate)
+    - write comments to get any doubts/uncertainties resolved
+    - if test fails/something looks wrong, send back to teammate with instructions for correction
+  * When all tests pass / everything looks satisfactory
+    -  Merge the PR
 
-* Don't fork or clone this repo! Instead, create a new, empty directory on your machine and `git init` (or create an empty repo on Github and clone it to your local machine)
-* Run the following commands:
+* Everybody: switch to master, pull from origin.
+  - `git checkout master` locally
+  - `git pull origin master` to bring local master up-to-date
+  - (optionally) `git checkout *theBranchYouWereWorkingOn#55* && git merge master` to bring your branch up-to-date with master
 
-```
-git remote add boilermaker https://github.com/FullstackAcademy/boilermaker.git
-git fetch boilermaker
-git merge boilermaker/master
-```
+[Click here for more info on recommended workflow] (https://help.waffle.io/automatic-work-tracking/auto-work-tracking-basics/recommended-workflow-using-pull-requests-automatic-work-tracking)
 
-Why did we do that? Because every once in a while, `boilermaker` may be updated with additional features or bug fixes, and you can easily get those changes from now on by entering:
+----
 
-```
-git fetch boilermaker
-git merge boilermaker/master
-```
+## **USER STORIES:**
 
-## Customize
+### **AS A VISITOR, I WANT TO...**
 
-Now that you've got the code, follow these steps to get acclimated:
+### PRODUCTS
 
-* Update project name and description in `package.json` file
-* `npm install`, or `yarn install` - whatever you're into
-* Create two postgres databases: `boilermaker` and `boilermaker-test` (you can substitute these with the name of your own application - just be sure to go through and change the `package.json` and `server/db/db.js` to refer to the new names)
-  * By default, running `npm test` will use `boilermaker-test`, while regular development uses `boilermaker`
-* Create a file called `secrets.js` in the project root
-  * This file is `.gitignore`'d, and will *only* be required in your *development* environment
-  * Its purpose is to attach the secret env variables that you'll use while developing
-  * However, it's **very** important that you **not** push it to Github! Otherwise, *prying eyes* will find your secret API keys!
-  * It might look like this:
+* ...view all available products
+* ...filter products by category
+* ...search for a product with a searchbar
+* ...view details for an inidivdual product
 
-  ```
-    process.env.GOOGLE_CLIENT_ID = 'hush hush'
-    process.env.GOOGLE_CLIENT_SECRET = 'pretty secret'
-    process.env.GOOGLE_CALLBACK = '/auth/google/callback'
-  ```
+### CART
 
-* To use OAuth with Google, complete the step above with a real client ID and client secret from Google
-  * You can get them here: https://console.developers.google.com/apis/credentials
-* Finally, complete the section below to set up your linter
+* ...add items to my cart (from all products or single product page)
+* ...remove items from my cart
+* ...edit/remove quantities of items in the cart
+* ...keep my cart on page reload
+* ...keep my cart after logout & login
+
+### CHECKOUT
+
+* ...complete my order on a checkout page
+* ...enter address and email for order recipient
+* ...submit payment for order
+* ...receive receipt/confirmation email after checkout
+* ...receive shipping confirmation
+* ...receive delivery confirmation
+
+### ACCOUNT MANAGEMENT
+
+* ...create an account to gain typical user privileges
+* ...create an account with google or facebook oauth
+
+---
+
+### **AS AN AUTHENTICATED USER, I WANT TO...**
+
+### ACCOUNT MANAGEMENT
+
+* ...be able to log out
+* ...view my list of previous orders
+* ...leave a review for an item in a previous order
+* ...view the details of a past order, including:
+    * Current order status
+    * Items with quantity and subtotal
+    * Link to the original product detail page
+    * Date/time order was created
+
+### REVIEWS
+
+* ...leave a review for a product on product detail page
+* ...leave a review for a product from the past orders page
+
+---
+
+### **AS AN ADMIN USER, I WANT TO...**
+
+## PRODUCT MANAGEMENT
+
+* ...create and edit products
+  * with name, description, category, price, and one or more photos
+* ...create categories for items
+* ...add/remove categories from items
+  * _Acceptance Criteria: items must have multiple categories_
+* ...toggle the availability of a product
+  * _Acceptance Criteria: Users can't see unavailable products unless they have a direct link (from previous order). On that product detail page, it should say "Currently Unavailable"_
+
+## ORDER MANAGEMENT
+
+* ...view a list of all orders
+* ...filter orders by status (Created, Processing, Cancelled, Completed)
+* ...view details of a specific order
+* ...change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
+
+## USER MANAGEMENT
+
+* ...promote other user accounts to have admin status
+* ...delete a user
+* ...trigger password reset for a user (that is, the next time they successfully log in with their old password, they are prompted for a new one)
+
+---
 
 ## Linting
 
-Linters are fundamental to any project - they ensure that your code has a consistent style, which is critical to writing readable code.
-
-Everyone has their own style, so Boilermaker does not come prepackaged with a linter. However, we `strongly` recommend that you (and your team, if working in a group) decide on a style, and stick with it. Here's what you need to do:
-
 * `npm install -g eslint`
 * In the root of your project, `eslint --init`
-* You will then be prompted to choose how you want to configure ESLint. We recommend selecting the `Use a popular style guide option`. The existing Boilermaker code was written in accordance with the `Standard` style, but you may choose a different one if you don't like it.
-  * [Standard style guide](https://standardjs.com/)
-  * [Airbnb style guide](https://github.com/airbnb/javascript)
-  * [Google style guide](https://google.github.io/styleguide/jsguide.html)
-* This will add an `.eslintrc.js`, `.eslintrc.yaml`, or `.eslintrc.json` (depending on which you choose) - `.js` or `.json` will usually work fine. You may also need to install an appropriate eslint plugin specific for your code editor.
+* Select the `Use a popular style guide option`.
+* Choose AirBnB style ([Airbnb style guide](https://github.com/airbnb/javascript))
+* Choose .js or .json format.
+* You may also need to install an appropriate eslint plugin specific for your code editor.
 
-## Start
-
-`npm run start-dev` will make great things happen!
-
-If you want to run the server and/or webpack separately, you can also `npm run start-server` and `npm run build-client`.
-
-From there, just follow your bliss.
+---
 
 ## Deployment
 
