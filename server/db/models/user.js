@@ -17,7 +17,43 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING,
   },
-});
+  name: {
+      type: Sequelize.STRING,
+  },
+  phone:  {
+      type: Sequelize.STRING,
+  },
+  addType: {
+      type: Sequelize.STRING,
+  },
+  addLine_1: {
+      type: Sequelize.STRING,
+  },
+  addLine_2: {
+      type: Sequelize.STRING,
+  },
+  addCity: {
+      type: Sequelize.STRING,
+  },
+  addState: {
+      type: Sequelize.STRING,
+  },
+  addZipcode: {
+      type: Sequelize.STRING,
+  },
+  isAdmin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+  },
+},
+  {
+      getterMethods: {
+          address: function () {
+              return this.addLine_1 + '/n' + this.addLine_2 + '/n' + this.addCity + ', ' + this.addState + ' ' + this.addZipcode
+          }
+      },
+  }
+);
 
 module.exports = User;
 
