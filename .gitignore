@@ -5,3 +5,8 @@ secrets.js
 .DS_Store
 npm-debug.log
 yarn-error.log
+.idea/graceshopper.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
