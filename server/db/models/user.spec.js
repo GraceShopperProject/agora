@@ -18,21 +18,14 @@ describe('User model', () => {
           // The `email` column should be a required field.
           it('require email', () => {
               const user = User.build();
-              return user.validate()
-                  .then(() => { throw new Error('Promise should have rejected');})
-                  .catch(err => {
-                      expect(err).to.exist;
-                      expect(err).to.be.an('error');
-                      expect(err.errors).to.contain.a.thing.with.properties({
-                          path: 'email',
-                          type: 'notNull Violation'
-                      });
-                  });
+              user.validate()
+                  .then(() => {
+                  throw new Error('Error: Incorrectly validated bad name');}, (err) => {
+              expect(err.errors[0].message).to.equal('email cannot be null');
           });
 
+          });
       });
-
-
 
       describe('instanceMethods', () => {
           describe('correctPassword', () => {
