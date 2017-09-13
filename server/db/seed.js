@@ -16,9 +16,7 @@ var { User, Order } = require('./models/index')
 
 var data = {
     users: [
-        {email: "nycjing@gmail.com", password: "123456", },
-        {email: "nycjing2@gmail.com", password: "123456", },
-        {email: "nycjing3@gmail.com", password: "123456", }
+        {email: "nycjing@gmail.com", password: "123456", name: "Jing Jia", addType : "home", addLine_1: "364 12th street", addCity: "Brooklyn", addState: "NY", addZipcode: "11125" },
     ],
     orders: [
         { status: "Created", },
