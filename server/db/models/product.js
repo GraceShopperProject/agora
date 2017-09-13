@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+// const Review = require('./review')
 
 const Product = db.define('product', {
   name: {
@@ -52,13 +53,13 @@ Product.prototype.isInStock = function () {
 };
 
 // TODO: hook this up properly to Reviews model
-/* Product.prototype.calculateAvgUserRating = function () {
-  return this.reviews.reduce((aggRating, review, idx, arr) => {
-    if (idx === arr.length - 1) {
-      return (aggRating + review.rating) / arr.length;
-    }
-    return aggRating + review.rating;
-  });
-}; */
+Product.prototype.calculateAvgUserRating = function () {
+  /*   return this.reviews.reduce((aggRating, review, idx, arr) => {
+      if (idx === arr.length - 1) {
+        return (aggRating + review.rating) / arr.length;
+      }
+      return aggRating + review.rating;
+    }); */
+};
 
 module.exports = Product;

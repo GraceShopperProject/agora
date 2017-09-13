@@ -115,10 +115,15 @@ describe('Product Model', () => {
         });
     });
 
-    it('.isInStock() returns true if remainingInventory > 0, else false', () => {
+    it('instance.isInStock() returns true if remainingInventory > 0, else false', () => {
       expect(validProduct.isInStock()).to.equal(true);
       validProduct.setDataValue('remainingInventory', 0);
       expect(validProduct.isInStock()).to.equal(false);
+    });
+
+    it('instance.calculateAvgUserRating() returns the average user rating for a product ', () => {
+      // expect(typeof validProduct.calculateAvgUserRating()).to.equal('number');
+      expect(validProduct.calculateAvgUserRating()).to.equal('the average of all user ratings (FIXME: should be actual number)');
     });
   });
 });
