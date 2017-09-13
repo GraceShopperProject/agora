@@ -1,8 +1,6 @@
-# Agora:
-The Best Way to Sell Your Products Online
-====
+# Agora:The Best Way to Sell Your Products Online
 
-## DEVELOPMENT WORKFLOW (using Waffle.io):
+## DEVELOPMENT WORKFLOW (using Waffle.io)
 
 * Make a Waffle/GitHub issue for the task.
 * Assign a teammate/pair to work on the task.
@@ -41,82 +39,84 @@ The Best Way to Sell Your Products Online
 ----
 
 ## **USER STORIES:**
----
+
 ### **AS A VISITOR, I WANT TO...**
 
 ### PRODUCTS
 
-...view all available products
-...filter products by category
-...search for a product with a searchbar
-...view details for an inidivdual product
+* ...view all available products
+* ...filter products by category
+* ...search for a product with a searchbar
+* ...view details for an inidivdual product
 
 ### CART
 
-...add items to my cart (from all products or single product page)
-...remove items from my cart
-...edit/remove quantities of items in the cart
-...keep my cart on page reload
-...keep my cart after logout & login
+* ...add items to my cart (from all products or single product page)
+* ...remove items from my cart
+* ...edit/remove quantities of items in the cart
+* ...keep my cart on page reload
+* ...keep my cart after logout & login
 
 ### CHECKOUT
 
-...complete my order on a checkout page
-...enter address and email for order recipient
-...submit payment for order
-...receive receipt/confirmation email after checkout
-...receive shipping confirmation
-...receive delivery confirmation
+* ...complete my order on a checkout page
+* ...enter address and email for order recipient
+* ...submit payment for order
+* ...receive receipt/confirmation email after checkout
+* ...receive shipping confirmation
+* ...receive delivery confirmation
 
 ### ACCOUNT MANAGEMENT
 
-...create an account to gain typical user privileges
-...create an account with google or facebook oauth
+* ...create an account to gain typical user privileges
+* ...create an account with google or facebook oauth
+
 ---
 
 ### **AS AN AUTHENTICATED USER, I WANT TO...**
 
 ### ACCOUNT MANAGEMENT
 
-...be able to log out
-...view my list of previous orders
-...leave a review for an item in a previous order
-...view the details of a past order, including:
-  * Current order status
-  * Items with quantity and subtotal
-  * Link to the original product detail page
-  * Date/time order was created
+* ...be able to log out
+* ...view my list of previous orders
+* ...leave a review for an item in a previous order
+* ...view the details of a past order, including:
+    * Current order status
+    * Items with quantity and subtotal
+    * Link to the original product detail page
+    * Date/time order was created
 
 ### REVIEWS
 
-...leave a review for a product on product detail page
-...leave a review for a product from the past orders page
+* ...leave a review for a product on product detail page
+* ...leave a review for a product from the past orders page
+
 ---
 
 ### **AS AN ADMIN USER, I WANT TO...**
 
 ## PRODUCT MANAGEMENT
 
-...create and edit products
+* ...create and edit products
   * with name, description, category, price, and one or more photos
-...create categories for items
-...add/remove categories from items
+* ...create categories for items
+* ...add/remove categories from items
   * _Acceptance Criteria: items must have multiple categories_
-...toggle the availability of a product
+* ...toggle the availability of a product
   * _Acceptance Criteria: Users can't see unavailable products unless they have a direct link (from previous order). On that product detail page, it should say "Currently Unavailable"_
 
 ## ORDER MANAGEMENT
 
-...view a list of all orders
-...filter orders by status (Created, Processing, Cancelled, Completed)
-...view details of a specific order
-...change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
+* ...view a list of all orders
+* ...filter orders by status (Created, Processing, Cancelled, Completed)
+* ...view details of a specific order
+* ...change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
 
 ## USER MANAGEMENT
 
-...promote other user accounts to have admin status
-...delete a user
-...trigger password reset for a user (that is, the next time they successfully log in with their old password, they are prompted for a new one)
+* ...promote other user accounts to have admin status
+* ...delete a user
+* ...trigger password reset for a user (that is, the next time they successfully log in with their old password, they are prompted for a new one)
 
 ---
 
