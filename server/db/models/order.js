@@ -3,7 +3,7 @@ const db = require('../db');
 const User = require('./user');
 
 const Order = db.define('order', {
-  customizeOrderMessage: {
+  user_order_message: {
     type: Sequelize.TEXT,
     allowNull: true
   },

@@ -22,7 +22,7 @@ describe('Order model', () => {
         .then (user => {
           user1 = user
           return Order.create({
-            customizeOrderMessage: "I have this order",
+            user_order_message: "I have this order",
             status: 'Created',
             price: 1,
           })
