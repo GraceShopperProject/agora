@@ -16,7 +16,8 @@ productRouter.route('/')
       .catch(next);
   })
   .post((req, res, next) => {
-    const { id, ...maybeNewProduct } = Product.build(req.body).get({ plain: true });
+    const maybeNewProduct = Product.build(req.body).get({ plain: true });
+    delete maybeNewProduct.id;
     Product.findOrCreate({ where: maybeNewProduct })
       .then(([product, wasCreated]) => {
         if (wasCreated) return res.status(201).json(product);
