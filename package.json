@@ -15,6 +15,7 @@
     "start-server": "NODE_ENV='development' nodemon server -e html,js,scss --ignore public",
     "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/agora_test' mocha ./**/*.spec.js --compilers js:babel-register",
     "test-models": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/agora_test' mocha -w ./server/db/models/*.spec.js --compilers js:babel-register",
+    "test-api": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/agora_test' mocha -w ./server/api/*.spec.js --compilers js:babel-register",
     "lint-fix": "eslint --fix -c .eslintrc.js .",
     "seed": "node ./server/db/seed.js"
   },
@@ -72,6 +73,7 @@
     "source-map": "^0.5.7",
     "style-loader": "^0.13.1",
     "supertest": "^3.0.0",
+    "supertest-as-promised": "^4.0.2",
     "webpack": "^2.7.0"
   }
 }
