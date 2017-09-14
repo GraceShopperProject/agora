@@ -1,6 +1,8 @@
 const productRouter = require('express').Router();
 const Product = require('../db/models').Product;
 
+// For any variable attached after /products/:XX 
+// Looks up XX product and attaches product to req.product for future routes
 productRouter.param('id', (req, res, next, id) => {
   Product.findOne({ where: { id } })
     .then((product) => {
@@ -25,6 +27,7 @@ productRouter.route('/')
       })
       .catch(next);
   });
+
 
 productRouter.route('/:id')
   .get((req, res) => res.json(req.product))
