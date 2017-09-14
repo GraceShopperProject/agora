@@ -2,7 +2,16 @@
 
 const db = require('./db');
 const dummy = require('faker');
-const {yellow,red} = require('chalk');
+const {yellow, red} = require('chalk');
+
+const buildNThings = (n, thingBuilder) => {
+  const things = [];
+  while (n) {
+    things.push(thingBuilder());
+    n -= 1;
+  }
+  return things;
+};
 
 const buildUser = () => {
   const firstName = dummy.name.firstName();
@@ -24,43 +33,30 @@ const buildUser = () => {
   };
 };
 
-const buildNUsers = (n) => {
-  const users = [];
-  while (n) {
-    users.push(buildUser());
-    n -= 1;
-  }
-  return users;
-};
+const buildCategory = () => ({name: dummy.commerce.productMaterial()});
 
-const buildCategory = () => {
-  return {name: dummy.}
-};
+const buildProduct = () => ({
+  name: dummy.commerce.product(),
+  description: dummy.lorem.paragraphs(),
+  imgUrl: dummy.image.technics(),
+  price: dummy.commerce.price(),
+  remainingInventory: dummy.random.number(),
+});
 
-const buildNCategories = (n) => {
+const buildOrder = () => ({
+  status: [
+    'Created',
+    'Processing',
+    'Cancelled',
+    'Completed',
+  ][Math.floor(Math.random() * 4)],
+});
 
-};
+const buildReview = () => ({
+  text: dummy.lorem.paragraphs(),
+  numOfStart: Math.foor(Math.random() * 6),
+});
 
-const buildProduct = () => {
 
-};
-
-const buildNProducts = (n) => {
-
-};
-
-const buildOrder = () => {
-
-};
-
-const buildNOrders = (n) => {
-
-};
-
-const buildReview = () => {
-
-};
-
-const buildNReviews = (n) => {
-
-};
+const users = buildNThings(50, buildUser());
+const categories = buildNThings
