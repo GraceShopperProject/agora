@@ -6,7 +6,7 @@ const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://localhost:5432/${pkgJSON.name}`,
   {
     logging: false,
-    underscore: true,
+    underscored: true,
   }
 );
 
