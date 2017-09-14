@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 
   a {
     text-decoration: none;
@@ -17,5 +17,9 @@ body {
   form div {
     margin: 1em;
     display: inline-block;
+  }
+
+  .cart {
+    float:right;
   }
 }

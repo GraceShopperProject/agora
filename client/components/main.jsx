@@ -15,21 +15,35 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>The Happy Sammie</h1>
+      <h1>Agora</h1>
       <nav>
+          <div className="container">
         {
           isLoggedIn
-            ? <div>
+            ? <div id="nav-items" className="collapse navbar-collapse navbar-right">
+                  <ul className="nav navbar-nav">
               {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={handleClick}>Logout</a>
+                      <li><Link to="/home">Home</Link></li>
+                      <li><a href="#" onClick={handleClick}>Logout</a></li>
+                  </ul>
             </div>
-            : <div>
+            : <div id="nav-items" className="collapse navbar-collapse navbar-right">
               {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+                  <ul className="nav navbar-nav">
+                      <li><Link to="/login">Login</Link></li>
+                      <li><Link to="/signup">Sign Up</Link></li>
+                  </ul>
             </div>
         }
+
+              <ul className="nav navbar-right">
+                  <li>
+                      <Link to="/shoppingcart" >
+                          <img src="icons8-Shopping Cart-50.png" height="20" width="20" />
+                      </Link>
+                  </li>
+              </ul>
+          </div>
       </nav>
       <hr />
       {children}
