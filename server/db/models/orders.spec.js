@@ -1,53 +1,46 @@
 /* global describe beforeEach it */
 
+const { expect } = require('chai');
+const db = require('../index');
 
-/*
+const Order = db.model('order');
+const User = db.model('user'); 
 
-Incomplete orders.spec file to test the correctness of the orders model.
+describe('Order model', () => {
+  beforeEach(() => db.sync({ force: true }));
 
-- Ensure the proper user is affiliated
-- Ensure status switching works
-- Let Robin know if this test spec is unnecessary :P
+  describe('ProperlyDefinedOrders', () => {
+    describe('correctUserAffiliation', () => {
+      let user1;
+      let order1;
 
-*/ 
+      beforeEach(() => {
+        return User.create({
+          email: 'cody@puppybook.com',
+          password: 'bones',
+          })
+        .then (user => {
+          user1 = user
+          return Order.create({
+            customizeOrderMessage: "I have this order",
+            status: 'Created',
+            price: 1,
+          })
+        })
+        .then (order => {
+          order.setUser(user1);
+          order1 = order;
+        })
+      })
 
-// const { expect } = require('chai');
-// const db = require('../index');
+      it('Ensure proper user is affiliated', () => {
+        expect(order1.dataValues.userId).to.equal(user1.dataValues.id);
+      });
 
-// const Order = db.model('order');
-// const User = db.model('user'); //Will need user to affiliate with the order they make
-
-// describe('Order model', () => {
-//   beforeEach(() => db.sync({ force: true }));
-
-//   describe('ProperlyDefinedOrders', () => {
-//     describe('correctUserAffiliation', () => {
-//       let user1;
-//       let order1;
-
-//       beforeEach(() => User.create({
-//         UserId: 'cody@puppybook.com',
-//         password: 'bones',
-//       })
-//       .then (user => {
-//         user1 = user
-//       })
-
-//       beforeEach(() => Order.create({
-//         UserId: // maybe use email? ,
-//         password: 'bones',
-//       })
-//         .then((order) => {
-//           order1 = order;
-//         }));
-
-//       it('returns true if the password is correct', () => {
-//         expect(cody.correctPassword('bones')).to.be.equal(true);
-//       });
-
-//       it('returns false if the password is incorrect', () => {
-//         expect(cody.correctPassword('bonez')).to.be.equal(false);
-//       });
-//     }); // end describe('correctPassword')
-//   }); // end describe('instanceMethods')
-// }); // end describe('User model')
+      it('Ensures proper change in status', () => {
+        order1.setDataValue('status', 'Processing');
+        expect(order1.dataValues.status).to.equal('Processing');
+      });
+    });
+  }); 
+});
