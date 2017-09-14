@@ -1,14 +1,19 @@
-// const reviewRouter = require('express').Router();
-// const { Review } = require('../db/models');
+const reviewRouter = require('express').Router();
+const { Review } = require('../db/models');
 
-// router.get('/', (req, res, next) => {
-//   Review.findAll({})
-//   .then( reviews => res.json(reviews))
-//   .catch(next);
-// });
+// '/api/reviews/'
+reviewRouter.route('/')
+.get( (req, res, next) => {
+  Review.findAll()
+  .then( reviews => res.json(reviews) )
+  .catch(next);
+})
+.post((req, res, next) => {
+  Review.create(req.body)
+    .then(newReview => {
+      res.status(201).send(newReview);
+    })
+    .catch(next);
+});
 
-// // TODO ensure this line is lowest so it does not get mistaken for other routes
-// // Possibly update the uri to '/product/:productId/:reviewId'
-// //update existing review
-// //'/api/reviews/:reviewId
-// router.put('/:reviewId', (req, res, next))
+module.exports = reviewRouter;
