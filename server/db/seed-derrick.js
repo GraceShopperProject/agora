@@ -13,47 +13,58 @@ const dummy = require('faker');
 
 const { floor, random } = Math;
 
-const createNPromisedThings = (n, creator, uniques) => {
+const makeNThings = (n, creator, uniques) => {
   const things = [];
   while (n) {
     const thing = creator();
     const isNotDuplicate = uniques.every(attribute => !thing[attribute]);
     if (isNotDuplicate) {
-      things.push(Promise.resolve(thing));
+      things.push(thing);
       n -= 1;
     }
   }
-  return Promise.all(things);
+  return things;
 };
 
 
-const createCategory = () => Category.create({
+const makeCategory = () => ({
   name: dummy.commerce.productMaterial(),
 });
-const creatingCategories = createNPromisedThings(20, createCategory, ['name']);
+
+const categories = makeNThings(20, makeCategory, ['name']);
 
 
-const createProduct = () => Product.create({
+const makeProduct = () => ({
   name: dummy.commerce.product(),
   description: dummy.lorem.paragraphs(),
   price: dummy.random.number({ min: 1, max: 1000, precision: 2 }),
   remainingInventory: dummy.random.number({ min: 0, max: 1000, precision: 0 }),
   categories: [categories[floor(random() * categories.length)]],
-}, {
-  include: [{
-    association: Product.Categories,
-  }],
 });
 
-const creatingProducts = createNPromisedThings(100, createProduct);
-creatingProducts
-  .then(products => products.forEach)
+const products = makeNThings(100, makeProduct);
 
-const createUser = () => {
+// const creatingProducts = Promise.all(
+//   products.map(product =>
+//     Product.create(product, {
+//       include: [{ association: Product.Categories }],
+//     })
+//   )
+// );
+
+const makeReview = reviewedProduct => ({
+  text: dummy.lorem.paragraphs(),
+  numOfStars: Math.foor(Math.random() * 6),
+  // productId: products[Math.floor(Math.random() * products.length)].id,
+  product: reviewedProduct,
+});
+
+
+const makeUser = (reviewedProducts) => {
   const firstName = dummy.name.firstName();
   const lastName = dummy.name.lastName();
   const emailDomain = dummy.internet.email().split('@')[1];
-  return User.create({
+  return {
     firstName,
     lastName,
     email: `${firstName + lastName}@${emailDomain}`,
@@ -66,22 +77,63 @@ const createUser = () => {
     city: dummy.address.city(),
     state: dummy.address.state(),
     zip: dummy.address.zipCode(),
-  });
+    reviews: reviewedProducts.map(product => makeReview(product)),
+  };
 };
 
-const creatingUsers = createNPromisedThings(50, createUser, ['email']);
+const users = makeNThings(50, makeUser, ['email']);
 
-const createOrder = () => Order.create({
-  status: ['Created', 'Processing', 'Cancelled', 'Completed'][floor(random() * 4)],
-  customizeOrderMessage: dummy.lorem.paragraph(),
+// const creatingUsers = Promise.all(users.map(user => User.create(user)));
+
+const makeOrder = (user, productsOrdered) => ({
+  status: [
+    'Created',
+    'Processing',
+    'Cancelled',
+    'Completed',
+  ][floor(random() * 4)],
+  user_request: dummy.lorem.paragraph(),
+  total_price: productsOrdered.reduce((total, product) => total + product.price),
+  user,
+  productsOrdered,
 });
 
-const creatingOrders = createN;
+const createNOrders = (n) => {
+  const ordersCreated = [];
+  while (n) {
+    const smaller = floor(random() * products.length);
+    const bigger = floor((random() * products.length) - smaller) + smaller;
+    const randProducts = products.slice(smaller, bigger);
+    // const randUser = users[floor(random() * users.length)];
+    const newUser = makeUser(randProducts);
+    const creatingOrder = Order.create(
+      makeOrder(newUser, randProducts), {
+        include: [
+          {
+            association: Order.Products,
+            include: [Product.Categories],
+          },
+          {
+            association: Order.User,
+            include: [User.Reviews],
+          },
+        ],
+      });
 
-const buildReview = () => ({
-  productId: products[Math.floor(Math.random() * products.length)].id,
-  text: dummy.lorem.paragraphs(),
-  numOfStars: Math.foor(Math.random() * 6),
-});
+    ordersCreated.push(creatingOrder);
+  }
+  return Promise.all(ordersCreated);
+  // simultaneously creates all users, products, orders, and reviews
+};
 
-const creatingReviews = createNPromisedThings();
+
+// const reviews = makeNThings(1000, makeReview);
+
+db.sync({ force: true })
+  .then(() => console.log('Dropping tables'))
+  .then(() => console.log('Seeding Database'))
+  .then(() => createNOrders(500))
+  .then(() => console.log('Database successfully seed!'))
+  .then(() => db.close())
+  .then(() => console.log('Database connection closed'))
+  .catch(err => console.error('UNSUCCESSFUL: ', err));
