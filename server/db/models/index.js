@@ -2,21 +2,17 @@ const User = require('./user');
 const Order = require('./order');
 const Category = require('./category');
 const Product = require('./product');
-// const Review = require('./review');
+const Review = require('./review');
+const OrderProduct = require('./order_product');
 
 /**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
+ * Table Associations
  */
-
-
 User.hasMany(Order);
 Order.belongsTo(User);
 
-Order.belongsToMany(Product, { through: 'order_product' });
-Product.belongsToMany(Order, { through: 'order_product' });
+Order.belongsToMany(Product, { through: OrderProduct });
+Product.belongsToMany(Order, { through: OrderProduct });
 
 /* Not sure if this will work as expected. I want categories to have multiple
 sub-categories AND for a particular category to be a sub-category of many
@@ -29,8 +25,9 @@ Category.belongsToMany(Category, {
 Category.belongsToMany(Product, { through: 'product_category' });
 Product.belongsToMany(Category, { through: 'product_category' });
 
-// Product.hasMany(Review);
-// Review.belongsTo(Product);
+Product.hasMany(Review);
+Review.belongsTo(Product);
+Review.belongsTo(User);
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -43,5 +40,6 @@ module.exports = {
   Order,
   Product,
   Category,
-  // Review,
+  Review, 
+  OrderProduct,
 };
