@@ -19,8 +19,8 @@ var data = {
         {email: "nycjing@gmail.com", password: "123456", name: "Jing Jia", addType : "home", addLine_1: "364 12th street", addCity: "Brooklyn", addState: "NY", addZipcode: "11125" },
     ],
     orders: [
-        { status: "Created", },
-        { status: "Created", }
+        { status: "Created", price: 1, },
+        { status: "Created", price: 1, },
     ]
 };
 
