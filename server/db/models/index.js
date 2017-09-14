@@ -6,7 +6,8 @@ const Review = require('./review');
 const Order_Product = require('./order_product');
 
 /**
- * Associations
+ * Table Associations
+>>>>>>> master
  */
 User.hasMany(Order);
 Order.belongsTo(User);
@@ -40,5 +41,6 @@ module.exports = {
   Order,
   Product,
   Category,
-  Review,
+  Review, 
+  Order_Product,
 };

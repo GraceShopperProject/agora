@@ -20,10 +20,10 @@ var data = {
     ],
     orders: [
         { status: "Created", price: 1, },
-        { status: "Created", price: 1, }
+        { status: "Created", price: 1, },
     ]
 };
-
+ 
 db.sync({ force: true })
     .then(function () {
         console.log("Dropped old data, now inserting data");

@@ -12,7 +12,7 @@ const Order = db.define('order', {
     allowNull: false,
     defaultValue: 'Created',
   },
-  price: {
+  price: { 
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
@@ -20,5 +20,4 @@ const Order = db.define('order', {
     }
   }
 });
-
 module.exports = Order;
