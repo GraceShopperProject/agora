@@ -13,26 +13,27 @@ const dummy = require('faker');
 
 const { floor, random } = Math;
 
-const pushNThingsIntoArray = (n, thingMaker, uniques) => {
+const createNPromisedThings = (n, creator, uniques) => {
   const things = [];
   while (n) {
-    const thing = thingMaker();
+    const thing = creator();
     const isNotDuplicate = uniques.every(attribute => !thing[attribute]);
     if (isNotDuplicate) {
-      things.push(thing);
+      things.push(Promise.resolve(thing));
       n -= 1;
     }
   }
-  return things;
+  return Promise.all(things);
 };
 
 
-const buildCategory = () => ({ name: dummy.commerce.productMaterial() });
-const categories = pushNThingsIntoArray(20, buildCategory, ['name']);
-console.log(categories);
+const createCategory = () => Category.create({
+  name: dummy.commerce.productMaterial(),
+});
+const creatingCategories = createNPromisedThings(20, createCategory, ['name']);
 
 
-const buildProduct = () => Product.create({
+const createProduct = () => Product.create({
   name: dummy.commerce.product(),
   description: dummy.lorem.paragraphs(),
   price: dummy.random.number({ min: 1, max: 1000, precision: 2 }),
@@ -44,35 +45,19 @@ const buildProduct = () => Product.create({
   }],
 });
 
-const products = pushNThingsIntoArray(100, buildProduct);
+const creatingProducts = createNPromisedThings(100, createProduct);
+creatingProducts
+  .then(products => products.forEach)
 
-
-const buildOrder = () => ({
-  status: [
-    'Created',
-    'Processing',
-    'Cancelled',
-    'Completed',
-  ][Math.floor(Math.random() * 4)],
-});
-
-const buildReview = () => ({
-  productId: products[Math.floor(Math.random() * products.length)].id,
-  text: dummy.lorem.paragraphs(),
-  numOfStars: Math.foor(Math.random() * 6),
-});
-
-const reviews = pushNThingsIntoArray();
-
-const buildUser = () => {
+const createUser = () => {
   const firstName = dummy.name.firstName();
   const lastName = dummy.name.lastName();
   const emailDomain = dummy.internet.email().split('@')[1];
-  return {
+  return User.create({
     firstName,
     lastName,
     email: `${firstName + lastName}@${emailDomain}`,
-    isAdmin: !!Math.round(Math.random() * 2),
+    isAdmin: dummy.random.boolean(),
     password: dummy.internet.password(),
     googleId: dummy.random.uuid(),
     phone: dummy.phone.phoneNumer(),
@@ -81,7 +66,22 @@ const buildUser = () => {
     city: dummy.address.city(),
     state: dummy.address.state(),
     zip: dummy.address.zipCode(),
-  };
+  });
 };
 
-const users = pushNThingsIntoArray(50, buildUser);
+const creatingUsers = createNPromisedThings(50, createUser, ['email']);
+
+const createOrder = () => Order.create({
+  status: ['Created', 'Processing', 'Cancelled', 'Completed'][floor(random() * 4)],
+  customizeOrderMessage: dummy.lorem.paragraph(),
+});
+
+const creatingOrders = createN;
+
+const buildReview = () => ({
+  productId: products[Math.floor(Math.random() * products.length)].id,
+  text: dummy.lorem.paragraphs(),
+  numOfStars: Math.foor(Math.random() * 6),
+});
+
+const creatingReviews = createNPromisedThings();

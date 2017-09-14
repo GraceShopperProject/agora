@@ -1,21 +1,22 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-const User = require('./user');
+// const User = require('./user');
 
 const Order = db.define('order', {
-  date: {
-    type: Sequelize.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.NOW
-  },
+  // Don't think this is necessary – Derric
+  // date: {
+  //   type: Sequelize.DATE,
+  //   allowNull: false,
+  //   defaultValue: Sequelize.NOW,
+  // },
   customizeOrderMessage: {
     type: Sequelize.TEXT,
-    allowNull: true
+    allowNull: true,
   },
   status: {
     type: Sequelize.ENUM(['Created', 'Processing', 'Cancelled', 'Completed']),
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 module.exports = Order;
