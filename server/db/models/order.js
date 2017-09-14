@@ -3,18 +3,21 @@ const db = require('../db');
 const User = require('./user');
 
 const Order = db.define('order', {
-  date: {
-    type: Sequelize.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.NOW
-  },
   customizeOrderMessage: {
     type: Sequelize.TEXT,
     allowNull: true
   },
   status: {
     type: Sequelize.ENUM(['Created', 'Processing', 'Cancelled', 'Completed']),
-    allowNull: false
+    allowNull: false,
+    defaultValue: 'Created',
+  },
+  price: { 
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 0,
+    },
   }
 });
 
