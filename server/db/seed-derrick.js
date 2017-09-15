@@ -11,18 +11,21 @@ const {
 
 const dummy = require('faker');
 
-const { floor, random } = Math;
+const {floor, random} = Math;
 
 const makeNThings = (n, creator, uniques) => {
   const things = [];
   while (n) {
-    const thing = creator();
-    const isNotDuplicate = uniques.every(attribute => !thing[attribute]);
-    if (isNotDuplicate) {
-      things.push(thing);
-      n -= 1;
-    }
+    const thingCreated = creator();
+    /*     const isNotDuplicate = uniques.every(attribute => things.every(thing =>
+          thing[attribute] !== thingCreated[attribute]
+        ));
+        if (isNotDuplicate) {
+          console.log('not duplicate'); */
+    things.push(thingCreated);
+    n--;
   }
+  // }
   return things;
 };
 
@@ -36,10 +39,11 @@ const categories = makeNThings(20, makeCategory, ['name']);
 
 const makeProduct = () => ({
   name: dummy.commerce.product(),
+  img_url: dummy.image.technics(),
   description: dummy.lorem.paragraphs(),
-  price: dummy.random.number({ min: 1, max: 1000, precision: 2 }),
-  remainingInventory: dummy.random.number({ min: 0, max: 1000, precision: 0 }),
-  categories: [categories[floor(random() * categories.length)]],
+  price: 100,
+  remaining_inventory: 100,
+  // categories: [categories[floor(random() * categories.length)]],
 });
 
 const products = makeNThings(100, makeProduct);
@@ -54,24 +58,24 @@ const products = makeNThings(100, makeProduct);
 
 const makeReview = reviewedProduct => ({
   text: dummy.lorem.paragraphs(),
-  numOfStars: Math.foor(Math.random() * 6),
+  rating: floor(Math.random() * 6),
   // productId: products[Math.floor(Math.random() * products.length)].id,
   product: reviewedProduct,
 });
 
 
 const makeUser = (reviewedProducts) => {
-  const firstName = dummy.name.firstName();
-  const lastName = dummy.name.lastName();
+  const first_name = dummy.name.firstName();
+  const last_name = dummy.name.lastName();
   const emailDomain = dummy.internet.email().split('@')[1];
   return {
-    firstName,
-    lastName,
-    email: `${firstName + lastName}@${emailDomain}`,
-    isAdmin: dummy.random.boolean(),
+    first_name,
+    last_name,
+    email: `${first_name + last_name}@${emailDomain}`,
+    is_admin: dummy.random.boolean(),
     password: dummy.internet.password(),
-    googleId: dummy.random.uuid(),
-    phone: dummy.phone.phoneNumer(),
+    google_id: dummy.random.uuid(),
+    phone: dummy.phone.phoneNumber(),
     streetAddress: dummy.address.streetAddress(),
     streetAddress2: dummy.address.secondaryAddress(),
     city: dummy.address.city(),
@@ -81,7 +85,7 @@ const makeUser = (reviewedProducts) => {
   };
 };
 
-const users = makeNThings(50, makeUser, ['email']);
+// const users = makeNThings(50, makeUser, ['email']);
 
 // const creatingUsers = Promise.all(users.map(user => User.create(user)));
 
@@ -93,7 +97,7 @@ const makeOrder = (user, productsOrdered) => ({
     'Completed',
   ][floor(random() * 4)],
   user_request: dummy.lorem.paragraph(),
-  total_price: productsOrdered.reduce((total, product) => total + product.price),
+  total_price: 100 /* productsOrdered.reduce((total, product) => total + product.price, 0) */,
   user,
   productsOrdered,
 });
@@ -102,25 +106,27 @@ const createNOrders = (n) => {
   const ordersCreated = [];
   while (n) {
     const smaller = floor(random() * products.length);
-    const bigger = floor((random() * products.length) - smaller) + smaller;
+    const bigger = floor((random() * (products.length - smaller))) + smaller;
     const randProducts = products.slice(smaller, bigger);
-    // const randUser = users[floor(random() * users.length)];
+    const randUser = users[floor(random() * users.length)];
     const newUser = makeUser(randProducts);
     const creatingOrder = Order.create(
       makeOrder(newUser, randProducts), {
         include: [
           {
             association: Order.Products,
-            include: [Product.Categories],
+            // through: 'order_products',
+            // include: [Product.Categories],
           },
           {
             association: Order.User,
             include: [User.Reviews],
           },
         ],
-      });
+      }/* , { returning: true }) */);
 
     ordersCreated.push(creatingOrder);
+    n--;
   }
   return Promise.all(ordersCreated);
   // simultaneously creates all users, products, orders, and reviews
@@ -129,10 +135,18 @@ const createNOrders = (n) => {
 
 // const reviews = makeNThings(1000, makeReview);
 
-db.sync({ force: true })
+db.sync({force: true})
   .then(() => console.log('Dropping tables'))
   .then(() => console.log('Seeding Database'))
-  .then(() => createNOrders(500))
+  .then(() => createNOrders(50))
+  // .then(createdOrders => createdOrders.map((order) => {
+  //   const smaller = floor(random() * products.length);
+  //   const bigger = floor((random() * (products.length - smaller))) + smaller;
+  //   const randProducts = products.slice(smaller, bigger);
+  //   return order.addProducts(randProducts);
+  // }))
+  // .then(() => Promise.all(products.map(product => Product.create(product))))
+  // .then(() => Promise.all(users.map(user => User.create(user))))
   .then(() => console.log('Database successfully seed!'))
   .then(() => db.close())
   .then(() => console.log('Database connection closed'))

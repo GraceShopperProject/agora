@@ -1,10 +1,10 @@
 /* global describe beforeEach it */
 
 const { expect } = require('chai');
-const db = require('../index');
+const db = require('../../index');
 
 const Order = db.model('order');
-const User = db.model('user'); 
+const User = db.model('user');
 
 describe('Order model', () => {
   beforeEach(() => db.sync({ force: true }));
@@ -40,5 +40,5 @@ describe('Order model', () => {
       order1.setDataValue('status', 'Processing');
       expect(order1.dataValues.status).to.equal('Processing');
     });
-  }); 
+  });
 });

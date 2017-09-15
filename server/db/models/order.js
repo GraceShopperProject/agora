@@ -3,7 +3,7 @@ const db = require('../db');
 // const User = require('./user');
 
 const Order = db.define('order', {
-  customizeOrderMessage: {
+  user_request: {
     type: Sequelize.TEXT,
     allowNull: true,
   },
@@ -12,13 +12,13 @@ const Order = db.define('order', {
     allowNull: false,
     defaultValue: 'Created',
   },
-  price: {
+  total_price: {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0,
     },
-  }
+  },
 });
 
 module.exports = Order;

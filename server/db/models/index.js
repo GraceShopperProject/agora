@@ -3,31 +3,32 @@ const Order = require('./order');
 const Category = require('./category');
 const Product = require('./product');
 const Review = require('./review');
-const OrderProduct = require('./order_product');
+const Order_Product = require('./order_product');
 
 /**
  * Table Associations
  */
-User.hasMany(Order);
-Order.belongsTo(User);
+User.Orders = User.hasMany(Order);
+Order.User = Order.belongsTo(User);
 
-Order.belongsToMany(Product, { through: OrderProduct });
-Product.belongsToMany(Order, { through: OrderProduct });
+Order.Products = Order.belongsToMany(Product, { through: Order_Product });
+Product.Orders = Product.belongsToMany(Order, { through: Order_Product });
 
 /* Not sure if this will work as expected. I want categories to have multiple
 sub-categories AND for a particular category to be a sub-category of many
 categories. */
-Category.belongsToMany(Category, {
+Category.Subcategories = Category.belongsToMany(Category, {
   as: 'Subcategory',
   through: 'category_subcategory',
 });
 
-Category.belongsToMany(Product, { through: 'product_category' });
-Product.belongsToMany(Category, { through: 'product_category' });
+Category.Products = Category.belongsToMany(Product, { through: 'products_categories' });
 
-Product.hasMany(Review);
-Review.belongsTo(Product);
-Review.belongsTo(User);
+Product.Categories = Product.belongsToMany(Category, { through: 'products_categories' });
+
+Product.Reviews = Product.hasMany(Review);
+Review.Product = Review.belongsTo(Product);
+Review.User = Review.belongsTo(User);
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -40,6 +41,6 @@ module.exports = {
   Order,
   Product,
   Category,
-  Review, 
-  OrderProduct,
+  Review,
+  Order_Product,
 };
