@@ -1,5 +1,17 @@
 # Agora:The Best Way to Sell Your Products Online
 
+## DESIGN NOTES:
+
+### Fonts:
+- font-family: 'Catamaran', sans-serif;
+
+### Color Palette:
+  - brand/info: #874C62
+  - primary/affirmative: #A7D2CB
+  - alert: #F2D388
+  - danger/negative: #C98474
+  - default: #999
+
 ## DEVELOPMENT WORKFLOW (using Waffle.io)
 
 * Make a Waffle/GitHub issue for the task.
