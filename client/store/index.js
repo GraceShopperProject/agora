@@ -9,3 +9,4 @@ const store = createStore(reducer, middleware);
 
 export default store;
 export * from './user';
+
