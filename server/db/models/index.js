@@ -3,7 +3,7 @@ const Order = require('./order');
 const Category = require('./category');
 const Product = require('./product');
 const Review = require('./review');
-const Order_Product = require('./order_product');
+const Order_Product = require('./order_products');
 
 /**
  * Table Associations
@@ -11,8 +11,14 @@ const Order_Product = require('./order_product');
 User.Orders = User.hasMany(Order);
 Order.User = Order.belongsTo(User);
 
-Order.Products = Order.belongsToMany(Product, { through: Order_Product });
-Product.Orders = Product.belongsToMany(Order, { through: Order_Product });
+Order.Products = Order.belongsToMany(Product, { through: 'order_products' });
+Product.Orders = Product.belongsToMany(Order, { through: 'order_products' });
+
+Order.addScope('defaultScope', {
+  include: [Order.Products, Order.User],
+}, {
+  override: true,
+});
 
 /* Not sure if this will work as expected. I want categories to have multiple
 sub-categories AND for a particular category to be a sub-category of many
@@ -28,8 +34,9 @@ Product.Categories = Product.belongsToMany(Category, { through: 'products_catego
 
 Product.Reviews = Product.hasMany(Review);
 Review.Product = Review.belongsTo(Product);
-Review.User = Review.belongsTo(User);
 
+Review.User = Review.belongsTo(User);
+User.Reviews = User.hasMany(Review);
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'

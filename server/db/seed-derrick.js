@@ -1,31 +1,26 @@
 
 
-const db = require('./db');
+const db = require('../db');
 const {
   Product,
   User,
   Order,
   Review,
   Category,
+  Order_Product,
 } = require('./models');
 
 const dummy = require('faker');
 
-const {floor, random} = Math;
+const { floor, random } = Math;
 
-const makeNThings = (n, creator, uniques) => {
+const makeNThings = (n, creator) => {
   const things = [];
   while (n) {
     const thingCreated = creator();
-    /*     const isNotDuplicate = uniques.every(attribute => things.every(thing =>
-          thing[attribute] !== thingCreated[attribute]
-        ));
-        if (isNotDuplicate) {
-          console.log('not duplicate'); */
     things.push(thingCreated);
-    n--;
+    n -= 1;
   }
-  // }
   return things;
 };
 
@@ -34,37 +29,26 @@ const makeCategory = () => ({
   name: dummy.commerce.productMaterial(),
 });
 
-const categories = makeNThings(20, makeCategory, ['name']);
+const categories = makeNThings(20, makeCategory);
 
 
 const makeProduct = () => ({
   name: dummy.commerce.product(),
   img_url: dummy.image.technics(),
   description: dummy.lorem.paragraphs(),
-  price: 100,
+  price: dummy.finance.amount(0, 1000, 2),
   remaining_inventory: 100,
-  // categories: [categories[floor(random() * categories.length)]],
+  categories: [categories[floor(random() * categories.length)]],
 });
 
 const products = makeNThings(100, makeProduct);
 
-// const creatingProducts = Promise.all(
-//   products.map(product =>
-//     Product.create(product, {
-//       include: [{ association: Product.Categories }],
-//     })
-//   )
-// );
+// const createReview = () => Review.create({
+//   text: dummy.lorem.paragraphs(),
+//   rating: floor(random() * 5) + 1,
+// });
 
-const makeReview = reviewedProduct => ({
-  text: dummy.lorem.paragraphs(),
-  rating: floor(Math.random() * 6),
-  // productId: products[Math.floor(Math.random() * products.length)].id,
-  product: reviewedProduct,
-});
-
-
-const makeUser = (reviewedProducts) => {
+const makeUser = () => {
   const first_name = dummy.name.firstName();
   const last_name = dummy.name.lastName();
   const emailDomain = dummy.internet.email().split('@')[1];
@@ -76,20 +60,17 @@ const makeUser = (reviewedProducts) => {
     password: dummy.internet.password(),
     google_id: dummy.random.uuid(),
     phone: dummy.phone.phoneNumber(),
-    streetAddress: dummy.address.streetAddress(),
-    streetAddress2: dummy.address.secondaryAddress(),
+    street_address_1: dummy.address.streetAddress(),
+    street_address_2: dummy.address.secondaryAddress(),
     city: dummy.address.city(),
     state: dummy.address.state(),
     zip: dummy.address.zipCode(),
-    reviews: reviewedProducts.map(product => makeReview(product)),
   };
 };
 
-// const users = makeNThings(50, makeUser, ['email']);
+const users = makeNThings(50, makeUser, ['email']);
 
-// const creatingUsers = Promise.all(users.map(user => User.create(user)));
-
-const makeOrder = (user, productsOrdered) => ({
+const makeOrder = () => ({
   status: [
     'Created',
     'Processing',
@@ -97,57 +78,97 @@ const makeOrder = (user, productsOrdered) => ({
     'Completed',
   ][floor(random() * 4)],
   user_request: dummy.lorem.paragraph(),
-  total_price: 100 /* productsOrdered.reduce((total, product) => total + product.price, 0) */,
-  user,
-  productsOrdered,
+  total_price: 100, // TODO: need to make a beforeValidate hook to set this
 });
 
 const createNOrders = (n) => {
   const ordersCreated = [];
   while (n) {
-    const smaller = floor(random() * products.length);
-    const bigger = floor((random() * (products.length - smaller))) + smaller;
-    const randProducts = products.slice(smaller, bigger);
-    const randUser = users[floor(random() * users.length)];
-    const newUser = makeUser(randProducts);
-    const creatingOrder = Order.create(
-      makeOrder(newUser, randProducts), {
-        include: [
-          {
-            association: Order.Products,
-            // through: 'order_products',
-            // include: [Product.Categories],
-          },
-          {
-            association: Order.User,
-            include: [User.Reviews],
-          },
-        ],
-      }/* , { returning: true }) */);
-
+    const creatingOrder = Order.create(makeOrder(), { returning: true });
     ordersCreated.push(creatingOrder);
-    n--;
+    n -= 1;
   }
   return Promise.all(ordersCreated);
-  // simultaneously creates all users, products, orders, and reviews
 };
 
 
-// const reviews = makeNThings(1000, makeReview);
+const associateEveryOrderToAUser = (allOrders, allUsers) =>
+  Promise.all(allOrders
+    .map((order) => {
+      const randUser = allUsers[floor(random() * users.length)];
+      return order
+        .setUser(randUser);
+    })
+  );
 
-db.sync({force: true})
-  .then(() => console.log('Dropping tables'))
-  .then(() => console.log('Seeding Database'))
-  .then(() => createNOrders(50))
-  // .then(createdOrders => createdOrders.map((order) => {
-  //   const smaller = floor(random() * products.length);
-  //   const bigger = floor((random() * (products.length - smaller))) + smaller;
-  //   const randProducts = products.slice(smaller, bigger);
-  //   return order.addProducts(randProducts);
-  // }))
-  // .then(() => Promise.all(products.map(product => Product.create(product))))
-  // .then(() => Promise.all(users.map(user => User.create(user))))
-  .then(() => console.log('Database successfully seed!'))
-  .then(() => db.close())
-  .then(() => console.log('Database connection closed'))
-  .catch(err => console.error('UNSUCCESSFUL: ', err));
+const associateRandomProductsToEachOrder = (allProducts, allOrders) =>
+  Promise.all(allOrders.map((order) => {
+    const maxQuantity = allProducts.length > 10 ? 10 : 2;
+    const smaller = floor(random() * maxQuantity);
+    const bigger = floor((random() * (maxQuantity - smaller))) + smaller;
+    const randProducts = allProducts.slice(smaller, bigger);
+    return Promise.all(randProducts.map(product =>
+      order.addProduct(product, {
+        through: { quantity: 1, product_price: product.price },
+      })));
+  }));
+
+const createReviewForEveryPurchase = () =>
+  Order.findAll()
+    .then((orders) => {
+      const promisedSetOfReviewPerOrder = orders.map((order) => {
+        const { user, products } = order;
+        const promisedReviews = products.map((product) => {
+          const creatingReview = Review.create({
+            text: dummy.lorem.paragraphs(),
+            rating: floor(random() * 5) + 1,
+            user,
+            products,
+          }, {
+            returning: true,
+          });
+          return creatingReview
+            .then(createdReview => createdReview.setUser(user))
+            .then(reviewWithUser => reviewWithUser.setProduct(product));
+        });
+        return Promise.all(promisedReviews);
+      });
+      return Promise.all(promisedSetOfReviewPerOrder);
+    });
+
+// db.sync({ force: true })
+//   .then(() => console.log('Dropping tables'))
+//   .then(() => console.log('Seeding Database'))
+
+//   // CREATE PRODUCTS WITH CATEGORIES
+//   .then(() => Promise.all(products.map(product => Product.create(product, {
+//     returning: true,
+//     include: [Category],
+//   }))))
+
+//   // CREATE USERS
+//   .then((allProducts) => {
+//     const promiseForAllUsers = Promise.all(users.map(user => User.create(user, {
+//       returning: true,
+//     })));
+//     return Promise.all([allProducts, promiseForAllUsers]);
+//   })
+
+//   // CREATE ORDERS
+//   .then(([allProducts, allUsers]) => {
+//     const promiseForAllOrders = createNOrders(500);
+//     return Promise.all([allProducts, allUsers, promiseForAllOrders]);
+//   })
+
+//   // SET ASSOCIATIONS BETWEEN INSTANCES
+//   .then(([allProducts, allUsers, allOrders]) =>
+//     associateEveryOrderToAUser(allOrders, allUsers)
+//       .then(allOrdersWithUser =>
+//         associateRandomProductsToEachOrder(allProducts, allOrdersWithUser)
+//       )
+//   )
+//   .then(() => createReviewForEveryPurchase())
+//   .then(() => console.log('Database successfully seed!'))
+//   .then(() => db.close())
+//   .then(() => console.log('Database connection closed'))
+//   .catch(err => console.error('UNSUCCESSFUL: ', err));

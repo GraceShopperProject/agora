@@ -14,11 +14,13 @@ const Order = db.define('order', {
   },
   total_price: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
     validate: {
       min: 0,
     },
   },
 });
+
+// DEFAULT SCOPE: set in models/index.js
 
 module.exports = Order;

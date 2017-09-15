@@ -49,7 +49,7 @@ const User = db.define('user', {
 {
   getterMethods: {
     address() {
-      return `${this.addLine_1}/n${this.addLine_2}/n${this.addCity}, ${this.addState} ${this.addZipcode}`;
+      return `${this.street_address_1}\n${this.street_address_2}\n${this.city}, ${this.state} ${this.zip}`;
     },
     name() {
       return `${this.first_name} ${this.last_name}`;

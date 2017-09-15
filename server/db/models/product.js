@@ -17,10 +17,17 @@ const Product = db.define('product', {
   },
 
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0,
+    },
+    set(val) {
+      const amount = typeof val === 'string' ? Number(val) : val;
+      this.setDataValue('price', amount * 100);
+    },
+    get() {
+      return this.getDataValue('price') / 100;
     },
   },
 
