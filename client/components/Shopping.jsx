@@ -29,12 +29,12 @@ const cartTemp = [{
     Quantity: 1,
 }];
 
-export const Shopping = (props) => {
-        // const cart = cartTemp;
+const Shopping = (props) => {
+        // let cart = cartTemp;
         const products = productTemp;
         // localStorage.setItem("Cart",JSON.stringify(cart))
         console.log('show localstorage',JSON.parse(localStorage.getItem("Cart")));
-        const cart = JSON.parse(localStorage.getItem("Cart"));
+        let cart = JSON.parse(localStorage.getItem("Cart"));
         return (
             <div className="container">
                 <h3>Your Shopping Cart</h3>
@@ -68,7 +68,7 @@ export const Shopping = (props) => {
                                     <input onClick={() => props.handleDecrease(item.id)} type='button' value='-'/>
                                 </td>
                                 <td>
-                                    <input onClick={()=>props.handleRemove(item.id)} type='button' value='x'/>
+                                    <input onClick={()=> props.handleRemove(cart,item.id)} type='button' value='x'/>
                                 </td>
                                 <td>
                                     <span>{ item.Quantity * item.Price }</span>
@@ -114,11 +114,13 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-    handleRemove(itemid) {
+    handleRemove: (cart,itemId) => {
         const items = cart.filter(item=> item.id !== itemId);
+        console.log('after remove button click',items);
         localStorage.setItem("Cart",JSON.stringify(items))
+        console.log('localStorage remove button click',localStorage.getItem("Cart"));
     },
-    handleAddItem(evt) {
+    handleAddItem: (evt) => {
         evt.preventDefault();
         const itemId = evt.target.product.value;
         const item = products[itemId-1];
