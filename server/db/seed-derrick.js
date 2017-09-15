@@ -136,39 +136,39 @@ const createReviewForEveryPurchase = () =>
       return Promise.all(promisedSetOfReviewPerOrder);
     });
 
-// db.sync({ force: true })
-//   .then(() => console.log('Dropping tables'))
-//   .then(() => console.log('Seeding Database'))
+db.sync({ force: true })
+  .then(() => console.log('Dropping tables'))
+  .then(() => console.log('Seeding Database'))
 
-//   // CREATE PRODUCTS WITH CATEGORIES
-//   .then(() => Promise.all(products.map(product => Product.create(product, {
-//     returning: true,
-//     include: [Category],
-//   }))))
+  // CREATE PRODUCTS WITH CATEGORIES
+  .then(() => Promise.all(products.map(product => Product.create(product, {
+    returning: true,
+    include: [Category],
+  }))))
 
-//   // CREATE USERS
-//   .then((allProducts) => {
-//     const promiseForAllUsers = Promise.all(users.map(user => User.create(user, {
-//       returning: true,
-//     })));
-//     return Promise.all([allProducts, promiseForAllUsers]);
-//   })
+  // CREATE USERS
+  .then((allProducts) => {
+    const promiseForAllUsers = Promise.all(users.map(user => User.create(user, {
+      returning: true,
+    })));
+    return Promise.all([allProducts, promiseForAllUsers]);
+  })
 
-//   // CREATE ORDERS
-//   .then(([allProducts, allUsers]) => {
-//     const promiseForAllOrders = createNOrders(500);
-//     return Promise.all([allProducts, allUsers, promiseForAllOrders]);
-//   })
+  // CREATE ORDERS
+  .then(([allProducts, allUsers]) => {
+    const promiseForAllOrders = createNOrders(500);
+    return Promise.all([allProducts, allUsers, promiseForAllOrders]);
+  })
 
-//   // SET ASSOCIATIONS BETWEEN INSTANCES
-//   .then(([allProducts, allUsers, allOrders]) =>
-//     associateEveryOrderToAUser(allOrders, allUsers)
-//       .then(allOrdersWithUser =>
-//         associateRandomProductsToEachOrder(allProducts, allOrdersWithUser)
-//       )
-//   )
-//   .then(() => createReviewForEveryPurchase())
-//   .then(() => console.log('Database successfully seed!'))
-//   .then(() => db.close())
-//   .then(() => console.log('Database connection closed'))
-//   .catch(err => console.error('UNSUCCESSFUL: ', err));
+  // SET ASSOCIATIONS BETWEEN INSTANCES
+  .then(([allProducts, allUsers, allOrders]) =>
+    associateEveryOrderToAUser(allOrders, allUsers)
+      .then(allOrdersWithUser =>
+        associateRandomProductsToEachOrder(allProducts, allOrdersWithUser)
+      )
+  )
+  .then(() => createReviewForEveryPurchase())
+  .then(() => console.log('Database successfully seed!'))
+  .then(() => db.close())
+  .then(() => console.log('Database connection closed'))
+  .catch(err => console.error('UNSUCCESSFUL: ', err));
