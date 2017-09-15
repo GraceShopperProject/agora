@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-// const Order = require('./order');
-// const Product = require('./product');
 
 const Order_Product = db.define('order_products', {
   product_price: {
@@ -10,6 +8,13 @@ const Order_Product = db.define('order_products', {
     defaultValue: 0,
     validate: {
       min: 0,
+    },
+    set(val) {
+      const amount = typeof val === 'string' ? Number(val) : val;
+      this.setDataValue('price', amount * 100);
+    },
+    get() {
+      return this.getDataValue('price') / 100;
     },
   },
   quantity: {

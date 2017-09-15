@@ -3,6 +3,7 @@ const db = require('../db');
 // const User = require('./user');
 
 const Order = db.define('order', {
+
   user_request: {
     type: Sequelize.TEXT,
     allowNull: true,
@@ -17,6 +18,13 @@ const Order = db.define('order', {
     allowNull: true,
     validate: {
       min: 0,
+    },
+    set(val) {
+      const amount = typeof val === 'string' ? Number(val) : val;
+      this.setDataValue('price', amount * 100);
+    },
+    get() {
+      return this.getDataValue('price') / 100;
     },
   },
 });
