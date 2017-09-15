@@ -1,24 +1,26 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-const User = require('./user');
+// const User = require('./user');
 
 const Order = db.define('order', {
-  customizeOrderMessage: {
+  user_request: {
     type: Sequelize.TEXT,
-    allowNull: true
+    allowNull: true,
   },
   status: {
     type: Sequelize.ENUM(['Created', 'Processing', 'Cancelled', 'Completed']),
     allowNull: false,
     defaultValue: 'Created',
   },
-  price: { 
+  total_price: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
     validate: {
       min: 0,
     },
-  }
+  },
 });
+
+// DEFAULT SCOPE: set in models/index.js
 
 module.exports = Order;
