@@ -13,7 +13,7 @@ describe('Product Model', () => {
       Product.build({
         name: 'Widget',
         description: 'a nifty thing that does stuff',
-        imgUrl: 'http://www.unsplash.com/url/to/image',
+        img_url: 'http://www.unsplash.com/url/to/image',
         price: 500,
         quantity: 1000,
       });
@@ -25,9 +25,9 @@ describe('Product Model', () => {
       validProduct = Product.build({
         name: 'my nifty widget',
         description: 'a nifty thing that does stuff',
-        imgUrl: 'http://www.unsplash.com/url/to/image',
+        img_url: 'http://www.unsplash.com/url/to/image',
         price: 500,
-        remainingInventory: 1000,
+        remaining_inventory: 1000,
       });
     });
 
@@ -75,49 +75,49 @@ describe('Product Model', () => {
         });
     });
 
-    it('does not allow imgUrl to be null', () => {
-      validProduct.setDataValue('imgUrl', null);
+    it('does not allow img_url to be null', () => {
+      validProduct.setDataValue('img_url', null);
       validProduct.validate()
         .then(() => {
           throw new Error('Error: Incorrectly validated bad url');
         }, (err) => {
-          expect(err.errors[0].message).to.equal('imgUrl cannot be null');
+          expect(err.errors[0].message).to.equal('img_url cannot be null');
         });
     });
 
-    it('requires imgUrl to be formatted as URL', () => {
-      validProduct.setDataValue('imgUrl', 'invalidUrl');
+    it('requires img_url to be formatted as URL', () => {
+      validProduct.setDataValue('img_url', 'invalidUrl');
       validProduct.validate()
         .then(() => {
           throw new Error('Error: Incorrectly validated bad url');
         }, (err) => {
-          expect(err.errors[0].message).to.equal('Validation isUrl on imgUrl failed');
+          expect(err.errors[0].message).to.equal('Validation isUrl on img_url failed');
         });
     });
 
-    it('does not allow remainingInventory to be null', () => {
-      validProduct.setDataValue('remainingInventory', null);
+    it('does not allow remaining_inventory to be null', () => {
+      validProduct.setDataValue('remaining_inventory', null);
       validProduct.validate()
         .then(() => {
-          throw new Error('Error: Incorrectly validated bad remainingInventory');
+          throw new Error('Error: Incorrectly validated bad remaining_inventory');
         }, (err) => {
-          expect(err.errors[0].message).to.equal('remainingInventory cannot be null');
+          expect(err.errors[0].message).to.equal('remaining_inventory cannot be null');
         });
     });
 
-    it('does not allow remainingInventory to be less than 0', () => {
-      validProduct.setDataValue('remainingInventory', -1);
+    it('does not allow remaining_inventory to be less than 0', () => {
+      validProduct.setDataValue('remaining_inventory', -1);
       validProduct.validate()
         .then(() => {
-          throw new Error('Error: Incorrectly validated bad remainingInventory');
+          throw new Error('Error: Incorrectly validated bad remaining_inventory');
         }, (err) => {
-          expect(err.errors[0].message).to.equal('Validation min on remainingInventory failed');
+          expect(err.errors[0].message).to.equal('Validation min on remaining_inventory failed');
         });
     });
 
-    it('instance.isInStock() returns true if remainingInventory > 0, else false', () => {
+    it('instance.isInStock() returns true if remaining_inventory > 0, else false', () => {
       expect(validProduct.isInStock()).to.equal(true);
-      validProduct.setDataValue('remainingInventory', 0);
+      validProduct.setDataValue('remaining_inventory', 0);
       expect(validProduct.isInStock()).to.equal(false);
     });
 
