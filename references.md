@@ -34,7 +34,7 @@ Product 'product'
     return this.remainingInventory > 0;
 
 Order 'order'
-  // DEFAULT SCOPE: Will have user and products returned
+  // DEFAULT SCOPE: Will have User and Products returned
   user_request: TEXT,
   status: ENUM(['Created', 'Processing', 'Cancelled', 'Completed']),
     defaultValue: 'Created',
