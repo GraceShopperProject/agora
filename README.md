@@ -1,9 +1,9 @@
 # Agora:The Best Way to Sell Your Products Online
 
-## DESIGN GUIDELINES
+## DESIGN NOTES:
 
 ### Fonts:
-- 
+- font-family: 'Catamaran', sans-serif;
 
 ### Color Palette:
   - brand/info: #874C62
