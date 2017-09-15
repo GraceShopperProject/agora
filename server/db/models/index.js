@@ -2,35 +2,47 @@ const User = require('./user');
 const Order = require('./order');
 const Category = require('./category');
 const Product = require('./product');
-// const Review = require('./review');
+const Review = require('./review');
+const Order_Product = require('./order_products');
 
 /**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
+ * Table Associations
  */
+User.Orders = User.hasMany(Order);
+Order.User = Order.belongsTo(User);
 
+Order.Products = Order.belongsToMany(Product, { through: 'order_products' });
+Product.Orders = Product.belongsToMany(Order, { through: 'order_products' });
 
-User.hasMany(Order);
-Order.belongsTo(User);
-
-Order.belongsToMany(Product, { through: 'order_product' });
-Product.belongsToMany(Order, { through: 'order_product' });
+Order.addScope('defaultScope', {
+  include: [Order.Products, Order.User],
+}, {
+  override: true,
+});
 
 /* Not sure if this will work as expected. I want categories to have multiple
 sub-categories AND for a particular category to be a sub-category of many
 categories. */
-Category.belongsToMany(Category, {
+Category.Subcategories = Category.belongsToMany(Category, {
   as: 'Subcategory',
   through: 'category_subcategory',
 });
 
-Category.belongsToMany(Product, { through: 'product_category' });
-Product.belongsToMany(Category, { through: 'product_category' });
+Category.Products = Category.belongsToMany(Product, { through: 'products_categories' });
 
-// Product.hasMany(Review);
-// Review.belongsTo(Product);
+Product.Categories = Product.belongsToMany(Category, { through: 'products_categories' });
+
+Product.Reviews = Product.hasMany(Review);
+Review.Product = Review.belongsTo(Product);
+
+Review.User = Review.belongsTo(User);
+User.Reviews = User.hasMany(Review);
+
+Product.addScope('defaultScope', {
+  include: [Product.Review],
+}, {
+  override: true,
+});
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -43,5 +55,6 @@ module.exports = {
   Order,
   Product,
   Category,
-  // Review,
+  Review,
+  Order_Product,
 };

@@ -4,7 +4,7 @@ const chai = require('chai');
 
 const expect = chai.expect;
 const spies = require('chai-spies');
-const Review = require('../models/review');
+const Review = require('../review');
 
 chai.use(spies);
 
@@ -48,7 +48,7 @@ describe('Review Model', () => {
           expect(err.errors[0].message).to.equal('Validation min on numOfStars failed');
         });
     });
-    
+
 /*
     it('allows null review text', () => {
       validReview.setDataValue('text', null);

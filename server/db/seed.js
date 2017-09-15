@@ -11,7 +11,7 @@ require('./models')
 var Promise = require('bluebird');
 
 var db = require('./index')
-
+ 
 var { User, Order } = require('./models/index')
 
 var data = {
@@ -19,11 +19,11 @@ var data = {
         {email: "nycjing@gmail.com", password: "123456", name: "Jing Jia", addType : "home", addLine_1: "364 12th street", addCity: "Brooklyn", addState: "NY", addZipcode: "11125" },
     ],
     orders: [
-        { status: "Created", },
-        { status: "Created", }
+        { status: "Created", price: 1, },
+        { status: "Created", price: 1, },
     ]
 };
-
+ 
 db.sync({ force: true })
     .then(function () {
         console.log("Dropped old data, now inserting data");
@@ -34,9 +34,9 @@ db.sync({ force: true })
         const creatingOrders = Promise.each(data.orders, function (order) {
             return Order.create(order)
             .then( createdOrder => {
-                User.findOne() 
+                return User.findOne() 
                 .then( user => {
-                    createdOrder.setUser(user)
+                    return createdOrder.setUser(user)
                 })
              });
         });

@@ -14,59 +14,56 @@ const User = db.define('user', {
   salt: {
     type: Sequelize.STRING,
   },
-  googleId: {
+  google_id: {
     type: Sequelize.STRING,
   },
-  name: {
-      type: Sequelize.STRING,
+  first_name: {
+    type: Sequelize.STRING,
   },
-  phone:  {
-      type: Sequelize.STRING,
+  last_name: {
+    type: Sequelize.STRING,
   },
-  addType: {
-      type: Sequelize.STRING,
+  phone: {
+    type: Sequelize.STRING,
   },
-  addLine_1: {
-      type: Sequelize.STRING,
+  street_address_1: {
+    type: Sequelize.STRING,
   },
-  addLine_2: {
-      type: Sequelize.STRING,
+  street_address_2: {
+    type: Sequelize.STRING,
   },
-  addCity: {
-      type: Sequelize.STRING,
+  city: {
+    type: Sequelize.STRING,
   },
-  addState: {
-      type: Sequelize.STRING,
+  state: {
+    type: Sequelize.STRING,
   },
-  addZipcode: {
-      type: Sequelize.STRING,
+  zip: {
+    type: Sequelize.STRING,
   },
-  isAdmin: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false
+  is_admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
 },
-  {
-      getterMethods: {
-          address: function () {
-              return this.addLine_1 + '/n' + this.addLine_2 + '/n' + this.addCity + ', ' + this.addState + ' ' + this.addZipcode
-          }
-      },
-  }
+{
+  getterMethods: {
+    address() {
+      return `${this.street_address_1}\n${this.street_address_2}\n${this.city}, ${this.state} ${this.zip}`;
+    },
+    name() {
+      return `${this.first_name} ${this.last_name}`;
+    },
+  },
+}
 );
 
-module.exports = User;
-
-/**
- * instanceMethods
- */
+// ---------------  INSTANCE METHODS ----------------------
 User.prototype.correctPassword = function (candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt) === this.password;
 };
 
-/**
- * classMethods
- */
+// ------------------ STATIC METHODS ------------------------
 User.generateSalt = function () {
   return crypto.randomBytes(16).toString('base64');
 };
@@ -75,15 +72,15 @@ User.encryptPassword = function (plainText, salt) {
   return crypto.createHash('sha1').update(plainText).update(salt).digest('hex');
 };
 
-/**
- * hooks
- */
+// ------------------------ HOOKS ------------------------------
 const setSaltAndPassword = (user) => {
   if (user.changed('password')) {
-    user.salt = User.generateSalt();
-    user.password = User.encryptPassword(user.password, user.salt);
+    user.setDataValue('salt', User.generateSalt());
+    user.setDataValue('password', User.encryptPassword(user.password, user.salt));
   }
 };
 
 User.beforeCreate(setSaltAndPassword);
 User.beforeUpdate(setSaltAndPassword);
+
+module.exports = User;

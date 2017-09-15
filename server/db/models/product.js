@@ -17,10 +17,17 @@ const Product = db.define('product', {
   },
 
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0,
+    },
+    set(val) {
+      const amount = typeof val === 'string' ? Number(val) : val;
+      this.setDataValue('price', amount * 100);
+    },
+    get() {
+      return this.getDataValue('price') / 100;
     },
   },
 
@@ -29,7 +36,7 @@ const Product = db.define('product', {
     allowNull: false,
   },
 
-  imgUrl: {
+  img_url: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
@@ -37,7 +44,7 @@ const Product = db.define('product', {
     },
   },
 
-  remainingInventory: {
+  remaining_inventory: {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
@@ -52,16 +59,6 @@ const Product = db.define('product', {
 
 Product.prototype.isInStock = function () {
   return this.remainingInventory > 0;
-};
-
-// TODO: hook this up properly to Reviews model
-Product.prototype.calculateAvgUserRating = function () {
-  /*   return this.reviews.reduce((aggRating, review, idx, arr) => {
-      if (idx === arr.length - 1) {
-        return (aggRating + review.rating) / arr.length;
-      }
-      return aggRating + review.rating;
-    }, 0); */
 };
 
 module.exports = Product;

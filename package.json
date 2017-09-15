@@ -17,16 +17,18 @@
     "test-models": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/agora_test' mocha -w ./server/db/models/*.spec.js --compilers js:babel-register",
     "test-api": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/agora_test' mocha -w ./server/api/*.spec.js --compilers js:babel-register",
     "lint-fix": "eslint --fix -c .eslintrc.js .",
-    "seed": "node ./server/db/seed.js"
+    "seed": "node ./server/db/seed-derrick.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.16.1",
+    "chalk": "^2.1.0",
     "connect-session-sequelize": "^4.1.0",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
+    "faker": "^4.1.0",
     "history": "^4.6.3",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
