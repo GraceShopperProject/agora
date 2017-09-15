@@ -7,7 +7,6 @@ const {
   Order,
   Review,
   Category,
-  Order_Product,
 } = require('./models');
 
 const dummy = require('faker');

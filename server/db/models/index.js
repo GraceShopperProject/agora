@@ -38,11 +38,11 @@ Review.Product = Review.belongsTo(Product);
 Review.User = Review.belongsTo(User);
 User.Reviews = User.hasMany(Review);
 
-// Product.addScope('defaultScope', {
-//   include: [Product.Reviews],
-// }, {
-//   override: true,
-// });
+Product.addScope('defaultScope', {
+  include: [Product.Reviews],
+}, {
+  override: true,
+});
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
