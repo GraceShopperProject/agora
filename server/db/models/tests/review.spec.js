@@ -14,38 +14,38 @@ describe('Review Model', () => {
     let validReview;
     beforeEach('setup valid review', () => {
       validReview = Review.build({
-        numOfStars: 5,
+        rating: 5,
         text: 'This thing is great',
       });
     });
 
-    it('numOfStars can not be null', () => {
-      validReview.setDataValue('numOfStars', null);
+    it('rating can not be null', () => {
+      validReview.setDataValue('rating', null);
       validReview.validate()
         .then(() => {
-          throw new Error('Error: Incorrectly validated numOfStars');
+          throw new Error('Error: Incorrectly validated rating');
         }, (err) => {
-          expect(err.errors[0].message).to.equal('numOfStars cannot be null');
+          expect(err.errors[0].message).to.equal('rating cannot be null');
         });
     });
 
-    it('does not allow numOfStars to be > 5', () => {
-      validReview.setDataValue('numOfStars', 6);
+    it('does not allow rating to be > 5', () => {
+      validReview.setDataValue('rating', 6);
       validReview.validate()
         .then(() => {
-          throw new Error('Error: Incorrectly validated numOfStars');
+          throw new Error('Error: Incorrectly validated rating');
         }, (err) => {
-          expect(err.errors[0].message).to.equal('Validation max on numOfStars failed');
+          expect(err.errors[0].message).to.equal('Validation max on rating failed');
         });
     });
 
-    it('does not allow numOfStars to be less than 1', () => {
-      validReview.setDataValue('numOfStars', 0);
+    it('does not allow rating to be less than 1', () => {
+      validReview.setDataValue('rating', 0);
       validReview.validate()
         .then(() => {
-          throw new Error('Error: Incorrectly validated numOfStars');
+          throw new Error('Error: Incorrectly validated rating');
         }, (err) => {
-          expect(err.errors[0].message).to.equal('Validation min on numOfStars failed');
+          expect(err.errors[0].message).to.equal('Validation min on rating failed');
         });
     });
 

@@ -1,5 +1,6 @@
 
 MODELS
+
 User 'user' 
   email: STRING,
   password: STRING,

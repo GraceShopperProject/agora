@@ -10,8 +10,8 @@ describe('Order model', () => {
   beforeEach(() => db.sync({ force: true }));
 
   describe('ProperlyDefinedOrders', () => {
-    let user1;
-    let order1;
+    let curUser;
+    let curOrder;
 
     beforeEach(() => {
       return User.create({
@@ -19,26 +19,26 @@ describe('Order model', () => {
         password: 'bones',
         })
       .then (user => {
-        user1 = user
+        curUser = user
         return Order.create({
-          customizeOrderMessage: "I have this order",
+          user_request: "I have this order",
           status: 'Created',
           price: 1,
         })
       })
       .then (order => {
-        order.setUser(user1);
-        order1 = order;
+        order.setUser(curUser);
+        curOrder = order;
       })
     })
 
     it('Ensure proper user is affiliated', () => {
-      expect(order1.dataValues.userId).to.equal(user1.dataValues.id);
+      expect(curOrder.dataValues.userId).to.equal(curUser.dataValues.id);
     });
 
     it('Ensures proper change in status', () => {
-      order1.setDataValue('status', 'Processing');
-      expect(order1.dataValues.status).to.equal('Processing');
+      curOrder.setDataValue('status', 'Processing');
+      expect(curOrder.dataValues.status).to.equal('Processing');
     });
   });
 });
