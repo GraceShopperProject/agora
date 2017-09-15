@@ -7,7 +7,6 @@ const {
   Order,
   Review,
   Category,
-  Order_Product,
 } = require('./models');
 
 const dummy = require('faker');
@@ -36,7 +35,7 @@ const makeProduct = () => ({
   name: dummy.commerce.product(),
   img_url: dummy.image.technics(),
   description: dummy.lorem.paragraphs(),
-  price: dummy.finance.amount(0, 1000, 2),
+  price: Number(dummy.finance.amount(0, 1000, 2)),
   remaining_inventory: 100,
   categories: [categories[floor(random() * categories.length)]],
 });
