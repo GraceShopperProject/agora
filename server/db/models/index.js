@@ -7,7 +7,6 @@ const Order_Product = require('./order_products');
 
 /**
  * Table Associations
->>>>>>> master
  */
 User.Orders = User.hasMany(Order);
 Order.User = Order.belongsTo(User);
