@@ -39,7 +39,7 @@ Review.User = Review.belongsTo(User);
 User.Reviews = User.hasMany(Review);
 
 Product.addScope('defaultScope', {
-  include: [Product.Review],
+  include: [Product.Reviews],
 }, {
   override: true,
 });

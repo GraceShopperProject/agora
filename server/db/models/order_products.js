@@ -11,10 +11,10 @@ const Order_Product = db.define('order_products', {
     },
     set(val) {
       const amount = typeof val === 'string' ? Number(val) : val;
-      this.setDataValue('price', amount * 100);
+      this.setDataValue('product_price', amount * 100);
     },
     get() {
-      return this.getDataValue('price') / 100;
+      return this.getDataValue('product_price') / 100;
     },
   },
   quantity: {
