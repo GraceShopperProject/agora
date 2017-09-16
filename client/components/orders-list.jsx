@@ -12,13 +12,11 @@ import { fetchOrders, } from '../store/orders';
 class OrdersList extends Component {
   
   componentDidMount () {
-    console.log("Hello");
     this.props.fetchOrders();
   }
   
   render () { 
-    console.log(this.props.orders)
-    console.log("ROBIN");
+
         return (
             <div className="container">
                 <h3>Work in Progress Orders List</h3>
@@ -52,7 +50,7 @@ class OrdersList extends Component {
         );
     };
   }
-// will need to check which user is logged in
+
 const mapState = state => {
   return ({
     user: state.user,
