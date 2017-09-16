@@ -24,15 +24,20 @@ const removeOrder = (id) => ({ type: REMOVE_Orders, id });
 /**
  * THUNK CREATORS
  */
-export const fetchOrders = () =>
-  dispatch =>
+export const fetchOrders = () => {
+  console.log(1);
+  dispatch => {
+    console.log(2);
     axios.get('/api/orders')
-      .then(res =>
-        dispatch(getOrders(res.data || defaultOrders)))
+      .then(res => {
+        console.log(3);
+        dispatch(getOrders(res.data || defaultOrders));
+      })
       .catch(err => console.log(err));
-
+  }
+}
 // TODO do I dispatch products to redux ?
-export const createOrder = (user_request, total_price) =>
+export const buildOrder = (user_request, total_price) =>
   dispatch =>
     axios.post(`/api/orders`, { user_request, total_price, })
       .then((res) => { // TODO ** 

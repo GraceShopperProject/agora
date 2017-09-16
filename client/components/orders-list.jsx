@@ -12,11 +12,12 @@ import { fetchOrders, } from '../store/orders';
 export class OrdersList extends Component {
   
   componentDidMount () {
+    console.log("mounting");
     this.props.fetchOrders();
   }
   
   render () { 
-    const { name, } = props;
+    console.log(this.props.orders)
         return (
             <div className="container">
                 <h3>Work in Progress Orders List</h3>
@@ -33,15 +34,7 @@ export class OrdersList extends Component {
                     </thead>
                     <tbody>
                       <tr> 
-                        {
-                          this.props.orders.map( order => {
-                            return (
-                              <th>
-                                order.id
-                              </th>
-                            );
-                          })
-                        }
+
                       </tr> 
                     </tbody>
                 </table>
@@ -50,11 +43,13 @@ export class OrdersList extends Component {
     };
   }
 // will need to check which user is logged in
-const mapState = state => ({
+const mapState = state => {
+  console.log("hello");  
+  return ({
     // userId? 
     user: state.user,
     orders: state.orders // state.orders.find(order => order.userId === currentUserId) // unless is an Admin
-});
+})};
 
 const mapDispatch = (dispatch, ownProps) => ({
 
@@ -67,4 +62,15 @@ const mapDispatch = (dispatch, ownProps) => ({
 
 });
 
-export default connect(mapState, )(OrdersList);
+export default connect(mapState, mapDispatch)(OrdersList);
+
+
+// {
+//                           this.props.orders.map( order => {
+//                             return (
+//                               <th>
+//                                 order.id
+//                               </th>
+//                             );
+//                           })
+//                         }
