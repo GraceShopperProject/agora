@@ -14,6 +14,7 @@ Order.User = Order.belongsTo(User);
 Order.Products = Order.belongsToMany(Product, { through: 'order_products' });
 Product.Orders = Product.belongsToMany(Order, { through: 'order_products' });
 
+
 Order.addScope('defaultScope', {
   include: [Order.Products, Order.User],
 }, {
@@ -38,11 +39,11 @@ Review.Product = Review.belongsTo(Product);
 Review.User = Review.belongsTo(User);
 User.Reviews = User.hasMany(Review);
 
-// Product.addScope('defaultScope', {
-//   include: [Product.Reviews],
-// }, {
-//   override: true,
-// });
+Product.addScope('defaultScope', {
+  include: [Product.Reviews],
+}, {
+  override: true,
+});
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

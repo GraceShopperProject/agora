@@ -116,8 +116,10 @@ describe('Product Model', () => {
     });
 
     it('instance.isInStock() returns true if remaining_inventory > 0, else false', () => {
+      console.log("Robin tests 1 : ", validProduct.isInStock())
       expect(validProduct.isInStock()).to.equal(true);
       validProduct.setDataValue('remaining_inventory', 0);
+      console.log("Robin tests 2 : ", validProduct.isInStock())
       expect(validProduct.isInStock()).to.equal(false);
     });
 
