@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import { connect, } from 'react-redux';
+import { getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshoppingcart, } from '../store';
 
 /**
  * COMPONENT
@@ -30,11 +31,13 @@ const cartTemp = [{
 }];
 
 const Shopping = (props) => {
+        // props.getShoppingCart();
+
         // let cart = cartTemp;
         const products = productTemp;
-        // localStorage.setItem("Cart",JSON.stringify(cart))
-        console.log('show localstorage',JSON.parse(localStorage.getItem("Cart")));
-        let cart = JSON.parse(localStorage.getItem("Cart"));
+        localStorage.setItem("Cart",JSON.stringify(cart))
+        // console.log('show localstorage',JSON.parse(localStorage.getItem("Cart")), 'items',props.items);
+        let cart = props.items;
         return (
             <div className="container">
                 <h3>Your Shopping Cart</h3>
@@ -68,7 +71,7 @@ const Shopping = (props) => {
                                     <input onClick={() => props.handleDecrease(item.id)} type='button' value='-'/>
                                 </td>
                                 <td>
-                                    <input onClick={()=> props.handleRemove(cart,item.id)} type='button' value='x'/>
+                                    <input onClick={()=> props.handleRemove(item.id)} type='button' value='x'/>
                                 </td>
                                 <td>
                                     <span>{ item.Quantity * item.Price }</span>
@@ -79,7 +82,7 @@ const Shopping = (props) => {
 
                     </tbody>
                 </table>
-                <form onSubmit={props.handleAddItem}>
+                <form onSubmit={(evt)=> props.handleAddItem(evt, props.items)}>
                     <div className="form-group">
                         <label className="col-sm-1 col-lg-1 col-md-1 control-label">Add Product</label>
                         <div className="col-sm-12 col-lg-12 col-md-12">
@@ -110,24 +113,26 @@ const Shopping = (props) => {
  */
 const mapState = state => ({
     name: state.user.name,
-    items: state.shopping
+    items: state.shoppingcart.items
 });
 
 const mapDispatch = dispatch => ({
-    handleRemove: (cart,itemId) => {
-        const items = cart.filter(item=> item.id !== itemId);
-        console.log('after remove button click',items);
-        localStorage.setItem("Cart",JSON.stringify(items))
-        console.log('localStorage remove button click',localStorage.getItem("Cart"));
+    handleRemove(itemId,items)  {
+        dispatch(removeshoppingcart(itemId));
+        localStorage.removeItem("Cart");
+        console.log('localStorage remove button click 1',localStorage.getItem("Cart"));
+        localStorage.setItem("Cart",JSON.stringify(items));
+        console.log('localStorage remove button click 2',localStorage.getItem("Cart"));
     },
-    handleAddItem: (evt) => {
+    handleAddItem(evt, items) {
+        const products = productTemp;
         evt.preventDefault();
         const itemId = evt.target.product.value;
         const item = products[itemId-1];
         item.Quantity = 1;
-        console.log(itemId, item);
-        const items =  cart.concat(item);
-        localStorage.setItem("Cart",JSON.stringify(items))
+        dispatch(addshoppingcart(item));
+        localStorage.removeItem("Cart");
+        localStorage.setItem("Cart",JSON.stringify(items));
     },
     handleCheckOut(){
         //update product inventory
