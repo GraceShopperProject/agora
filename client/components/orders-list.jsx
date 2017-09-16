@@ -9,33 +9,49 @@ import { fetchOrders, } from '../store/orders';
 // Admin see list of all orders? 
 // Only one user per order?
 
-export class OrdersList extends Component {
+class OrdersList extends Component {
   
   componentDidMount () {
-    console.log("mounting");
+    console.log("Hello");
     this.props.fetchOrders();
   }
   
   render () { 
     console.log(this.props.orders)
+    console.log("ROBIN");
         return (
             <div className="container">
                 <h3>Work in Progress Orders List</h3>
                 <table className='table'>
                     <thead>
                     <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Total Price</th>
-                        <th>Price</th>
-                        <th>First Product Id</th>
-                        <th>Remove</th>
+                        <th>Order Placed</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Shipped To</th>
                     </tr>
                     </thead>
                     <tbody>
-                      <tr> 
-
-                      </tr> 
+                      {
+                        this.props.orders.length === 0 
+                        ? (<tr><th>No orders</th></tr>)
+                        :  this.props.orders.map( order => {
+                            return (
+                              <tr key={order.id}>
+                                <th>{order.createdAt}</th>
+                                <th>{order.status}</th>
+                                <th>{order.total_price}</th>
+                                <th>{order.user.name}</th>
+                              </tr> )
+                              order.product.map( product =>     {
+                                  return (
+                                    <tr key={product.id}><th>Hello</th></tr>
+                                  )
+                                })
+                              }
+                            )
+                          })
+                        }
                     </tbody>
                 </table>
             </div>
@@ -44,7 +60,6 @@ export class OrdersList extends Component {
   }
 // will need to check which user is logged in
 const mapState = state => {
-  console.log("hello");  
   return ({
     // userId? 
     user: state.user,
@@ -65,12 +80,4 @@ const mapDispatch = (dispatch, ownProps) => ({
 export default connect(mapState, mapDispatch)(OrdersList);
 
 
-// {
-//                           this.props.orders.map( order => {
-//                             return (
-//                               <th>
-//                                 order.id
-//                               </th>
-//                             );
-//                           })
-//                         }
+

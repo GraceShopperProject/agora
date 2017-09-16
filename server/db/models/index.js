@@ -14,12 +14,12 @@ Order.User = Order.belongsTo(User);
 Order.Products = Order.belongsToMany(Product, { through: 'order_products' });
 Product.Orders = Product.belongsToMany(Order, { through: 'order_products' });
 
-//** */
-// Order.addScope('defaultScope', {
-//   include: [Order.Products, Order.User],
-// }, {
-//   override: true,
-// });
+
+Order.addScope('defaultScope', {
+  include: [Order.Products, Order.User],
+}, {
+  override: true,
+});
 
 /* Not sure if this will work as expected. I want categories to have multiple
 sub-categories AND for a particular category to be a sub-category of many

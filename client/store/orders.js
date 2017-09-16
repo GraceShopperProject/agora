@@ -26,7 +26,7 @@ const removeOrder = (id) => ({ type: REMOVE_Orders, id });
  */
 export const fetchOrders = () => {
   console.log(1);
-  dispatch => {
+  return (dispatch) => {
     console.log(2);
     axios.get('/api/orders')
       .then(res => {
@@ -62,7 +62,7 @@ export default function (state = defaultOrders, action) {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders;
-    case REMOVE_ORDERS:
+    case REMOVE_ORDERS: //TODO
       return defaultOrders;
     default:
       return state;
