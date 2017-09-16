@@ -1,11 +1,18 @@
-import React, { Component, } from 'react';
-import { connect, } from 'react-redux';
-import { Router, } from 'react-router';
-import { Route, Switch, } from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Router } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
-import { Main, Login, Signup, UserHome, Shopping } from './components/index.jsx';
-import { me, } from './store';
+import {
+  Main,
+  Login,
+  Signup,
+  UserHome,
+  Shopping,
+  ProductList,
+} from './components';
+import { me } from './store';
 
 /**
  * COMPONENT
@@ -16,7 +23,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <Router history={history}>
@@ -25,6 +32,7 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/products" component={ProductList} />
             <Route path="/shoppingcart" component={Shopping} />
             {
               isLoggedIn &&
