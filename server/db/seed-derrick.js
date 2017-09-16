@@ -28,7 +28,7 @@ const makeCategory = () => ({
   name: dummy.commerce.productMaterial(),
 });
 
-const categories = makeNThings(20, makeCategory);
+const categories = makeNThings(10, makeCategory);
 
 
 const makeProduct = () => ({
@@ -40,7 +40,7 @@ const makeProduct = () => ({
   categories: [categories[floor(random() * categories.length)]],
 });
 
-const products = makeNThings(100, makeProduct);
+const products = makeNThings(10, makeProduct);
 
 // const createReview = () => Review.create({
 //   text: dummy.lorem.paragraphs(),
@@ -67,7 +67,7 @@ const makeUser = () => {
   };
 };
 
-const users = makeNThings(50, makeUser, ['email']);
+const users = makeNThings(10, makeUser, ['email']);
 
 const makeOrder = () => ({
   status: [
@@ -155,7 +155,7 @@ db.sync({ force: true })
 
   // CREATE ORDERS
   .then(([allProducts, allUsers]) => {
-    const promiseForAllOrders = createNOrders(500);
+    const promiseForAllOrders = createNOrders(10);
     return Promise.all([allProducts, allUsers, promiseForAllOrders]);
   })
 
