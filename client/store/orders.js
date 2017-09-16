@@ -62,8 +62,8 @@ export default function (state = defaultOrders, action) {
       return action.orders;
     case GET_USER_ORDERS:
       return action.userOrders;
-    case REMOVE_ORDERS: //TODO
-      return defaultOrders;
+    case CREATE_ORDER:
+      return [state.orders, action.orders];
     default:
       return state;
   }

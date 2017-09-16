@@ -17,9 +17,9 @@ describe('Product routes', () => {
       aPreexistingProduct = {
         name: 'whatsit',
         description: 'nifty as hell',
-        imgUrl: 'http://www.imagehoster.com/321',
+        img_url: 'http://www.imagehoster.com/321',
         price: 10,
-        remainingInventory: 5,
+        remaining_inventory: 5,
       };
       return Product.create(aPreexistingProduct);
     });
@@ -29,9 +29,9 @@ describe('Product routes', () => {
     const newProduct = {
       name: 'widget',
       description: 'super useful',
-      imgUrl: 'http://www.imagehoster.com/123',
+      img_url: 'http://www.imagehoster.com/123',
       price: 10,
-      remainingInventory: 5,
+      remaining_inventory: 5,
     };
 
     it('creates a new product instance with the req.body data', () => testRequest

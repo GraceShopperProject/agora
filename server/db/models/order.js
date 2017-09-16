@@ -21,10 +21,10 @@ const Order = db.define('order', {
     },
     set(val) {
       const amount = typeof val === 'string' ? Number(val) : val;
-      this.setDataValue('price', amount * 100);
+      this.setDataValue('total_price', amount * 100);
     },
     get() {
-      return this.getDataValue('price') / 100;
+      return this.getDataValue('total_price') / 100;
     },
   },
 });
