@@ -26,6 +26,7 @@ export default class ShoppingCart extends React.Component {
         this.handleRemove = this.handleRemove.bind(this);
         this.handleCheckOut = this.handleCheckOut.bind(this);
         this.handleIncrease = this.handleIncrease.bind(this);
+        this.handleCleanCart = this.handleCleanCart.bind(this);
     }
 
     componentDidMount() {
@@ -103,6 +104,17 @@ export default class ShoppingCart extends React.Component {
                 price: 0,
                 quantity: 1,
             });
+        localStorage.removeItem('Cart');
+    }
+    handleCleanCart(){
+        this.setState ({
+            items: [],
+            id: 0,
+            name: '',
+            description: '',
+            price: 0,
+            quantity: 1,
+        });
         localStorage.removeItem('Cart');
     }
 

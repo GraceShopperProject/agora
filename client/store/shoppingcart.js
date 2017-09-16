@@ -13,8 +13,8 @@ const CHECKOUT = 'CHECKOUT';
  * INITIAL STATE
  */
 const defaultCart = {
-        items: [],
-    };
+    items: [],
+};
 
 /**
  * ACTION CREATORS
@@ -34,7 +34,7 @@ export const getshoppingcart = () =>
         // if (localStorage.getItem("Cart")!==null)
         //     { const items = JSON.parse(localStorage.getItem("Cart"));}
         // else
-            const items = [];
+        const items = [];
         dispatch(getCart(items));
     }
 
