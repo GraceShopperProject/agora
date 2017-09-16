@@ -6,5 +6,6 @@
 export { default as Main, } from './main';
 export { default as UserHome, } from './user-home';
 export { Login, Signup, } from './auth-form';
-export { Shopping, } from './Shopping';
+
+export ShoppingCart from './ShoppingCart';
 export { default as OrdersList, } from './orders-list'
