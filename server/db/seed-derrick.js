@@ -90,7 +90,6 @@ const createNOrders = (n) => {
   return Promise.all(ordersCreated);
 };
 
-
 const associateEveryOrderToAUser = (allOrders, allUsers) =>
   Promise.all(allOrders
     .map((order) => {
