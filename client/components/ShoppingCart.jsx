@@ -91,13 +91,8 @@ export default class ShoppingCart extends React.Component {
     handleCheckOut(){
         // evt.preventDefault();
         //update product inventory
-        //update order table
+        //update order table------
         console.log(this.state.items);
-        // const orderInput = {id: this.state.id, price: this.state.Price, quantity: this.state.Quantity}
-        // axios.post(`/api/order`, orderInput)
-        //     .then(res => res.data)
-        //     .then(data => {
-        //         })
         axios.post('/api/products/orderUpdate/',this.state.items )
             .then(res => res.data)
             .then(data => console.log(data));
