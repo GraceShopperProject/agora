@@ -34,7 +34,12 @@ export const getshoppingcart = () =>
         // if (localStorage.getItem("Cart")!==null)
         //     { const items = JSON.parse(localStorage.getItem("Cart"));}
         // else
-        const items = [];
+        console.log('redux get localstorage',localStorage.getItem("Cart"));
+        let items = [];
+        if (localStorage.getItem("Cart") !== null)
+            items = JSON.parse(localStorage.getItem("Cart"));
+
+
         dispatch(getCart(items));
     }
 
@@ -49,14 +54,14 @@ export const addshoppingcart = (item) =>
 export const removeshoppingcart = (itemId) =>
     dispatch =>
     {
-        dispatch(removeItem(itemId));
+        // dispatch(removeItem(itemId));
 
     }
 export const checkoutshoppingcart = () =>
     dispatch =>
     {
-        dispatch(checkout());
-        localStorage.removeItem("Cart");
+        // dispatch(checkout());
+        // localStorage.removeItem("Cart");
     }
 /**
  * REDUCER

@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import {Link} from 'react-router-dom';
 // import { connect, } from 'react-redux';
-// import { getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshoppingcart, } from '../store';
+import { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshoppingcart, } from '../store';
 //
 /**
  * COMPONENT
@@ -30,12 +30,14 @@ export default class ShoppingCart extends React.Component {
     }
 
     componentDidMount() {
-        console.log('MOUNTING COMPONENT');
+        let olditems = [];
+        if (localStorage.getItem("Cart") !== null)
+            olditems = JSON.parse(localStorage.getItem("Cart"));
         this.setState({
-            items: JSON.parse(localStorage.getItem("Cart"))
+            items: olditems
+        });
 
-        })
-        axios.get('/api/products')
+        axios.get('/api/products/')
             .then(res => res.data)
             .then(data => this.setState({products:data}));
         axios.get('/api/category')
@@ -104,11 +106,13 @@ export default class ShoppingCart extends React.Component {
 				// ROBIN HISTORY this.params.
 				
 
-        const orderInput = {id: this.state.id, price: this.state.price, quantity: this.state.quantity}
-        axios.post(`/api/order`, orderInput)
-            .then(res => res.data)
-            .then(data => {
-                })
+        // const orderInput = {id: this.state.id, price: this.state.price, quantity: this.state.quantity}
+        //axios.post(`/api/order`, orderInput)
+				
+        // console.log(this.state.items);
+        // axios.post('/api/products/orderUpdate/',this.state.items )
+        //     .then(res => res.data)
+        //     .then(data => console.log(data));
 
         this.setState ({
                 items: [],
@@ -181,7 +185,7 @@ export default class ShoppingCart extends React.Component {
 
                     </tbody>
                 </table>
-                <form onSubmit={(evt)=> this.handleAddItem(evt)}>
+                <form onSubmit={this.handleAddItem}>
                     <div className="form-group">
                         <label className="col-sm-1 col-lg-1 col-md-1 control-label">Add Product</label>
                         <div className="col-sm-12 col-lg-12 col-md-12">
@@ -205,67 +209,3 @@ export default class ShoppingCart extends React.Component {
         );
     }
 }
-
-
-
-
-//
-// const Shopping = (props) => {
-//     // props.getShoppingCart();
-//
-//     // let cart = cartTemp;
-//     const products = productTemp;
-//     // localStorage.setItem("Cart",JSON.stringify(cart))
-//     console.log('show localstorage',JSON.parse(localStorage.getItem("Cart")), 'items',props.items);
-//     let cart = props.items;
-//
-// // };
-//
-//
-// /**
-//  * CONTAINER
-//  */
-// const mapState = state => ({
-//     name: state.user.name,
-//     items: state.shoppingcart.items
-// });
-//
-// const mapDispatch = dispatch => ({
-//     handleRemove(itemId,items)  {
-//         dispatch(removeshoppingcart(itemId));
-//         localStorage.removeItem("Cart");
-//         console.log('localStorage remove button click 1',localStorage.getItem("Cart"));
-//         localStorage.setItem("Cart",JSON.stringify(items));
-//         console.log('localStorage remove button click 2',localStorage.getItem("Cart"));
-//     },
-//     handleAddItem(evt, items) {
-//         const products = productTemp;
-//         evt.preventDefault();
-//         const itemId = evt.target.product.value;
-//         const item = products[itemId-1];
-//         item.Quantity = 1;
-//         dispatch(addshoppingcart(item));
-//         localStorage.removeItem("Cart");
-//         localStorage.setItem("Cart",JSON.stringify(items));
-//     },
-//     handleCheckOut(){
-//         //update product inventory
-//         //update order table
-//         cart = [];
-//         localStorage.removeItem('Cart');
-//     },
-//     handleCheckOut(){
-//         cart = [];
-//         localStorage.removeItem('Cart');
-//     },
-//     handleIncrease(itemid) {
-//         cart[itemid].Quantity++;
-//         localStorage.setItem("Cart",JSON.stringify(cart));
-//     },
-//     handleDecrease(itemid) {
-//         cart[itemid].Quantity--;
-//         localStorage.setItem("Cart",JSON.stringify(cart));
-//     },
-// });
-//
-// export default connect(mapState, mapDispatch)(Shopping);
