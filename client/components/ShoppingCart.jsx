@@ -17,7 +17,7 @@ export default class ShoppingCart extends React.Component {
             category: [],
             id: 0,
             name: '',
-            ddescription: '',
+            description: '',
             price: 0,
             quantity: 1,
         };
@@ -30,12 +30,12 @@ export default class ShoppingCart extends React.Component {
     }
 
     componentDidMount() {
-
+        console.log('MOUNTING COMPONENT');
         this.setState({
             items: JSON.parse(localStorage.getItem("Cart"))
 
         })
-        axios.get('/api/products/')
+        axios.get('/api/products')
             .then(res => res.data)
             .then(data => this.setState({products:data}));
         axios.get('/api/category')
@@ -55,13 +55,21 @@ export default class ShoppingCart extends React.Component {
     }
 
     handleAddItem(evt) {
-        evt.preventDefault();
-        const itemId = evt.target.product.value;
-        const item = this.state.products[itemId-1];
-        item.quantity = 1;
-        this.setState({items : this.state.items.concat(item)});
-        localStorage.removeItem("Cart");
-        localStorage.setItem("Cart",JSON.stringify(this.state.items));
+			evt.preventDefault();
+
+			if ( localStorage.getItem("Cart") !== null ) {
+					localStorage.removeItem("Cart");
+			} 
+
+			const itemId = evt.target.product.value;
+			const item = this.state.products[itemId-1];
+			item.quantity = 1;
+			console.log("ROBIN: ", this.state.items);
+			this.state.items === null
+			? this.setState({items: [item]})
+			: this.setState({items : this.state.items.concat(item)});
+
+			localStorage.setItem("Cart",JSON.stringify(this.state.items));
     }
 
     handleRemove(itemId)  {
@@ -86,11 +94,17 @@ export default class ShoppingCart extends React.Component {
     }
 
     handleCheckOut(){
-        evt.preventDefault();
+        // Passes the cart information to the next component
+				evt.preventDefault();
         //update product inventory
         //update order table
+        
+        //ORDER 
+        // needs {}
+				// ROBIN HISTORY this.params.
+				
 
-        const orderInput = {id: this.state.id, price: this.state.Price, quantity: this.state.Quantity}
+        const orderInput = {id: this.state.id, price: this.state.price, quantity: this.state.quantity}
         axios.post(`/api/order`, orderInput)
             .then(res => res.data)
             .then(data => {
@@ -119,9 +133,9 @@ export default class ShoppingCart extends React.Component {
     }
 
     render() {
-        console.log('current local staorage',JSON.parse(localStorage.getItem("Cart")));
+        console.log('current local storage', JSON.parse(localStorage.getItem("Cart")));
         const cart = this.state.items;
-        console.log('cart length',cart);
+        console.log('cart length', cart);
         const products = this.state.products;
         return (
             <div className="container">
