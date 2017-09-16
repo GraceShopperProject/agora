@@ -42,16 +42,10 @@ class OrdersList extends Component {
                                 <th>{order.status}</th>
                                 <th>{order.total_price}</th>
                                 <th>{order.user.name}</th>
-                              </tr> )
-                              order.product.map( product =>     {
-                                  return (
-                                    <tr key={product.id}><th>Hello</th></tr>
-                                  )
-                                })
-                              }
-                            )
-                          })
-                        }
+                              </tr> 
+                            )}
+                          )
+                      }
                     </tbody>
                 </table>
             </div>
@@ -61,9 +55,8 @@ class OrdersList extends Component {
 // will need to check which user is logged in
 const mapState = state => {
   return ({
-    // userId? 
     user: state.user,
-    orders: state.orders // state.orders.find(order => order.userId === currentUserId) // unless is an Admin
+    orders: state.orders
 })};
 
 const mapDispatch = (dispatch, ownProps) => ({
@@ -71,9 +64,6 @@ const mapDispatch = (dispatch, ownProps) => ({
   fetchOrders() {
     dispatch(fetchOrders());
   }
-  // cancelOrderEvent(event) {
-  //   dispatch()
-  // }
 
 });
 
