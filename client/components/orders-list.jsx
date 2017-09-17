@@ -9,17 +9,9 @@ import { fetchUserOrders, } from '../store';
 // Admin see list of all orders? 
 // Only one user per order?
 
-// class OrdersList extends Component {
-    const OrdersList = (props) => {
 
-    // componentDidMount() {
-    //     props.userOrders(props.user);
-    // }
-    //
-    // render() {
-        console.log('this user is:', props.user.id);
-        console.log('orders are:', props.orders);
-        // props.userOrders(props.user.id);
+const OrdersList = (props) => {
+
         const userOrders = props.orders.filter(order =>  order.userId === props.user.id);
         console.log('user orders are:', props.orders);
         return (
