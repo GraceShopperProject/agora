@@ -2,6 +2,8 @@ import React from 'react';
 import { connect, } from 'react-redux';
 import { me, buildOrder } from '../store';
 
+// TODO Form Authentication
+
 /**
  * COMPONENT
  */
@@ -117,9 +119,8 @@ const mapDispatch = dispatch => ({
   handleSubmit(evt) {
     evt.preventDefault();
     console.log("You've submitted me!!");
-
     const cart_product_list = JSON.parse(localStorage.getItem("Cart"));
-    
+
     // buildOrder(user_request, product_list);
     dispatch(buildOrder(null, cart_product_list));
 
@@ -131,15 +132,6 @@ const mapDispatch = dispatch => ({
   getCurUser () {
     dispatch (me());
   }
-    
-    // const target = evt.target;
-    // const formName = evt.target.name;
-
-    // const email = evt.target.email.value;
-    // const password = evt.target.password.value;
-    // let name = '';
-    // formName === 'signup' ? name = evt.target.nameSignup.value : '';
-    // dispatch(auth(email, password, name, formName));
 });
 
 export default connect(mapState, mapDispatch)(CheckoutForm);
@@ -147,7 +139,7 @@ export default connect(mapState, mapDispatch)(CheckoutForm);
 /**
  * PROP TYPES
  */
-// AuthForm.propTypes = {
+//   .propTypes = {
 //   name: PropTypes.string.isRequired,
 //   displayName: PropTypes.string.isRequired,
 //   handleSubmit: PropTypes.func.isRequired,

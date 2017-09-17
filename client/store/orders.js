@@ -71,7 +71,6 @@ export const buildOrder = ( user_request, product_list, total_price, ) =>
         localStorage.removeItem('Cart');
         //generate unique string of chars to represent the order number for unauthenticated users? and just an order
 
-
       })
         // axios.put(`/api/orders/${newOrder.id}`) 
         // dispatch(createOrder(res.data));
