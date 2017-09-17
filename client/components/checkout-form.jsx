@@ -118,6 +118,9 @@ const mapDispatch = dispatch => ({
     evt.preventDefault();
     console.log("You've submitted me!!");
 
+    // *** 
+    //send information from the window.localStorage to orders component where create the order + product affiliations
+
   },
 
   getCurUser () {
