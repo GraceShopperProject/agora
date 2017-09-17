@@ -18,12 +18,14 @@ const Main = (props) => {
       <h1>Agora</h1>
       <nav>
           <div className="container">
+
         {
           isLoggedIn
             ? <div id="nav-items" className="collapse navbar-collapse navbar-right">
                   <ul className="nav navbar-nav">
               {/* The navbar will show these links after you log in */}
                       <li><Link to="/home">Home</Link></li>
+                      <li><Link to="/orders">Order</Link></li>
                       <li><a href="#" onClick={handleClick}>Logout</a></li>
                   </ul>
             </div>
