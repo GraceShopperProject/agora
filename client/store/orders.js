@@ -44,22 +44,38 @@ export const fetchUserOrders = (userId) => {
 }
 
 // TODO How to also build Product associations passed in?
-export const buildOrder = (user_request, items_list) =>
+export const buildOrder = ( user_request, product_list, total_price, ) =>
   dispatch =>
     axios.post(`/api/orders`, { user_request, })
-      .then((res => res.data)
-      .then( newOrder ) => { // TODO ** 
+      .then(res => res.data)
+      .then( newOrder => { // TODO ** 
         const orderId = newOrder.id;
         const totalPrice = 0;
-        items_list.map( item => {
+        product_list.map( product => {
+          axios.post('/api/orderproducts', { 
+            orderId: orderId, 
+            productId: product.id,
+            quantity: product.quantity, 
+            product_price: product.price, 
+            })
+          .then(res => res.data)
+          .then(addedProductToOrder => {
+            console.log("added Product to Order ", addedProductToOrder);
+          })
+          //newOrder.addProduct(product, {through: })});
           // create entry in orders-product
-          // { quantity: item.quantity, product_price: item.price, productId: item.id, orderId: orderId }
-          // totalPrice = totalPrice + (item.quantity * item.price);
-        });
-        axios.put(`/api/orders/${newOrder.id}`) 
-        dispatch(createOrder(res.data));
-        history.push('/confirmation'); // TODO where to go after order created
+          // { quantity: product.quantity, product_price: product.price, productId: product.id, orderId: orderId }
+          // totalPrice = totalPrice + (product.quantity * product.price);
+        })
+      }).then( () => {
+        localStorage.removeItem('Cart');
+        //generate unique string of chars to represent the order number for unauthenticated users? and just an order
+
+
       })
+        // axios.put(`/api/orders/${newOrder.id}`) 
+        // dispatch(createOrder(res.data));
+        // history.push('/confirmation'); // TODO where to go after order created
       .catch(err => console.log(err));
 
 /**

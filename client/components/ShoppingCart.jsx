@@ -8,6 +8,7 @@ import { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshopp
  * COMPONENT
  */
 
+ //TODO change variable names "items" to products in cart
 export default class ShoppingCart extends React.Component {
     constructor() {
         super();
@@ -19,7 +20,8 @@ export default class ShoppingCart extends React.Component {
             name: '',
             description: '',
             price: 0,
-            quantity: 1,
+						quantity: 1,
+						total_price: 0,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleAddItem = this.handleAddItem.bind(this);

@@ -118,6 +118,11 @@ const mapDispatch = dispatch => ({
     evt.preventDefault();
     console.log("You've submitted me!!");
 
+    const cart_product_list = JSON.parse(localStorage.getItem("Cart"));
+    
+    // buildOrder(user_request, product_list);
+    dispatch(buildOrder(null, cart_product_list));
+
     // *** 
     //send information from the window.localStorage to orders component where create the order + product affiliations
 
