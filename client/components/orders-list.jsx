@@ -59,8 +59,8 @@ const mapState = state => {
 
 const mapDispatch = (dispatch, ownProps) => ({
 
-  fetchOrders() {
-    dispatch(fetchOrders());
+  fetchOrders () {
+    dispatch(fetchOrders ());
   }
 
 });

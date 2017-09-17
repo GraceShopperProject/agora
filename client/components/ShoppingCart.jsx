@@ -44,7 +44,8 @@ export default class ShoppingCart extends React.Component {
             .then(res => res.data)
             .then(data => {
                 this.setState({category:data})
-            });
+						});
+						
         console.log('AFTER update',this.state);
     }
 
@@ -66,7 +67,7 @@ export default class ShoppingCart extends React.Component {
 			const itemId = evt.target.product.value;
 			const item = this.state.products[itemId-1];
 			item.quantity = 1;
-			console.log("ROBIN: ", this.state.items);
+
 			this.state.items === null
 			? this.setState({items: [item]})
 			: this.setState({items : this.state.items.concat(item)});
@@ -75,7 +76,7 @@ export default class ShoppingCart extends React.Component {
     }
 
     handleRemove(itemId)  {
-        this.setState({items : this.state.items.filter(item=> item.id !== itemId)});
+        this.setState({items : this.state.items.filter(item => item.id !== itemId)});
         localStorage.removeItem("Cart");
         localStorage.setItem("Cart",JSON.stringify(this.state.items));
     }
@@ -95,18 +96,24 @@ export default class ShoppingCart extends React.Component {
         localStorage.setItem("Cart",JSON.stringify(this.state.items));
     }
 
-    handleCheckOut(){
-        // Passes the cart information to the next component
-				evt.preventDefault();
-        //update product inventory
-        //update order table
-        
-        //ORDER 
-        // needs {}
-				// ROBIN HISTORY this.params.
-				
+    handleCheckOut(evt){
+				//STEPS
+				// Next page collect user information 
+				// Submits
+				//		Sends order to database => 
+				//			- Creates Order puts in totalPrice, user_requestText in order
+				//			- Creates Order-Product associations productId, orderId, price, quantity
+				//			
 
-        // const orderInput = {id: this.state.id, price: this.state.price, quantity: this.state.quantity}
+				evt.preventDefault();
+				if( this.state.items.length > 0 && localStorage.getItem("Cart") !== null) {
+                    console.log(history);
+					this.props.history.push('/checkoutform');
+				}
+
+				// const orderInput = {id: this.state.id, total_price: this.state.price, quantity: this.state.quantity };
+
+				
         //axios.post(`/api/order`, orderInput)
 				
         // console.log(this.state.items);
@@ -122,9 +129,10 @@ export default class ShoppingCart extends React.Component {
                 price: 0,
                 quantity: 1,
             });
-        localStorage.removeItem('Cart');
+        //localStorage.removeItem('Cart'); IN NEXT COMPONENT
     }
-    handleCleanCart(){
+    handleCleanCart(evt){
+        evt.preventDefault();
         this.setState ({
             items: [],
             id: 0,
@@ -201,8 +209,8 @@ export default class ShoppingCart extends React.Component {
                         <button className="btn btn-default col-sm-1 col-lg-1 col-md-1" type="submit">+</button>
                     </div>
                     <div className="form-group">
-                        <input onClick={() => this.handleCheckOut()} type='button' value='Check Out'/>
-                        <input onClick={() => this.handleCleanCart()} type='button' value='Clean Cart'/>
+                        <input onClick={(evt) => this.handleCheckOut(evt)} type='button' value='Check Out'/>
+                        <input onClick={(evt) => this.handleCleanCart(evt)} type='button' value='Clean Cart'/>
                     </div>
                 </form>
             </div>

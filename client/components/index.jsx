@@ -10,3 +10,4 @@ export { Login, Signup, } from './auth-form';
 
 export ShoppingCart from './ShoppingCart';
 export { default as OrdersList, } from './orders-list';
+export { default as CheckoutForm, } from './checkout-form';
