@@ -3,26 +3,42 @@
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
-export {default as Main, } from './main';
-export {NavFooterWrapper} from './Layout';
-export {TopNavBar, Footer} from './Navigation';
-export {default as UserHome, } from './user-home';
-export {Login, Signup, } from './auth-form';
 
 export {default as Home} from './Home';
-export ShoppingCart from './ShoppingCart';
-export {default as CheckoutForm, } from './checkout-form';
+export ErrorPage from './error';
+export {
+  NavFooterWrapper,
+  Sidebar,
+} from './Layout';
+export {
+  TopNavBar,
+  Footer
+} from './Navigation';
 export {default as Category} from './category';
+export {Login, Signup, } from './Authorize/auth-form';
+export {default as UserHome, } from './user-home';
 
-export {default as ProductDetailpage} from './productdetailpage';
+export {
+  ShoppingCart
+} from './ShoppingCart';
+
+export {
+  CheckoutForm,
+  OrdersList,
+  Confirmation,
+} from './Order';
+
+export {
+  ProductList,
+  ProductDetail,
+} from './Product';
+
 
 export {default as OrdersList, } from './orders-list';
 export Productpage from './productpage';
 export ErrorPage from './error';
 export Confirmation from './confirmation';
-
 export MaintainCatProD from './MaintainCatProD';
 export MaintainUser from './MaintainUser';
-
 export Sidebar from './sidebar';
 
