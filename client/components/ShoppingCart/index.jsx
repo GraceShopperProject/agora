@@ -1,1 +1,1 @@
-export { default as ShoppingCart } from './index.jsx';
+export { default as ShoppingCart } from './ShoppingCart';
