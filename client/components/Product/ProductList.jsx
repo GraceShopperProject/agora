@@ -1,27 +1,25 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import store, {fetchCategoryProducts} from '../store';
-import Sidebar from './sidebar';
+import store, {fetchCategoryProducts} from '../../store';
+//import Sidebar from '../Layout'; 				<Sidebar />
 import { connect } from 'react-redux';
 
-class ProductsList extends React.Component {
+class ProductList extends React.Component {
 
 	render() {
-		let productsToRender = this.state.products;
-
+		let productsToRender = this.props.products;
 		if (this.props.match.params.categoryId) { 
-			const curCategory = this.state.categories.find(category => category.id === this.props.match.params.categoryId);
 		 	productsToRender = productsToRender.filter(product => {
 				return product.categories.find(productCategory => {
-					return productCategory.id === curCategory.id;
+					return productCategory.id === +this.props.match.params.categoryId;
 				})
 			 });
 		}
 
 		return (
 			<div>
-				<Sidebar />
+
 					<div id="page-content-wrapper">
 						<div className="container-fluid">
 							<div className="container">
@@ -55,4 +53,4 @@ const mapState = state => {
 	}
 }
 
-export default connect(mapState, mapDispatch)(ProductsList);
+export default connect(mapState)(ProductList);
