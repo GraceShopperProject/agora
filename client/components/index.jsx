@@ -15,3 +15,4 @@ export { default as OrdersList, } from './orders-list';
 export Productpage from './productpage';
 export ErrorPage from './error';
 export Confirmation from './confirmation';
+export Sidebar from './sidebar';
