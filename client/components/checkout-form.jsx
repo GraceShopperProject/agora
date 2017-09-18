@@ -13,20 +13,25 @@ class CheckoutForm extends React.Component {
     super(props);
 
     this.state = {
-      name: '', 
-      street_address_1: '', 
-      street_address_2: '', 
-      city: '', 
-      state: '', 
-      zip: '',
-      email: '',
+      ...this.props
     };
 
     this.fillInDummyData = this.fillInDummyData.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   
   componentDidMount () {
     this.props.getCurUser();
+  }
+
+  handleChange (evt) {
+    evt.preventDefault();
+    console.log("CHANGING");
+    const name = evt.target.name
+    const value = evt.target.value;
+    this.setState({
+      [name]: value
+    });
   }
 
   fillInDummyData(evt) {
@@ -44,7 +49,6 @@ class CheckoutForm extends React.Component {
   }
 
   render () {
-    const { name, street_address_1, street_address_2, city, state, zip, } = this.state;
     const { handleSubmit, error, } = this.props;
     return (
       <div>
@@ -52,27 +56,27 @@ class CheckoutForm extends React.Component {
         <form onSubmit={handleSubmit} name={name}>
           <div>
             <label htmlFor="name"><small>Name</small></label>
-            <input name="name" type="text" />
+            <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
           </div>
           <div>
             <label htmlFor="street_address_1"><small>Street Address 1:</small></label>
-            <input name="street_address_1" type="text" value={street_address_1} />
+            <input name="street_address_1" type="text" onChange={this.handleChange} value={this.state.street_address_1} />
           </div>
           <div>
             <label htmlFor="street_address_2"><small>Street Address 2:</small></label>
-            <input name="street_address_2" type="text" value={street_address_2} />
+            <input name="street_address_2" type="text" onChange={this.handleChange} value={this.state.street_address_2} />
           </div>
           <div>
             <label htmlFor="city"><small>City:</small></label>
-            <input name="city" type="text" value={city} />
+            <input name="city" type="text" onChange={this.handleChange} value={this.state.city} />
           </div>
           <div>
             <label htmlFor="state"><small>State:</small></label>
-            <input name="state" type="text" value={state} />
+            <input name="state" type="text" onChange={this.handleChange} value={this.state.state} />
           </div>
           <div>
             <label htmlFor="zip"><small>Zip Code:</small></label>
-            <input name="zip" type="text" value={zip} />
+            <input name="zip" type="text" onChange={this.handleChange} value={this.state.zip} />
           </div>
           <div>
             <button type="submit">Submit</button>
@@ -90,32 +94,33 @@ class CheckoutForm extends React.Component {
  */
 
 const mapState = state => {
-  // //console.log(state);
-  // const curUser = state.user
-  // ? state.user
-  // : null;
+  //console.log(state);
+  const curUser = state.user
+  ? state.user
+  : null;
+
+  // return {
+  //   name: '', 
+  //   street_address_1: '', 
+  //   street_address_2: '', 
+  //   city: '', 
+  //   state: '', 
+  //   zip: '',
+  //   email: '',
+  // }
 
   return {
-    name: '', 
-    street_address_1: '', 
-    street_address_2: '', 
-    city: '', 
-    state: '', 
-    zip: '',
-    email: '',
+    name: curUser && curUser.name ? curUser.name : '', 
+    street_address_1: curUser.street_address_1 || '', 
+    street_address_2: curUser.street_address_2 || '', 
+    city: curUser.city || '', 
+    state: curUser.state || '', 
+    zip: curUser.zip || '',
+    email: curUser.email || '',
   }
-  // return {
-  //   name: curUser && curUser.name ? curUser.name : '', 
-  //   street_address_1: curUser.street_address_1 || '', 
-  //   street_address_2: curUser.street_address_2 || '', 
-  //   city: curUser.city || '', 
-  //   state: curUser.state || '', 
-  //   zip: curUser.zip || '',
-  //   email: curUser.email || '',
-  // }
 }
 
-const mapDispatch = dispatch => ({
+const mapDispatch = dispatch  => ({
   handleSubmit(evt) {
     evt.preventDefault();
     console.log("You've submitted me!!");

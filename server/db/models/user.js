@@ -17,10 +17,7 @@ const User = db.define('user', {
   google_id: {
     type: Sequelize.STRING,
   },
-  first_name: {
-    type: Sequelize.STRING,
-  },
-  last_name: {
+  name: {
     type: Sequelize.STRING,
   },
   phone: {
@@ -50,9 +47,6 @@ const User = db.define('user', {
   getterMethods: {
     address() {
       return `${this.street_address_1}\n${this.street_address_2}\n${this.city}, ${this.state} ${this.zip}`;
-    },
-    name() {
-      return `${this.first_name} ${this.last_name}`;
     },
   },
 }

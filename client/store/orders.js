@@ -71,14 +71,14 @@ export const buildOrder = ( user_request, product_list, total_price, ) =>
         localStorage.removeItem('Cart');
         //generate unique string of chars to represent the order number for unauthenticated users? and just an order
         console.log("the local storage is now ", localStorage.getItem('Cart'));
-        this.props.history.push('/confirmation');
+        history.push('/confirmation');
       })
         // axios.put(`/api/orders/${newOrder.id}`) 
         // dispatch(createOrder(res.data));
         // history.push('/confirmation'); // TODO where to go after order created
       .catch(err => {
         console.log(err);
-        this.props.history.push('/error');
+        history.push('/error');
       });
 
 /**
