@@ -5,7 +5,7 @@ import store, {fetchCategoryProducts} from '../store';
 import Sidebar from './sidebar';
 import { connect } from 'react-redux';
 
-class ProductsPage extends React.Component {
+class ProductsList extends React.Component {
 
 	componentDidMount() {
 		if (this.props.match.params.categoryId)	this.setState({curCategoryId: +this.props.match.params.categoryId});
@@ -13,28 +13,25 @@ class ProductsPage extends React.Component {
 
 	render() {
 		const productsToRender = this.state.products;
-		if (this.state.curCategoryId) {
+
+		if (this.state.curCategoryId) { 
 			const curCategory = this.state.categories.find(category => category.id === this.state.curCategoryId);
-			productsToRender = productsToRender.filter(product => product.getCategory().id === curCategory); // *** issue
+			productsToRender = productsToRender.filter(product => {
+				product.category.find(productCategory => {
+					productCategory.id === curCategory
+				})
+			 !== -1});
 		}
 
-		const category = this.state.categories.filter(category => +category.id === +this.props.match.params.categoryId)[0];
 		return (
 			<div>
 				<Sidebar />
 					<div id="page-content-wrapper">
 						<div className="container-fluid">
 							<div className="container">
-								<div>
-									<h3>{category && category.name} Product Page</h3>
-									<div className="col-lg-6 col-md-6 col-sm-12">
-										{category && (<img src={`/img/${category.id}.png`} name={category.name} height="200" width="200"/>)}
-									</div>
-									<br></br>
-								</div>
 								<div className="row">
 									{
-										(products) && products.map(product => (
+										(productsToRender) && productsToRender.map(product => (
 											<div className="col-lg-6 col-md-6 col-sm-12" key={product.id}>
 												<li>
 													<Link to={`/products/${product.id}`}>
@@ -51,7 +48,7 @@ class ProductsPage extends React.Component {
 						</div>
 					</div>
 				</div>
-		)
+			)
 	}
 }
 
@@ -63,4 +60,4 @@ const mapState = state => {
 	}
 }
 
-export default connect(mapState, mapDispatch)(ProductsPage);
+export default connect(mapState, mapDispatch)(ProductsList);

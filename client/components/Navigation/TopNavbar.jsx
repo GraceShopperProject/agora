@@ -1,17 +1,17 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {withRouter, Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 
 import {
   LoggedInNavButtons,
   LoggedOutNavButtons,
 } from '../Navigation';
 
-function TopNavbar ({children, isLoggedIn}) {
+function TopNavbar({ children, isLoggedIn }) {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark"
-      style={{backgroundColor: '#874C62'}}
+      style={{ backgroundColor: '#874C62' }}
     >
       <div className="container">
         <Link

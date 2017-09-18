@@ -30,8 +30,8 @@ const Category = (props) => {
                   width="200"
                 />
               </Link>
-            </div>  
-          
+            </div>
+
           )
           )
         }

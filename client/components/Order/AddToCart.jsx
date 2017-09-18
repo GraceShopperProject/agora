@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {addshoppingcart} from '../store';
+import {addshoppingcart} from '../../store';
 
 function AddToCart (props) {
 
