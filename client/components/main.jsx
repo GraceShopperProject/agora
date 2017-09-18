@@ -31,7 +31,7 @@ const Main = (props) => {
                   {/* The navbar will show these links after you log in */}
                   <li><Link to="/home">Home</Link></li>
                   <li><Link to="/orders">Order</Link></li>
-                  <li><a href="#" onClick={handleClick}>Logout</a></li>
+                  <li><NavLink href="#" onClick={handleClick}>Logout</NavLink></li>
                 </ul>
               </div>
               : <div id="nav-items" className="collapse navbar-collapse navbar-right">

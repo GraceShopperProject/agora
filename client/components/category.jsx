@@ -22,7 +22,13 @@ const Category = (props) => {
             <div className="col-sm-3 col-lg-3 col-md-3" key={type.id}>
               <Link to={`/category/${type.id}`}>
                 <h2>{type.name}</h2>
-                <img src={`/img/${type.id}.png`} name={type.name} height="200" width="200" />
+                <img
+                  alt={type.name}
+                  src={`/img/${type.id}.png`}
+                  name={type.name}
+                  height="200"
+                  width="200"
+                />
               </Link>
             </div>
           )

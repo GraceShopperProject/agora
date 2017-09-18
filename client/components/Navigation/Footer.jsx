@@ -1,5 +1,21 @@
 import React from 'react';
 
 export default function Footer() {
-  return <h3>I'm a footer!</h3>;
+  return (
+    <div
+      style={{
+        backgroundColor: '#874C62',
+        bottom: 0,
+        color: '#fff',
+        left: 0,
+        padding: '20px 0',
+        position: 'absolute',
+        width: '100vw',
+      }}
+    >
+      <div className="container">
+        <h3>I'm a footer!</h3>
+      </div>
+    </div>
+  );
 }

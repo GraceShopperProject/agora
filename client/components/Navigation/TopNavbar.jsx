@@ -1,18 +1,25 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter, Link} from 'react-router-dom';
 
-export default function TopNavbar (props) {
+import {
+  LoggedInNavButtons,
+  LoggedOutNavButtons,
+} from '../Navigation';
+
+function TopNavbar ({children, isLoggedIn}) {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark"
       style={{backgroundColor: '#874C62'}}
     >
       <div className="container">
-        <a
+        <Link
           className="navbar-brand"
-          href="/"
+          to="/"
         >
           Agora
-        </a>
+        </Link>
         <form className="form-inline">
           <input
             className="form-control mr-sm-2"
@@ -24,15 +31,18 @@ export default function TopNavbar (props) {
         </form>
 
         <div className="navbar-nav">
-          <a className="nav-item nav-link active" href="#">
-            <button className="btn btn-outline-light">Login</button>
-          </a>
-          <a className="nav-item nav-link" href="#">
-            <button className="btn btn-outline-light">Sign Up</button>
-          </a>
-          <a className="nav-item nav-link" href="#">
-            <button className="btn btn-outline-light">Cart</button>
-          </a>
+
+          {isLoggedIn
+            ? <LoggedInNavButtons />
+            : <LoggedOutNavButtons />
+          }
+
+
+          <Link to="/shoppingcart" className="nav-item nav-link">
+            <button className="btn btn-outline-light">
+              Cart
+            </button>
+          </Link>
 
         </div>
 
@@ -40,3 +50,15 @@ export default function TopNavbar (props) {
     </nav>
   );
 }
+
+/**
+ * CONTAINER
+ */
+const mapState = state => ({
+  isLoggedIn: !!state.user.id,
+});
+
+// The `withRouter` wrapper makes sure that updates are not blocked
+// when the url changes
+export default withRouter(connect(mapState, null)(TopNavbar));
+

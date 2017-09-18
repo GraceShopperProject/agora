@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Router} from 'react-router';
-import {Route, Switch} from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Router } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
 import {
   Main,
   NavFooterWrapper,
+  Home,
   Login,
   Signup,
   UserHome,
@@ -15,7 +16,7 @@ import {
   OrdersList,
   Category,
   Productpage,
-  CheckoutForm, ErrorPage, Confirmation
+  CheckoutForm, ErrorPage, Confirmation,
 } from './components';
 import {
   me,
@@ -28,12 +29,12 @@ import {
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.loadInitialData();
   }
 
-  render () {
-    const {isLoggedIn} = this.props;
+  render() {
+    const { isLoggedIn } = this.props;
 
     return (
       <Router history={history}>
@@ -45,7 +46,7 @@ class Routes extends Component {
             <Route path="/orders" component={OrdersList} />
             <Route path="/shoppingcart" component={ShoppingCart} />
             <Route path="/checkoutform" component={CheckoutForm} />
-            <Route exact path="/category" component={Category}/>
+            <Route exact path="/category" component={Category} />
             <Route path="/category/:categoryId" component={Productpage} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
@@ -57,7 +58,7 @@ class Routes extends Component {
               </Switch>
             }
             {/* Displays our Login component as a fallback */}
-            <Route component={Login} />
+            <Route component={Home} />
           </Switch>
         </NavFooterWrapper>
       </Router>
@@ -75,7 +76,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  loadInitialData () {
+  loadInitialData() {
     dispatch(fetchOrders());
     dispatch(fetchCategory());
     dispatch(getshoppingcart());
