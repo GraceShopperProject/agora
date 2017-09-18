@@ -4,47 +4,36 @@ import history from '../history';
 /**
  * ACTION TYPES
  */
-const GET_CATEGORY = 'GET_CATEGORY';
-const GET_PRODUCT_CATEGORY = 'GET_PRODUCT_CATEGORY';
+const GET_CATEGORIES = 'GET_CATEGORIES';
 
 /**
  * INITIAL STATE
  */
-const defaultCategory = {};
+const defaultCategories = [];
 
 /**
  * ACTION CREATORS
  */
-const getCategory = category => ({ type: GET_CATEGORY, category });
-const getProductCategory = category => ({ type: GET_PRODUCT_CATEGORY, category });
+const getCategories = categories => ({ type: GET_CATEGORIES, categories });
 
 /**
  * THUNK CREATORS
  */
-export const fetchCategory = () => (dispatch) => {
+export const fetchCategories = () => (dispatch) => {
   axios.get('/api/category')
     .then((res) => {
-      dispatch(getCategory(res.data || defaultCategory));
+      dispatch(getCategories(res.data || defaultCategories));
     })
     .catch(err => console.log(err));
 };
 
-export const fetchProductCategory = productId => (dispatch) => {
-  axios.get(`/api/category/products/${productId}`)
-    .then((res) => {
-      dispatch(getProductCategory(res.data || defaultCategory));
-    })
-    .catch(err => console.log(err));
-};
 /**
  * REDUCER
  */
-export default function (state = defaultCategory, action) {
+export default function (state = defaultCategories, action) {
   switch (action.type) {
-    case GET_CATEGORY:
-      return action.category;
-    case GET_PRODUCT_CATEGORY:
-      return Object.assign({}, state, { currentCategory: action.category });
+    case GET_CATEGORIES:
+      return action.categories;
     default:
       return state;
   }

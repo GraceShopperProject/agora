@@ -10,15 +10,15 @@ import { connect } from 'react-redux';
 
 
 const Category = (props) => {
-  const category = props.category;
-  console.log('category are:', category);
+  const categories = props.categories;
+  console.log('categories are:', categories);
   return (
     <div className="container">
 
       <h3>Category List</h3>
       <div className="row">
         {
-          (category) && category.map(type => (
+          (categories && categories.length) && categories.map(type => (
             <div className="col-sm-3 col-lg-3 col-md-3" key={type.id}>
               <Link to={`/category/${type.id}`}>
                 <h2>{type.name}</h2>
@@ -30,7 +30,8 @@ const Category = (props) => {
                   width="200"
                 />
               </Link>
-            </div>
+            </div>  
+          
           )
           )
         }
@@ -40,7 +41,7 @@ const Category = (props) => {
 };
 
 const mapState = state => ({
-  category: state.category,
+  categories: state.categories,
 });
 
 

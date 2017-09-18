@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect, } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-export default function CartegoryNav (props) {
+function CategoryNav (props) {
+  const categories = props.categories
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light"
@@ -9,24 +12,31 @@ export default function CartegoryNav (props) {
         borderBottom: '1px solid #999',
       }}
     >
+    
       <div className="container">
-
         <ul className="nav justify-content-center">
-          <li className="nav-item">
-            <a className="nav-link active" href="#">Category</a>
+          <li className="nav-item" key="all-products">
+            <Link className="nav-link" to={`/products/`}>All Products</Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Category</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Category</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link disabled" href="#">Category</a>
-          </li>
+          {
+          categories && categories.map(category =>
+            (
+              <li className="nav-item" key={category.id}>
+                <Link className="nav-link" to={`/category/${category.id}`}>{category.name}</Link>
+              </li>
+            ))
+          }
         </ul>
 
       </div>
     </nav>
   );
 }
+
+const mapState = state => {
+  return ({
+    categories: state.categories,
+  })};
+
+export default connect(mapState)(CategoryNav);
+
