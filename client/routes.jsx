@@ -18,6 +18,7 @@ import {
   Productpage,
   ProductDetailpage,
   CheckoutForm, ErrorPage, Confirmation,
+  MaintainCatProD, MaintainUser,
 } from './components';
 import {
   me,
@@ -55,6 +56,8 @@ class Routes extends Component {
 
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
+            <Route path="/maintain_c_p" component = {MaintainCatProD} />
+            <Route path="/maintain_user" component = {MaintainUser} />
 
             {
               isLoggedIn &&

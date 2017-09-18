@@ -5,9 +5,10 @@ import {withRouter, Link} from 'react-router-dom';
 import {
   LoggedInNavButtons,
   LoggedOutNavButtons,
+  AdminLoggedInNavButtons,
 } from '../Navigation';
 
-function TopNavbar ({children, isLoggedIn}) {
+function TopNavbar ({children, isLoggedIn, isAdmin, }) {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark"
@@ -33,10 +34,11 @@ function TopNavbar ({children, isLoggedIn}) {
         <div className="navbar-nav">
 
           {isLoggedIn
-            ? <LoggedInNavButtons />
+            ?   isAdmin
+                  ?  <AdminLoggedInNavButtons />
+                  : <LoggedInNavButtons />
             : <LoggedOutNavButtons />
           }
-
 
           <Link to="/shoppingcart" className="nav-item nav-link">
             <button className="btn btn-outline-light">
@@ -56,6 +58,7 @@ function TopNavbar ({children, isLoggedIn}) {
  */
 const mapState = state => ({
   isLoggedIn: !!state.user.id,
+  isAdmin :  state.user.is_admin
 });
 
 // The `withRouter` wrapper makes sure that updates are not blocked
