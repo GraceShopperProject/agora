@@ -3,26 +3,20 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import store, {fetchCategoryProducts} from '../store';
 import Sidebar from './sidebar';
+import { connect } from 'react-redux';
 
-export default class Productpage extends React.Component {
-	constructor() {
-		super();
-		this.state = store.getState();
-		// !this.props.match.params.categoryId
-	}
+class ProductsPage extends React.Component {
+
 	componentDidMount() {
-		const categoryId = +this.props.match.params.categoryId;
-		console.log('current category',categoryId)
-		store.dispatch(fetchCategoryProducts(categoryId));
-		this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-	}
-
-	componentWillUnmount () {
-		this.unsubscribe();
+		if (this.props.match.params.categoryId)	this.setState({curCategoryId: +this.props.match.params.categoryId});
 	}
 
 	render() {
-		const products = this.state.product.products;
+		const productsToRender = this.state.products;
+		if (this.state.curCategoryId) {
+			const curCategory = this.state.categories.find(category => category.id === this.state.curCategoryId);
+			productsToRender = productsToRender.filter(product => product.getCategory().id === curCategory); // *** issue
+		}
 
 		const category = this.state.categories.filter(category => +category.id === +this.props.match.params.categoryId)[0];
 		return (
@@ -60,3 +54,13 @@ export default class Productpage extends React.Component {
 		)
 	}
 }
+
+const mapState = state => {
+	return {
+		products: state.products,
+		categories: state.categories,
+		curCategoryId: null,
+	}
+}
+
+export default connect(mapState, mapDispatch)(ProductsPage);

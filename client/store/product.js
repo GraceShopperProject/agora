@@ -4,7 +4,7 @@ import history from '../history';
 /* ACTION TYPES
 */
 
-const GET_CATEGORY_PRODUCTS = 'GET_CATEGORY_PRODUCTS';
+const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 
 /**
  * INITIAL STATE
@@ -15,17 +15,18 @@ const defaultState = [];
  * ACTION CREATORS
  */
 
-const getCategoryProducts = (products) => ({ type: GET_CATEGORY_PRODUCTS, products});
+const getAllProducts = (products) => ({ type: GET_ALL_PRODUCTS, products })
 /**
  * THUNK CREATORS
  */
 
 
-export const fetchCategoryProducts = (categoryId) => {
+export const fetchProductsInCategory = (categoryId) => {
     return (dispatch) => {
-        axios.get(`/api/products/category/${categoryId}`)
-            .then(res => {
-                dispatch(getCategoryProducts(res.data || defaultState));
+        axios.get(`/api/products/`)
+            .then(res => res.data)
+            .then(allProducts => {
+                dispatch(getAllProducts(allProducts || defaultState));
             })
             .catch(err => console.log(err));
     }
@@ -36,8 +37,8 @@ export const fetchCategoryProducts = (categoryId) => {
  */
 export default function (state = defaultState, action) {
     switch (action.type) {
-        case GET_CATEGORY_PRODUCTS:
-            return  action.products;
+        case GET_ALL_PRODUCTS:
+            return action.products
         default:
             return state;
     }
