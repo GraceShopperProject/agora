@@ -124,6 +124,8 @@ const mapDispatch = dispatch => ({
     // buildOrder(user_request, product_list);
     dispatch(buildOrder(null, cart_product_list));
 
+    //if logged in, if no address data exists for user, update address data
+
     // *** 
     //send information from the window.localStorage to orders component where create the order + product affiliations
 

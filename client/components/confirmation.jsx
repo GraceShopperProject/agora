@@ -63,32 +63,12 @@ const mapState = state => {
   const curUser = state.user
   ? state.user
   : null;
-
+  console.log("current user is ", curUser);
   return {
-    user: curUser && curUser.name || {}, 
+    name: curUser && curUser.name || {}, 
     curOrder: '',
   }
 }
-
-const mapDispatch = dispatch => ({
-  handleSubmit(evt) {
-    evt.preventDefault();
-    console.log("You've submitted me!!");
-
-    const cart_product_list = JSON.parse(localStorage.getItem("Cart"));
-
-    // buildOrder(user_request, product_list);
-    dispatch(buildOrder(null, cart_product_list));
-
-    // *** 
-    //send information from the window.localStorage to orders component where create the order + product affiliations
-
-  },
-
-  getCurUser () {
-    dispatch (me());
-  }
-});
 
 export default connect(mapState, mapDispatch)(CheckoutForm);
 

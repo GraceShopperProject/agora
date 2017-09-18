@@ -13,3 +13,4 @@ export { default as CheckoutForm, } from './checkout-form';
 export Category from './category';
 export { default as OrdersList, } from './orders-list';
 export Productpage from './productpage';
+export ErrorPage from './error';
