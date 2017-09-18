@@ -46,7 +46,7 @@ const Main = (props) => {
               <ul className="nav navbar-right">
                   <li>
                       <Link to="/shoppingcart" >
-                          <img src="icons8-Shopping Cart-50.png" height="20" width="20" />
+                          <img src="icons8-Shopping.png" height="20" width="20" />
                       </Link>
                   </li>
               </ul>

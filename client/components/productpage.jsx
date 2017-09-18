@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import store from '../store';
+import store, {fetchCategoryProducts} from '../store';
 
 export default class Productpage extends React.Component {
     constructor() {
@@ -10,25 +10,18 @@ export default class Productpage extends React.Component {
     }
 
     componentDidMount() {
-        const categoryId = this.props.match.params.categoryId;
-        console.log(categoryId)
+        const categoryId = +this.props.match.params.categoryId;
+        console.log('current category',categoryId)
+        store.dispatch(fetchCategoryProducts(categoryId));
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+    }
 
-        axios.get(`/api/products/category/${categoryId}`)
-            .then(res => {
-                console.log(res.data);
-                console.log('products from the category',res.data);
-                return res.data
-            })
-            .then(data => {
-                this.setState({
-                    products: data.products
-                })
-            });
+    componentWillUnmount () {
+        this.unsubscribe();
     }
 
     render() {
-        const products = this.state.products;
-        console.log(this.state, );
+        const products = this.state.product.products;
         const category = this.state.category.filter(type => type.id === +this.props.match.params.categoryId)[0];
         console.log('current category', category);
         return (
