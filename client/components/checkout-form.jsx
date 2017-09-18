@@ -13,7 +13,8 @@ class CheckoutForm extends React.Component {
     super(props);
 
     this.state = {
-      ...this.props
+      ...this.props,
+      user_request: '',
     };
 
     this.fillInDummyData = this.fillInDummyData.bind(this);
@@ -30,7 +31,7 @@ class CheckoutForm extends React.Component {
     const name = evt.target.name
     const value = evt.target.value;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -45,6 +46,7 @@ class CheckoutForm extends React.Component {
       state: 'hi', 
       zip: '11111',
       email: 'hi@hi.hi',
+      user_request: 'hi hi hi',
     });
   }
 
@@ -79,6 +81,10 @@ class CheckoutForm extends React.Component {
             <input name="zip" type="text" onChange={this.handleChange} value={this.state.zip} />
           </div>
           <div>
+            <label htmlFor="user_request"><small>Special instructions:</small></label>
+            <input name="user_request" type="text" onChange={this.handleChange} value={this.state.user_request} />
+          </div>
+          <div>
             <button type="submit">Submit</button>
             <button onClick={this.fillInDummyData}>Quick Fill in Data</button>
           </div>
@@ -99,16 +105,6 @@ const mapState = state => {
   ? state.user
   : null;
 
-  // return {
-  //   name: '', 
-  //   street_address_1: '', 
-  //   street_address_2: '', 
-  //   city: '', 
-  //   state: '', 
-  //   zip: '',
-  //   email: '',
-  // }
-
   return {
     name: curUser && curUser.name ? curUser.name : '', 
     street_address_1: curUser.street_address_1 || '', 
@@ -120,20 +116,16 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch  => ({
-  handleSubmit(evt) {
+const mapDispatch = (dispatch, ownProps)  => ({
+  handleSubmit(evt, user_request) {
     evt.preventDefault();
     console.log("You've submitted me!!");
     const cart_product_list = JSON.parse(localStorage.getItem("Cart"));
 
-    // buildOrder(user_request, product_list);
-    dispatch(buildOrder(null, cart_product_list));
-
-    //if logged in, if no address data exists for user, update address data
-
-    // *** 
-    //send information from the window.localStorage to orders component where create the order + product affiliations
-
+    console.log("MY OWN PROPS IS :", ownProps);
+    
+    // buildOrder(user_request, product_list, total_price);
+    dispatch(buildOrder(ownProps.user_request, cart_product_list));
   },
 
   getCurUser () {

@@ -49,9 +49,11 @@ export const buildOrder = ( user_request, product_list, total_price, ) =>
     axios.post(`/api/orders`, { user_request, })
       .then(res => res.data)
       .then( newOrder => { // TODO ** 
+        console.log("NewOrder is ", newOrder);
         const orderId = newOrder.id;
         const totalPrice = 0;
         product_list.map( product => {
+          console.log("Product: ", product); 
           axios.post('/api/orderproducts', { 
             orderId: orderId, 
             productId: product.id,
@@ -67,7 +69,7 @@ export const buildOrder = ( user_request, product_list, total_price, ) =>
           // { quantity: product.quantity, product_price: product.price, productId: product.id, orderId: orderId }
           // totalPrice = totalPrice + (product.quantity * product.price);
         })
-      }).then( () => {
+      }).then(() => {
         localStorage.removeItem('Cart');
         //generate unique string of chars to represent the order number for unauthenticated users? and just an order
         console.log("the local storage is now ", localStorage.getItem('Cart'));
