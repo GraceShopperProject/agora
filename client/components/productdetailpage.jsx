@@ -1,31 +1,11 @@
 import React from 'react';
 import AddToCart from './AddToCart';
 import store, { fetchProductCategory } from '../store';
-// import {fetchStudents, fetchCourses, fetchHouses ,fetchCoursesStudent,removeCourseStudent } from '../reducers';
+import { connect, } from 'react-redux';
 
-
-export default class ProductDetailpage extends React.Component {
-    constructor() {
-        super();
-        this.state = store.getState();
-    }
-
-    componentDidMount () {
-        const productId = +this.props.match.params.productId;
-        console.log('curent productId',productId, typeof productId)
-        // store.dispatch(fetchProductCategory(productId));
-        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-    }
-
-    componentWillUnmount () {
-        this.unsubscribe();
-    }
-
-    render() {
-        const products = this.state.product.products;
-        console.log('current state',products);
-        const product = products.filter(product => product.id === +this.props.match.params.productId)[0];
-        // const productCategory = this.state.ProductCategory
+const ProductDetailpage = (props) => {
+        const products = props.products;
+        const product = products.filter(product => product.id === +props.match.params.productId)[0];
         return (
             <div className="container">
                 <h3>{product.name} detail Page</h3>
@@ -42,5 +22,14 @@ export default class ProductDetailpage extends React.Component {
                 </div>
             </div>
 
-        )}
+        )
 }
+
+
+const mapState = state => {
+    return ({
+        products: state.product.products
+    })};
+
+
+export default connect(mapState)(ProductDetailpage);
