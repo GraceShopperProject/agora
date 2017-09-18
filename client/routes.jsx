@@ -5,8 +5,13 @@ import { Route, Switch, } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
-import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, CheckoutForm, ErrorPage, Confirmation} from './components/index.jsx';
+// import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, ProductDetailpage } from './components/index.jsx';
+// import { me, getshoppingcart, fetchOrders, fetchCategory,  } from './store';
+
+import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, ProductDetailpage,
+         CheckoutForm, ErrorPage, Confirmation} from './components/index.jsx';
 import { me, getshoppingcart, fetchOrders, fetchCategory, } from './store';
+
 
 /**
  * COMPONENT
@@ -31,8 +36,12 @@ class Routes extends Component {
             <Route path="/checkoutform" component={CheckoutForm} />
             <Route exact path="/category" component={Category}/>
             <Route path="/category/:categoryId" component={Productpage} />
+
+            <Route path="/products/:productId" component={ProductDetailpage} />
+
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
+
             {
               isLoggedIn &&
               <Switch>

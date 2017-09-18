@@ -11,7 +11,11 @@ export { Login, Signup, } from './auth-form';
 export ShoppingCart from './ShoppingCart';
 export { default as CheckoutForm, } from './checkout-form';
 export Category from './category';
+
+export ProductDetailpage from './productdetailpage';
+
 export { default as OrdersList, } from './orders-list';
 export Productpage from './productpage';
 export ErrorPage from './error';
 export Confirmation from './confirmation';
+

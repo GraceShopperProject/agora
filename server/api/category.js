@@ -1,5 +1,6 @@
 const categoryRouter = require('express').Router();
 const Category = require('../db/models').Category;
+const Product = require('../db/models').Product;
 
 categoryRouter.param('id', (req, res, next, id) => {
   Category.findOne({ where: { id } })
@@ -40,5 +41,19 @@ categoryRouter.route('/:id')
       .then(() => res.sendStatus(204))
       .catch(next);
   });
+
+categoryRouter.route('/products/:productId')
+    .get((req, res, next) => {
+        Product.findById(req.params.productId)
+            .then((product) => {
+                console.log('want to see the join table', product);
+                return product.getCategory();
+            })
+            .then((category)=>{
+                res.json({category})
+            })
+            .catch(next);
+    });
+
 
 module.exports = categoryRouter;
