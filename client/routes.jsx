@@ -56,8 +56,8 @@ class Routes extends Component {
 
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
-            <Route path="/maintain_c_p" component = {MaintainCatProD} />
-            <Route path="/maintain_user" component = {MaintainUser} />
+            <Route path="/adminProduct" component = {MaintainCatProD} />
+            <Route path="/adminUser" component = {MaintainUser} />
 
             {
               isLoggedIn &&
