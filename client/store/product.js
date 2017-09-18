@@ -9,7 +9,7 @@ const GET_CATEGORY_PRODUCTS = 'GET_CATEGORY_PRODUCTS';
 /**
  * INITIAL STATE
  */
-const defaultState = {};
+const defaultState = [];
 
 /**
  * ACTION CREATORS

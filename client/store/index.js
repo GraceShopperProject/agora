@@ -6,14 +6,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
 import orders from './orders';
 import shoppingcart from './shoppingcart';
-import category from './category';
+import categories from './category';
 import product from './product';
 
 const reducer = combineReducers({
   user,
   orders,
   shoppingcart,
-  category,
+  categories,
   product,
 });
 

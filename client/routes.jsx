@@ -24,7 +24,7 @@ import {
   me,
   getshoppingcart,
   fetchOrders,
-  fetchCategory,
+  fetchCategories,
 } from './store';
 
 
@@ -87,7 +87,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   loadInitialData() {
     dispatch(fetchOrders());
-    dispatch(fetchCategory());
+    dispatch(fetchCategories());
     dispatch(getshoppingcart());
     dispatch(me());
   },
