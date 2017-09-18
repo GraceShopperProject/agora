@@ -44,12 +44,8 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/orders" component={OrdersList} />
             <Route path="/shoppingcart" component={ShoppingCart} />
-<<<<<<< HEAD
-            <Route exact path="/category" component={Category} />
-=======
             <Route path="/checkoutform" component={CheckoutForm} />
             <Route exact path="/category" component={Category}/>
->>>>>>> master
             <Route path="/category/:categoryId" component={Productpage} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
