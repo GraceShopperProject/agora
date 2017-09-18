@@ -14,4 +14,4 @@ export default store;
 export * from './user';
 export * from './shoppingcart';
 export * from './orders';
-export * from './category'
+export * from './category';

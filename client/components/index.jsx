@@ -10,6 +10,9 @@ export {default as UserHome, } from './user-home';
 export {Login, Signup, } from './auth-form';
 
 export ShoppingCart from './ShoppingCart';
+export { default as CheckoutForm, } from './checkout-form';
 export Category from './category';
 export {default as OrdersList, } from './orders-list'
 export Productpage from './productpage';
+export ErrorPage from './error';
+export Confirmation from './confirmation';
