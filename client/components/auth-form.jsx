@@ -1,13 +1,13 @@
 import React from 'react';
-import { connect, } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { auth, } from '../store';
+import { auth } from '../store';
 
 /**
  * COMPONENT
  */
 const AuthForm = (props) => {
-  const { name, displayName, handleSubmit, error, } = props;
+  const { name, displayName, handleSubmit, error } = props;
 
   return (
     <div>
@@ -21,16 +21,16 @@ const AuthForm = (props) => {
           <input name="password" type="password" />
         </div>
 
-          {
-              ( displayName === 'Sign Up') ?
-                  <div>
-                    <div>
-                      <label htmlFor="name"><small>Name</small></label>
-                      <input name="nameSignup" type="text" />
-                    </div>
-                  </div>
-                  : null
-          }
+        {
+          (displayName === 'Sign Up') ?
+            <div>
+              <div>
+                <label htmlFor="name"><small>Name</small></label>
+                <input name="nameSignup" type="text" />
+              </div>
+            </div>
+            : null
+        }
         <div>
           <button type="submit">{displayName}</button>
         </div>
