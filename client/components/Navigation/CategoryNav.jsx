@@ -1,10 +1,13 @@
 import React from 'react';
 
-export default function CartegoryNav(props) {
+export default function CartegoryNav (props) {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light"
-      style={{ borderBottom: '1px solid #999' }}
+      style={{
+        backgroundColor: '#fff',
+        borderBottom: '1px solid #999',
+      }}
     >
       <div className="container">
 
