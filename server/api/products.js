@@ -1,5 +1,6 @@
 const productRouter = require('express').Router();
 const Product = require('../db/models').Product;
+const Category = require('../db/models').Category;
 var Promise = require('bluebird');
 
 // For any variable attached after /products/:XX 
@@ -46,6 +47,19 @@ productRouter.route('/:id')
       .catch(next);
   });
 
+
+productRouter.route('/category/:categoryId')
+    .get((req, res, next) => {
+        Category.findById(req.params.categoryId)
+            .then((category) => {
+                console.log('want to see the join table', category);
+                return category.getProducts();
+            })
+            .then((products)=>{
+                res.json({products})
+            })
+            .catch(next);
+        });
 
 productRouter.route('/orderUpdate')
     .post((req, res, next) => {
