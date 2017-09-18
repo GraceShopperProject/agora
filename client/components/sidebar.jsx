@@ -10,7 +10,7 @@ import { connect, } from 'react-redux';
 
 
 const Sidebar = (props) => {
-    const category = props.category
+    const category = props.categories
     return (
       <div id="wrapper">
         <div id="sidebar-wrapper">
@@ -18,7 +18,7 @@ const Sidebar = (props) => {
             {
               category && category.map(type=>
                 (
-                  <li>
+                  <li key={type.id}>
                     <Link to={`/category/${type.id}`}>{type.name}</Link>
                   </li>
                 )
@@ -32,7 +32,7 @@ const Sidebar = (props) => {
 
 const mapState = state => {
   return ({
-    category: state.category,
+    categories: state.categories,
   })};
 
 export default connect(mapState)(Sidebar);

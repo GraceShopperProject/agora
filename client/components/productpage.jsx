@@ -8,6 +8,7 @@ export default class Productpage extends React.Component {
 	constructor() {
 		super();
 		this.state = store.getState();
+		// !this.props.match.params.categoryId
 	}
 	componentDidMount() {
 		const categoryId = +this.props.match.params.categoryId;
@@ -22,19 +23,21 @@ export default class Productpage extends React.Component {
 
 	render() {
 		const products = this.state.product.products;
-		const category = this.state.category.filter(type => type.id === +this.props.match.params.categoryId)[0];
-		console.log('current category', category);
+
+		const category = this.state.categories.filter(category => +category.id === +this.props.match.params.categoryId)[0];
 		return (
 			<div>
 				<Sidebar />
 					<div id="page-content-wrapper">
 						<div className="container-fluid">
 							<div className="container">
-								<h3>{category.name} product Page</h3>
-								<div className="col-lg-6 col-md-6 col-sm-12" key={category.id}>
-									<img src={`/img/${category.id}.png`} name={category.name} height="200" width="200"/>
+								<div>
+									<h3>{category && category.name} Product Page</h3>
+									<div className="col-lg-6 col-md-6 col-sm-12">
+										{category && (<img src={`/img/${category.id}.png`} name={category.name} height="200" width="200"/>)}
+									</div>
+									<br></br>
 								</div>
-								<br></br>
 								<div className="row">
 									{
 										(products) && products.map(product => (

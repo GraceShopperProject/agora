@@ -30,16 +30,16 @@ const OrdersList = (props) => {
                     {
                         userOrders.length === 0
                             ? (<tr>
-                                <th>No orders</th>
+															<th>No orders</th>
                             </tr>)
                             : userOrders.map(order => {
                                 return (
-                                    <tr key={order.id}>
-                                        <th>{order.createdAt}</th>
-                                        <th>{order.status}</th>
-                                        <th>{order.total_price}</th>
-                                        <th>{order.user.name}</th>
-                                    </tr>
+																	<tr key={order.id}>
+																		<th>{order.createdAt}</th>
+																		<th>{order.status}</th>
+																		<th>{order.total_price}</th>
+																		<th>{order.user.name}</th>
+																	</tr>
                                 )
                             }
                             )
