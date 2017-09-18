@@ -48,13 +48,11 @@ const products = makeNThings(10, makeProduct);
 // });
 
 const makeUser = () => {
-  const first_name = dummy.name.firstName();
-  const last_name = dummy.name.lastName();
+  const name = dummy.name.firstName();
   const emailDomain = dummy.internet.email().split('@')[1];
   return {
-    first_name,
-    last_name,
-    email: `${first_name + last_name}@${emailDomain}`,
+    name,
+    email: `${name}@${emailDomain}`,
     is_admin: dummy.random.boolean(),
     password: dummy.internet.password(),
     google_id: dummy.random.uuid(),
@@ -68,6 +66,28 @@ const makeUser = () => {
 };
 
 const users = makeNThings(10, makeUser, ['email']);
+users.push({ name: "rw",
+  email: "rw@rw.rw",
+  is_admin: false,
+  password: "rw",
+  phone: "(555) 555-5555",
+  street_address_1: "111 RW St",
+  street_address_2: "Apt RW",
+  city: "RW City",
+  state: "RW State",
+  zip: "RW Zip",})
+
+  users.push({ 
+    name: "jj",
+    email: "jj@jj.jj",
+    is_admin: true,
+    password: "jj",
+    phone: "(555) 555-5555",
+    street_address_1: "111 jj St",
+    street_address_2: "Apt jj",
+    city: "jj City",
+    state: "jj State",
+    zip: "jj Zip",})
 
 const makeOrder = () => ({
   status: [

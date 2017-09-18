@@ -8,6 +8,7 @@ import { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshopp
  * COMPONENT
  */
 
+ //TODO change variable names "items" to products in cart
 export default class ShoppingCart extends React.Component {
     constructor() {
         super();
@@ -17,9 +18,10 @@ export default class ShoppingCart extends React.Component {
             category: [],
             id: 0,
             name: '',
-            ddescription: '',
+            description: '',
             price: 0,
-            quantity: 1,
+						quantity: 1,
+						total_price: 0,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleAddItem = this.handleAddItem.bind(this);
@@ -44,7 +46,8 @@ export default class ShoppingCart extends React.Component {
             .then(res => res.data)
             .then(data => {
                 this.setState({category:data})
-            });
+						});
+						
         console.log('AFTER update',this.state);
     }
 
@@ -57,18 +60,25 @@ export default class ShoppingCart extends React.Component {
     }
 
     handleAddItem(evt) {
-        evt.preventDefault();
-        const itemId = evt.target.product.value;
-        const item = this.state.products[itemId-1];
-        item.quantity = 1;
-        console.log('before add the state.items',this.state.items);
-        this.setState({items : this.state.items.concat(item)});
-        localStorage.removeItem("Cart");
-        localStorage.setItem("Cart",JSON.stringify(this.state.items));
+			evt.preventDefault();
+
+			if ( localStorage.getItem("Cart") !== null ) {
+					localStorage.removeItem("Cart");
+			} 
+
+			const itemId = evt.target.product.value;
+			const item = this.state.products[itemId-1];
+			item.quantity = 1;
+
+			this.state.items === null
+			? this.setState({items: [item]})
+			: this.setState({items : this.state.items.concat(item)});
+
+			localStorage.setItem("Cart",JSON.stringify(this.state.items));
     }
 
     handleRemove(itemId)  {
-        this.setState({items : this.state.items.filter(item=> item.id !== itemId)});
+        this.setState({items : this.state.items.filter(item => item.id !== itemId)});
         localStorage.removeItem("Cart");
         localStorage.setItem("Cart",JSON.stringify(this.state.items));
     }
@@ -88,14 +98,30 @@ export default class ShoppingCart extends React.Component {
         localStorage.setItem("Cart",JSON.stringify(this.state.items));
     }
 
-    handleCheckOut(){
-        // evt.preventDefault();
-        //update product inventory
-        //update order table------
-        console.log(this.state.items);
-        axios.post('/api/products/orderUpdate/',this.state.items )
-            .then(res => res.data)
-            .then(data => console.log(data));
+    handleCheckOut(evt){
+				//STEPS
+				// Next page collect user information 
+				// Submits
+				//		Sends order to database => 
+				//			- Creates Order puts in totalPrice, user_requestText in order
+				//			- Creates Order-Product associations productId, orderId, price, quantity
+				//			
+
+				evt.preventDefault();
+				if( this.state.items.length > 0 && localStorage.getItem("Cart") !== null) {
+                    console.log(history);
+					this.props.history.push('/checkoutform');
+				}
+
+				// const orderInput = {id: this.state.id, total_price: this.state.price, quantity: this.state.quantity };
+
+				
+        //axios.post(`/api/order`, orderInput)
+				
+        // console.log(this.state.items);
+        // axios.post('/api/products/orderUpdate/',this.state.items )
+        //     .then(res => res.data)
+        //     .then(data => console.log(data));
 
         this.setState ({
                 items: [],
@@ -105,9 +131,10 @@ export default class ShoppingCart extends React.Component {
                 price: 0,
                 quantity: 1,
             });
-        localStorage.removeItem('Cart');
+        //localStorage.removeItem('Cart'); IN NEXT COMPONENT
     }
-    handleCleanCart(){
+    handleCleanCart(evt){
+        evt.preventDefault();
         this.setState ({
             items: [],
             id: 0,
@@ -120,9 +147,9 @@ export default class ShoppingCart extends React.Component {
     }
 
     render() {
-        console.log('current local staorage',JSON.parse(localStorage.getItem("Cart")));
+        console.log('current local storage', JSON.parse(localStorage.getItem("Cart")));
         const cart = this.state.items;
-        console.log('cart length',cart);
+        console.log('cart length', cart);
         const products = this.state.products;
         return (
             <div className="container">
@@ -184,8 +211,8 @@ export default class ShoppingCart extends React.Component {
                         <button className="btn btn-default col-sm-1 col-lg-1 col-md-1" type="submit">+</button>
                     </div>
                     <div className="form-group">
-                        <input onClick={() => this.handleCheckOut()} type='button' value='Check Out'/>
-                        <input onClick={() => this.handleCleanCart()} type='button' value='Clean Cart'/>
+                        <input onClick={(evt) => this.handleCheckOut(evt)} type='button' value='Check Out'/>
+                        <input onClick={(evt) => this.handleCleanCart(evt)} type='button' value='Clean Cart'/>
                     </div>
                 </form>
             </div>
