@@ -7,7 +7,10 @@ import {
 
 export default function NavFooterWrapper({ children }) {
   return (
-    <div>
+    <div style={{
+      backgroundColor: '#fff',
+    }}
+    >
       <TopNavBar />
       <CategoryNav />
       <div
