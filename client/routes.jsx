@@ -16,6 +16,7 @@ import {
   OrdersList,
   Category,
   Productpage,
+  ProductDetailpage,
   CheckoutForm, ErrorPage, Confirmation,
 } from './components';
 import {
@@ -24,6 +25,7 @@ import {
   fetchOrders,
   fetchCategory,
 } from './store';
+
 
 /**
  * COMPONENT
@@ -48,8 +50,12 @@ class Routes extends Component {
             <Route path="/checkoutform" component={CheckoutForm} />
             <Route exact path="/category" component={Category} />
             <Route path="/category/:categoryId" component={Productpage} />
+
+            <Route path="/products/:productId" component={ProductDetailpage} />
+
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
+
             {
               isLoggedIn &&
               <Switch>

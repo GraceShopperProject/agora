@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import {Link} from 'react-router-dom';
 // import { connect, } from 'react-redux';
-import { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshoppingcart } from '../store';
+import store, { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshoppingcart } from '../store';
 //
 /**
  * COMPONENT
@@ -12,7 +12,8 @@ import { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshopp
 export default class ShoppingCart extends React.Component {
   constructor() {
     super();
-    this.state = {
+    this.state = store.getState();
+    this.stateLocal = {
       items: [],
       products: [],
       category: [],
@@ -31,7 +32,10 @@ export default class ShoppingCart extends React.Component {
     this.handleCleanCart = this.handleCleanCart.bind(this);
   }
 
+
   componentDidMount() {
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+
     let olditems = [];
     if (localStorage.getItem('Cart') !== null) { olditems = JSON.parse(localStorage.getItem('Cart')); }
     this.setState({
@@ -49,6 +53,11 @@ export default class ShoppingCart extends React.Component {
 
     console.log('AFTER update', this.state);
   }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
 
   handleChange(evt) {
     const value = evt.target.value;
@@ -146,7 +155,7 @@ export default class ShoppingCart extends React.Component {
   }
 
   render() {
-    console.log('current local storage', JSON.parse(localStorage.getItem('Cart')));
+    console.log('current local storage', JSON.parse(localStorage.getItem('Cart')), 'current state', this.state.shoppingcart);
     const cart = this.state.items;
     console.log('cart length', cart);
     const products = this.state.products;
@@ -170,15 +179,15 @@ export default class ShoppingCart extends React.Component {
               cart && cart.map((item, idx) => (
                 <tr key={item.id}>
                   <td />
-                  <td> { item.name } </td>
+                  <td> {item.name} </td>
                   <td>
-                    <span>{ item.description }</span>
+                    <span>{item.description}</span>
                   </td>
                   <td>
-                    <span>{ item.price }</span>
+                    <span>{item.price}</span>
                   </td>
                   <td>
-                    <span>{ item.quantity }</span>
+                    <span>{item.quantity}</span>
                     <input onClick={() => this.handleIncrease(idx)} type="button" value="+" />
                     <input onClick={() => this.handleDecrease(idx)} type="button" value="-" />
                   </td>
@@ -186,7 +195,7 @@ export default class ShoppingCart extends React.Component {
                     <input onClick={() => this.handleRemove(item.id)} type="button" value="x" />
                   </td>
                   <td>
-                    <span>{ item.quantity * item.price }</span>
+                    <span>{item.quantity * item.price}</span>
                   </td>
                 </tr>
               ))
@@ -213,9 +222,9 @@ export default class ShoppingCart extends React.Component {
             <input onClick={evt => this.handleCheckOut(evt)} type="button" value="Check Out" />
             <input onClick={evt => this.handleCleanCart(evt)} type="button" value="Clean Cart" />
           </div>
-
         </form>
       </div>
+
     );
   }
 }

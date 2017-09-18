@@ -12,8 +12,12 @@ export {Login, Signup, } from './auth-form';
 export {default as Home} from './Home';
 export ShoppingCart from './ShoppingCart';
 export {default as CheckoutForm, } from './checkout-form';
-export Category from './category';
-export {default as OrdersList, } from './orders-list'
+export {default as Category} from './category';
+
+export {default as ProductDetailpage} from './productdetailpage';
+
+export {default as OrdersList, } from './orders-list';
 export Productpage from './productpage';
 export ErrorPage from './error';
 export Confirmation from './confirmation';
+
