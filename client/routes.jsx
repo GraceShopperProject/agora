@@ -1,12 +1,31 @@
-import React, { Component, } from 'react';
-import { connect, } from 'react-redux';
-import { Router, } from 'react-router';
-import { Route, Switch, } from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Router } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
-import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, CheckoutForm, ErrorPage, Confirmation} from './components/index.jsx';
-import { me, getshoppingcart, fetchOrders, fetchCategory, } from './store';
+import {
+  Main,
+  NavFooterWrapper,
+  Home,
+  Login,
+  Signup,
+  UserHome,
+  ShoppingCart,
+  OrdersList,
+  Category,
+  Productpage,
+  ProductDetailpage,
+  CheckoutForm, ErrorPage, Confirmation,
+} from './components';
+import {
+  me,
+  getshoppingcart,
+  fetchOrders,
+  fetchCategory,
+} from './store';
+
 
 /**
  * COMPONENT
@@ -17,11 +36,11 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <Router history={history}>
-        <Main>
+        <NavFooterWrapper>
           <Switch>
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
@@ -29,10 +48,14 @@ class Routes extends Component {
             <Route path="/orders" component={OrdersList} />
             <Route path="/shoppingcart" component={ShoppingCart} />
             <Route path="/checkoutform" component={CheckoutForm} />
-            <Route exact path="/category" component={Category}/>
+            <Route exact path="/category" component={Category} />
             <Route path="/category/:categoryId" component={Productpage} />
+
+            <Route path="/products/:productId" component={ProductDetailpage} />
+
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
+
             {
               isLoggedIn &&
               <Switch>
@@ -41,9 +64,9 @@ class Routes extends Component {
               </Switch>
             }
             {/* Displays our Login component as a fallback */}
-            <Route component={Login} />
+            <Route component={Home} />
           </Switch>
-        </Main>
+        </NavFooterWrapper>
       </Router>
     );
   }
@@ -60,10 +83,10 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   loadInitialData() {
-      dispatch(fetchOrders());
-      dispatch(fetchCategory());
-      dispatch(getshoppingcart());
-      dispatch(me());
+    dispatch(fetchOrders());
+    dispatch(fetchCategory());
+    dispatch(getshoppingcart());
+    dispatch(me());
   },
 });
 
