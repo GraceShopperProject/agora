@@ -11,3 +11,4 @@ export ShoppingCart from './ShoppingCart';
 export Category from './category';
 export { default as OrdersList, } from './orders-list'
 export Productpage from './productpage';
+// export ProductDetailpage from './productdetailpage';
