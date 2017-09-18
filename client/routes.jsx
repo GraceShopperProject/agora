@@ -5,10 +5,11 @@ import { Route, Switch, } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
-import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, ProductDetailpage } from './components/index.jsx';
-import { me, getshoppingcart, fetchOrders, fetchCategory,  } from './store';
+// import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, ProductDetailpage } from './components/index.jsx';
+// import { me, getshoppingcart, fetchOrders, fetchCategory,  } from './store';
 
-import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, CheckoutForm, ErrorPage, Confirmation} from './components/index.jsx';
+import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, ProductDetailpage,
+         CheckoutForm, ErrorPage, Confirmation} from './components/index.jsx';
 import { me, getshoppingcart, fetchOrders, fetchCategory, } from './store';
 
 

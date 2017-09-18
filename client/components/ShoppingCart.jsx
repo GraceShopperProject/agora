@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 // import {Link} from 'react-router-dom';
 // import { connect, } from 'react-redux';
-import { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshoppingcart, } from '../store';
+import store, { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshoppingcart, } from '../store';
 //
 /**
  * COMPONENT
@@ -12,7 +12,8 @@ import { me, getshoppingcart, addshoppingcart, removeshoppingcart, checkoutshopp
 export default class ShoppingCart extends React.Component {
     constructor() {
         super();
-        this.state = {
+        this.state = store.getState();
+        this.stateLocal = {
             items: [],
             products: [],
             category: [],
@@ -20,8 +21,8 @@ export default class ShoppingCart extends React.Component {
             name: '',
             description: '',
             price: 0,
-						quantity: 1,
-						total_price: 0,
+            quantity: 1,
+            total_price: 0,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleAddItem = this.handleAddItem.bind(this);
@@ -31,7 +32,11 @@ export default class ShoppingCart extends React.Component {
         this.handleCleanCart = this.handleCleanCart.bind(this);
     }
 
+
     componentDidMount() {
+
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+
         let olditems = [];
         if (localStorage.getItem("Cart") !== null)
             olditems = JSON.parse(localStorage.getItem("Cart"));
@@ -50,6 +55,11 @@ export default class ShoppingCart extends React.Component {
 						
         console.log('AFTER update',this.state);
     }
+
+    componentWillUnmount () {
+        this.unsubscribe();
+    }
+
 
     handleChange (evt) {
         const value = evt.target.value;
@@ -147,7 +157,7 @@ export default class ShoppingCart extends React.Component {
     }
 
     render() {
-        console.log('current local storage', JSON.parse(localStorage.getItem("Cart")));
+        console.log('current local storage', JSON.parse(localStorage.getItem("Cart")), 'current state', this.state.shoppingcart);
         const cart = this.state.items;
         console.log('cart length', cart);
         const products = this.state.products;
