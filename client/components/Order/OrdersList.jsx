@@ -2,11 +2,11 @@ import React, { Component, } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect, } from 'react-redux';
-import { fetchUserOrders, } from '../store';
+import { fetchUserOrders, } from '../../store';
 
 
 // TODO ? Stay DRY : May be able to reuse this list somewhere else
-// Admin see list of all orders? 
+// Admin see list of all orders?
 // Only one user per order?
 
 
