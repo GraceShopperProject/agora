@@ -28,7 +28,7 @@ const ProductDetailPage = (props) => {
 
 const mapState = state => {
 	return ({
-		products: state.product.products
+		products: state.products
 	})};
 
 
