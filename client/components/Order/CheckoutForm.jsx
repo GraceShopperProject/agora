@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, } from 'react-redux';
-import { me, buildOrder } from '../store';
+import { me, buildOrder } from '../../store';
 
 // TODO Form Authentication
 
@@ -20,7 +20,7 @@ class CheckoutForm extends React.Component {
     this.fillInDummyData = this.fillInDummyData.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  
+
   componentDidMount () {
     this.props.getCurUser();
   }
@@ -39,11 +39,11 @@ class CheckoutForm extends React.Component {
     evt.preventDefault();
     console.log("dummy data");
     this.setState({
-      name: 'hi', 
-      street_address_1: 'hi', 
-      street_address_2: 'hi', 
-      city: 'hi', 
-      state: 'hi', 
+      name: 'hi',
+      street_address_1: 'hi',
+      street_address_2: 'hi',
+      city: 'hi',
+      state: 'hi',
       zip: '11111',
       email: 'hi@hi.hi',
       user_request: 'hi hi hi',
@@ -106,11 +106,11 @@ const mapState = state => {
   : null;
 
   return {
-    name: curUser && curUser.name ? curUser.name : '', 
-    street_address_1: curUser.street_address_1 || '', 
-    street_address_2: curUser.street_address_2 || '', 
-    city: curUser.city || '', 
-    state: curUser.state || '', 
+    name: curUser && curUser.name ? curUser.name : '',
+    street_address_1: curUser.street_address_1 || '',
+    street_address_2: curUser.street_address_2 || '',
+    city: curUser.city || '',
+    state: curUser.state || '',
     zip: curUser.zip || '',
     email: curUser.email || '',
   }
@@ -123,7 +123,7 @@ const mapDispatch = (dispatch, ownProps)  => ({
     const cart_product_list = JSON.parse(localStorage.getItem("Cart"));
 
     console.log("MY OWN PROPS IS :", ownProps);
-    
+
     // buildOrder(user_request, product_list, total_price);
     dispatch(buildOrder(ownProps.user_request, cart_product_list));
   },

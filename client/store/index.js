@@ -7,14 +7,14 @@ import user from './user';
 import orders from './orders';
 import shoppingcart from './shoppingcart';
 import categories from './category';
-import product from './product';
+import products from './product';
 
 const reducer = combineReducers({
   user,
   orders,
   shoppingcart,
   categories,
-  product,
+  products,
 });
 
 const middleware = applyMiddleware(thunkMiddleware, createLogger({

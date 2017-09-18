@@ -1,9 +1,9 @@
 import React from 'react';
-import AddToCart from './AddToCart';
-import store, { fetchProductCategory } from '../store';
+import AddToCart from '../Order/AddToCart';
+import store, { fetchProductCategory } from '../../store';
 import { connect, } from 'react-redux';
 
-const ProductDetailpage = (props) => {
+const ProductDetailPage = (props) => {
 	const products = props.products;
 	const product = products && products.filter(product => +product.id === +props.match.params.productId)[0];
 	return (
@@ -28,8 +28,8 @@ const ProductDetailpage = (props) => {
 
 const mapState = state => {
 	return ({
-		products: state.product.products
+		products: state.products
 	})};
 
 
-export default connect(mapState)(ProductDetailpage);
+export default connect(mapState)(ProductDetailPage);
