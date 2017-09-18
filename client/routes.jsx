@@ -8,6 +8,10 @@ import history from './history';
 import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, ProductDetailpage } from './components/index.jsx';
 import { me, getshoppingcart, fetchOrders, fetchCategory,  } from './store';
 
+import { Main, Login, Signup, UserHome, ShoppingCart, OrdersList, Category, Productpage, CheckoutForm, ErrorPage, Confirmation} from './components/index.jsx';
+import { me, getshoppingcart, fetchOrders, fetchCategory, } from './store';
+
+
 /**
  * COMPONENT
  */
@@ -28,9 +32,15 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/orders" component={OrdersList} />
             <Route path="/shoppingcart" component={ShoppingCart} />
+            <Route path="/checkoutform" component={CheckoutForm} />
             <Route exact path="/category" component={Category}/>
             <Route path="/category/:categoryId" component={Productpage} />
+
             <Route path="/products/:productId" component={ProductDetailpage} />
+
+            <Route path="/confirmation" component={Confirmation} />
+            <Route path="/error" component={ErrorPage} />
+
             {
               isLoggedIn &&
               <Switch>

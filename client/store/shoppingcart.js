@@ -67,7 +67,7 @@ export const checkoutshoppingcart = () =>
  * REDUCER
  */
 export default function (state = defaultCart, action) {
-    console.log('curent state', state);
+    console.log('current state', state);
     switch (action.type) {
         case GET_CART:
             return Object.assign({}, state, {items: action.items});
