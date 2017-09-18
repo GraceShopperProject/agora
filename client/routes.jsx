@@ -25,6 +25,7 @@ import {
   getshoppingcart,
   fetchOrders,
   fetchCategories,
+  fetchProducts,
 } from './store';
 
 
@@ -87,6 +88,7 @@ const mapDispatch = dispatch => ({
     dispatch(fetchOrders());
     dispatch(fetchCategories());
     dispatch(getshoppingcart());
+    dispatch(fetchProducts());
     dispatch(me());
   },
 });

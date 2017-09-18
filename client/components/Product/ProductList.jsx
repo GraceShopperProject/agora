@@ -7,20 +7,16 @@ import { connect } from 'react-redux';
 
 class ProductsList extends React.Component {
 
-	componentDidMount() {
-		if (this.props.match.params.categoryId)	this.setState({curCategoryId: +this.props.match.params.categoryId});
-	}
-
 	render() {
-		const productsToRender = this.state.products;
+		let productsToRender = this.state.products;
 
-		if (this.state.curCategoryId) { 
-			const curCategory = this.state.categories.find(category => category.id === this.state.curCategoryId);
-			productsToRender = productsToRender.filter(product => {
-				product.category.find(productCategory => {
-					productCategory.id === curCategory
+		if (this.props.match.params.categoryId) { 
+			const curCategory = this.state.categories.find(category => category.id === this.props.match.params.categoryId);
+		 	productsToRender = productsToRender.filter(product => {
+				return product.categories.find(productCategory => {
+					return productCategory.id === curCategory.id;
 				})
-			 !== -1});
+			 });
 		}
 
 		return (
@@ -56,7 +52,6 @@ const mapState = state => {
 	return {
 		products: state.products,
 		categories: state.categories,
-		curCategoryId: null,
 	}
 }
 

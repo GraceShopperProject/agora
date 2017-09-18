@@ -1,6 +1,5 @@
-
 import axios from 'axios';
-import history from '../history';
+
 /* ACTION TYPES
 */
 
@@ -21,12 +20,12 @@ const getAllProducts = (products) => ({ type: GET_ALL_PRODUCTS, products })
  */
 
 
-export const fetchProductsInCategory = (categoryId) => {
+export const fetchProducts = () => {
     return (dispatch) => {
         axios.get(`/api/products/`)
             .then(res => res.data)
             .then(allProducts => {
-                dispatch(getAllProducts(allProducts || defaultState));
+                dispatch(getAllProducts(allProducts));
             })
             .catch(err => console.log(err));
     }
