@@ -21,14 +21,33 @@ productRouter.route('/')
       .catch(next);
   })
   .post((req, res, next) => {
-    const maybeNewProduct = Product.build(req.body).get({ plain: true });
-    delete maybeNewProduct.id;
-    Product.findOrCreate({ where: maybeNewProduct })
-      .then(([product, wasCreated]) => {
-        if (wasCreated) return res.status(201).json(product);
-        return res.sendStatus(204);
-      })
-      .catch(next);
+
+          product = {
+              name: req.body.name,
+              price: req.body.price,
+              img_url: req.body.img_url,
+              description: req.body.description,
+              remaining_inventory: req.body.remaining_inventory
+          };
+          console.log(product);
+
+          var newProduct = Product.build(product);
+          newProduct.save()
+              .then(()=> {
+                  newProduct.addCategory(req.body.category);
+                  res.json(newProduct)
+              })
+              .catch(next)
+
+    //
+    // const maybeNewProduct = Product.build(req.body).get({ plain: true });
+    // delete maybeNewProduct.id;
+    // Product.findOrCreate({ where: maybeNewProduct })
+    //   .then(([product, wasCreated]) => {
+    //     if (wasCreated) return res.status(201).json(product);
+    //     return res.sendStatus(204);
+    //   })
+    //   .catch(next);
   });
 
 

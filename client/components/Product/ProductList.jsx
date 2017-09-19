@@ -9,6 +9,7 @@ class ProductList extends React.Component {
 
 	render() {
 		let productsToRender = this.props.products;
+		const isAdmin =  this.props.isAdmin;
 		if (this.props.match.params.categoryId) { 
 		 	productsToRender = productsToRender.filter(product => {
 				return product.categories.find(productCategory => {
@@ -26,12 +27,19 @@ class ProductList extends React.Component {
 								<div className="row">
 									{
 										(productsToRender) && productsToRender.map(product => (
-											<div className="col-lg-6 col-md-6 col-sm-12" key={product.id}>
+											<div className="col-lg-6 col-md-6 col-sm-12 tabs" key={product.id}>
+
 												<li>
 													<Link to={`/products/${product.id}`}>
-														{product.name}
-														<img src={product.img_url} name={product.name} height="50" width="50">
-														</img>
+														<tr> {product.name} </tr>
+
+														<img src={product.img_url} name={product.name} height="50" width="50"></img>
+
+														<tr>
+                                                            {
+                                                                isAdmin? product.remaining_inventory :null
+                                                            }
+														</tr>
 													</Link>
 												</li>
 											</div>
@@ -50,6 +58,7 @@ const mapState = state => {
 	return {
 		products: state.products,
 		categories: state.categories,
+        isAdmin :  state.user.is_admin
 	}
 }
 
