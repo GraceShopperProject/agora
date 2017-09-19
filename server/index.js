@@ -46,6 +46,7 @@ const createApp = () => {
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
+    userId: -1,
   }));
   app.use(passport.initialize());
   app.use(passport.session());

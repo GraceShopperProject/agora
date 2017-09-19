@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, } from 'react-redux';
-import { me, buildOrder } from '../../store';
+import { submitOrder } from '../../store';
 
 // TODO Form Authentication
 
@@ -27,12 +27,17 @@ class CheckoutForm extends React.Component {
 
   handleChange (evt) {
     evt.preventDefault();
-    console.log("CHANGING");
     const name = evt.target.name
     const value = evt.target.value;
     this.setState({
       [name]: value,
     });
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+
+    this.props.dispatch(submitOrder(this.state));
   }
 
   fillInDummyData(evt) {
@@ -51,11 +56,10 @@ class CheckoutForm extends React.Component {
   }
 
   render () {
-    const { handleSubmit, error, } = this.props;
     return (
       <div>
         <h2>Checkout</h2>
-        <form onSubmit={handleSubmit} name={name}>
+        <form onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor="name"><small>Name</small></label>
             <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
@@ -100,12 +104,12 @@ class CheckoutForm extends React.Component {
  */
 
 const mapState = state => {
-  //console.log(state);
   const curUser = state.user
   ? state.user
   : null;
 
   return {
+    products: state.shoppingcart, // productsInsideShoppingCart
     name: curUser && curUser.name ? curUser.name : '',
     street_address_1: curUser.street_address_1 || '',
     street_address_2: curUser.street_address_2 || '',
@@ -116,31 +120,4 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps)  => ({
-  handleSubmit(evt, user_request) {
-    evt.preventDefault();
-    console.log("You've submitted me!!");
-    const cart_product_list = JSON.parse(localStorage.getItem("Cart"));
-
-    console.log("MY OWN PROPS IS :", ownProps);
-
-    // buildOrder(user_request, product_list, total_price);
-    dispatch(buildOrder(ownProps.user_request, cart_product_list));
-  },
-
-  getCurUser () {
-    dispatch (me());
-  }
-});
-
-export default connect(mapState, mapDispatch)(CheckoutForm);
-
-/**
- * PROP TYPES
- */
-//   .propTypes = {
-//   name: PropTypes.string.isRequired,
-//   displayName: PropTypes.string.isRequired,
-//   handleSubmit: PropTypes.func.isRequired,
-//   error: PropTypes.object,
-// };
+export default connect(mapState)(CheckoutForm);

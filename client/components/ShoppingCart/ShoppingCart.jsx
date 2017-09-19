@@ -9,6 +9,13 @@ import store, { me, getshoppingcart, addshoppingcart, removeshoppingcart, checko
  */
 
 // TODO change variable names "items" to products in cart
+
+
+
+// *** TODO *** Render shopping cart from the redux shopping cart store
+// Window.onBeforeUnload()
+
+
 export default class ShoppingCart extends React.Component {
   constructor() {
     super();

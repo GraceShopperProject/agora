@@ -1,49 +1,54 @@
 import axios from 'axios';
 import history from '../history';
 
+
+// *** TODO *** 
+// Add and remove products
+// increase decrease quanity 
+
+// finish submitOrder
+
+
+
 /**
  * ACTION TYPES
  */
 const GET_CART = 'GET_CART';
 const REMOVE_ITEM = 'REMOVE_ITEM';
 const ADD_ITEM = 'ADD_ITEM';
-const CHECKOUT = 'CHECKOUT';
+const RESET_CART = 'RESET_CART';
 
 /**
  * INITIAL STATE
  */
-const defaultCart = {
-    items: [],
-};
+const defaultCart = [];
+//     products: [],
+// };
 
 /**
  * ACTION CREATORS
  */
-const getCart = items => ({ type: GET_CART, items, });
-const removeItem = itemId => ({ type: REMOVE_ITEM, itemId, });
-const addItem = item => ({ type: ADD_ITEM, item, });
-const checkout = () => ({ type: CHECKOUT, });
+const getCartFromLocalStorage = productsInCart => ({ type: GET_CART, shoppingCart: productsInCart, });
+const removeProduct = product => ({ type: REMOVE_ITEM, product, });
+const addProduct = product => ({ type: ADD_ITEM, product, });
+const resetCart = () => ({ type: RESET_CART })
 
 /**
  * THUNK CREATORS
  */
 
-export const getshoppingcart = () =>
-    dispatch =>
-    {
-        // if (localStorage.getItem("Cart")!==null)
-        //     { const items = JSON.parse(localStorage.getItem("Cart"));}
-        // else
+export const fetchCartFromLocalStorage = () =>
+    dispatch => {
         console.log('redux get localstorage',localStorage.getItem("Cart"));
-        let items = [];
+        let productsInCart = [];
         if (localStorage.getItem("Cart") !== null)
-            items = JSON.parse(localStorage.getItem("Cart"));
-
-
-        dispatch(getCart(items));
+            productsInCart = JSON.parse(localStorage.getItem("Cart"));
+        
+        dispatch(getCart(productsInCart));
     }
 
-export const addshoppingcart = (item) =>
+
+export const addToCart = (product) =>
     dispatch =>
     {
         dispatch(addItem(item));
@@ -51,18 +56,32 @@ export const addshoppingcart = (item) =>
         // localStorage.removeItem("Cart");
         // localStorage.setItem("Cart",JSON.stringify(items));
     }
-export const removeshoppingcart = (itemId) =>
+export const removeFromCart = (product) =>
     dispatch =>
     {
         // dispatch(removeItem(itemId));
 
     }
-export const checkoutshoppingcart = () =>
+export const submitOrder = (orderData, products) =>
     dispatch =>
     {
-        // dispatch(checkout());
-        // localStorage.removeItem("Cart");
-    }
+
+			//total_price += loop through products
+			// orderData.total_price = total_price;
+			// orderData.products = this.state.products;
+
+			axios.post(`/api/orders`, { user_request, total_price, products: shoppingCart})
+			.then(res => res.data)
+			.then(() => {
+				dispatch(resetCart());
+				console.log("created order and associated products"); 
+				history.push('/confirmation');
+			})
+			.catch(err => {
+				history.push('/error');
+			});
+		}
+
 /**
  * REDUCER
  */
@@ -75,8 +94,8 @@ export default function (state = defaultCart, action) {
             return Object.assign({}, state, {items: state.items.filter(item=> item.id !== action.itemId)});
         case ADD_ITEM:
             return Object.assign({}, state, {items: state.items.concat(action.item)});
-        case CHECKOUT:
-            return {};
+        case RESET_CART:
+            return [];
         default:
             return state;
     }
