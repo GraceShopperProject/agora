@@ -15,11 +15,11 @@ productRouter.param('id', (req, res, next, id) => {
 });
 
 productRouter.route('/')
-  // .get((req, res, next) => {
-  //   Product.findAll({})
-  //     .then(res.json.bind(res))
-  //     .catch(next);
-  // })
+  .get((req, res, next) => {
+    Product.findAll({})
+      .then(res.json.bind(res))
+      .catch(next);
+  })
   .post((req, res, next) => {
 
           product = {
