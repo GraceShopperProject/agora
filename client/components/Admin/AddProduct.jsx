@@ -64,54 +64,54 @@ export default class AddProduct extends React.Component {
             <div className="container">
                 <h3>Add a product</h3>
                 <form onSubmit={this.handleSubmit}>
-                    <section>
-                        <div className="form-group">
-                            <label className="col-sm-2 control-label">Name</label>
-                            <div className="col-sm-10">
-                                <input name="name" type="text" className="form-control" value={this.state.name} required onChange={this.handleChange}/>
-                            </div>
+                <section>
+                    <div className="form-group">
+                        <label className="col-sm-2 col-md-2 col-lg-2 control-label">Name</label>
+                        <div className="col-sm-10 col-md-10 col-lg-10">
+                             <input name="name" type="text" className="form-control" value={this.state.name} required onChange={this.handleChange}/>
                         </div>
-                        <div className="form-group">
-                            <label className="col-sm-2 control-label">Price</label>
-                            <div className="col-sm-10">
-                                <input name="price" type="text" className="form-control" value={this.state.price} required onChange={this.handleChange}/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 col-md-2 col-lg-2 control-label">Price</label>
+                        <div className="col-sm-10 col-md-10 col-lg-10">
+                            <input name="price" type="text" className="form-control" value={this.state.price} required onChange={this.handleChange}/>
                         </div>
-                        <div className="form-group">
-                            <label className="col-sm-2 control-label">Description</label>
-                            <div className="col-sm-10">
-                                <input name="description" type="text" className="form-control" value={this.state.description} onChange={this.handleChange}/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Description</label>
+                        <div className="col-sm-10">
+                            <input name="description" type="text" className="form-control" value={this.state.description} onChange={this.handleChange}/>
                         </div>
-                        <div className="form-group">
-                            <label className="col-sm-2 control-label">Inventory</label>
-                            <div className="col-sm-10">
-                                <input name="remaining_inventory" type="text" className="form-control" value={this.state.dremaining_inventory} onChange={this.handleChange}/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Inventory</label>
+                        <div className="col-sm-10">
+                            <input name="remaining_inventory" type="text" className="form-control" value={this.state.dremaining_inventory} onChange={this.handleChange}/>
                         </div>
-                        <div className="form-group">
-                            <label className="col-sm-2 control-label">Img_url</label>
-                            <div className="col-sm-10">
-                                <input name="img_url" type="text" className="form-control" value={this.state.img_url} onChange={this.handleChange}/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Img_url</label>
+                        <div className="col-sm-10">
+                            <input name="img_url" type="text" className="form-control" value={this.state.img_url} onChange={this.handleChange}/>
                         </div>
-                        <div className="form-group">
-                            <label className="col-sm-2 control-label">Category</label>
-                            <div className="col-sm-10">
-                                <select className="form-control" name="category" value={this.state.category} onChange={this.handleChange}>
-                                    {
-                                        categories && categories.map(category => (
-                                            <option value={category.id} key={category.id}>{category.name}</option>
-                                        ))
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Category</label>
+                        <div className="col-sm-10">
+                            <select className="form-control" name="category" value={this.state.category} onChange={this.handleChange}>
+                                {
+                                    categories && categories.map(category => (
+                                        <option value={category.id} key={category.id}>{category.name}</option>
+                                    ))
 
-                                    }
-                                </select>
-                            </div>
+                                }
+                            </select>
                         </div>
-                        <div className="col-sm-offset-2 col-sm-10">
-                            <button type="submit" className="btn btn-primary">submit</button>
-                        </div>
-                    </section>
+                    </div>
+                    <div className="col-sm-offset-2 col-sm-10">
+                        <button type="submit" className="btn btn-primary">submit</button>
+                    </div>
+                </section>
 
                 </form>
             </div>

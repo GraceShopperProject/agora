@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import store, {fetchCategoryProducts} from '../../store';
+import UpdateInventory from '../Admin/UpdateInventory'
 //import Sidebar from '../Layout'; 				<Sidebar />
 import { connect } from 'react-redux';
 
@@ -31,16 +32,14 @@ class ProductList extends React.Component {
 
 												<li>
 													<Link to={`/products/${product.id}`}>
-														<tr> {product.name} </tr>
+														 {product.name}
 
 														<img src={product.img_url} name={product.name} height="50" width="50"></img>
 
-														<tr>
-                                                            {
-                                                                isAdmin? product.remaining_inventory :null
-                                                            }
-														</tr>
 													</Link>
+                                                    {
+                                                        isAdmin? <UpdateInventory product = {product} /> :null
+                                                    }
 												</li>
 											</div>
 										))

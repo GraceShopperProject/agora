@@ -8,22 +8,24 @@ function NewCategory (props) {
         <form id="new-message-form" onSubmit={props.handleSubmit}>
 
             <div className="form-group">
-                <label className="col-sm-2 control-label">Add New Category</label>
-                <div className="col-sm-9">
+                <label className="col-sm-4 control-label">Add Category Name</label>
+                <div className="col-sm-8">
                     <div>
-                        <label htmlFor="Name"><small>Category Name</small></label>
+                        <label htmlFor="Name"><small></small></label>
                         <input name="name" type="text" />
-                    </div>
 
+                         <button className="btn btn-default col-sm-1" type="submit">+</button>
+                    </div>
                 </div>
-                <button className="btn btn-default col-sm-1" type="submit">+</button>
             </div>
         </form>
     );
 }
 
 const mapStateToProps = function (state, ownProps) {
-
+    return {
+        categories: state.categories
+    };
 };
 
 const mapDispatchToProps = function (dispatch, ownProps) {
