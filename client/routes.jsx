@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Router } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Router} from 'react-router';
+import {Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
@@ -24,7 +24,6 @@ import {
   MaintainUser,
 
 } from './components';
-
 import {
   me,
   getshoppingcart,
@@ -38,12 +37,12 @@ import {
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadInitialData();
   }
 
-  render() {
-    const { isLoggedIn } = this.props;
+  render () {
+    const {isLoggedIn} = this.props;
 
     return (
       <Router history={history}>
@@ -63,8 +62,8 @@ class Routes extends Component {
             <Route path="/products" component={ProductList} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
-            <Route path="/adminProduct" component={MaintainCatProD} />
-            <Route path="/adminUser" component={MaintainUser} />
+            <Route path="/adminProduct" component = {MaintainCatProD} />
+            <Route path="/adminUser" component = {MaintainUser} />
 
             {
               isLoggedIn &&
@@ -92,7 +91,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  loadInitialData() {
+  loadInitialData () {
     dispatch(fetchOrders());
     dispatch(fetchCategories());
     dispatch(getshoppingcart());
