@@ -11,11 +11,18 @@ router.post('/login', (req, res, next) => {
       } else if (!user.correctPassword(req.body.password)) {
         res.status(401).send('Incorrect password');
       } else {
-        req.login(user, err => (err ? next(err) : res.json(user)));
-      }
-    })
-    .catch(next);
-});
+        req.login(user, err => {
+          if (err) {
+            next(err) 
+          } else {
+            req.session.userId = user.id;
+            res.json(user);
+          }
+      })
+    }
+  })
+  .catch(next);
+}
 
 router.post('/signup', (req, res, next) => {
   User.create(req.body)

@@ -15,8 +15,10 @@ orderRouter.route('/')
     .then(orders => res.json(orders))
     .catch(next);
 })
+
+// user_request, total_price, productsList -> all products in the cart
 .post((req, res, next) => {
-  Order.create(req.body)
+  Order.create(req.body, { include: [Order_Product] })
     .then(newOrder => {
       res.status(201).send(newOrder);
     })

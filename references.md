@@ -47,3 +47,21 @@ Order_Product 'order_products'
 
 Category 'category'
   name: STRING, // Capital case
+
+
+
+
+order : {
+  user_request:
+  total_price: null
+  userId: req.session.userId ? req.session.userId : null
+  products: [{
+    productId:
+    product_price:
+    quantity: 
+    
+  },
+  {
+    ...
+  }]
+}
