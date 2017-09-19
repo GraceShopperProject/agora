@@ -42,6 +42,17 @@ const Main = (props) => {
                 </ul>
               </div>
           }
+          {
+           isAdmin
+           ?  <div id="nav-items" className="collapse navbar-collapse  navbar-right">
+                 <ul className="nav navbar-nav">
+                     {/* The navbar will show these links after you login as Admin */}
+                   <li><Link to="/maintain_c_p">Category/Products Maintaince</Link></li>
+                   <li><Link to="/maintain_user">Users maintaince</Link></li>
+                 </ul>
+               </div>
+               :null
+          }
 
           <ul className="nav navbar-right">
             <li>
@@ -62,7 +73,8 @@ const Main = (props) => {
  * CONTAINER
  */
 const mapState = state => ({
-  isLoggedIn: !!state.user.id,
+  isLoggedIn : !!state.user.id,
+  isAdmin :   state.user.is_admin
 });
 
 const mapDispatch = dispatch => ({

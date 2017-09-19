@@ -14,11 +14,15 @@ import {
   ShoppingCart,
   OrdersList,
   Category,
+
   ProductList,
   ProductDetail,
   CheckoutForm,
   ErrorPage,
   Confirmation,
+  MaintainCatProD,
+  MaintainUser,
+
 } from './components';
 import {
   me,
@@ -58,6 +62,8 @@ class Routes extends Component {
             <Route path="/products" component={ProductList} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
+            <Route path="/adminProduct" component = {MaintainCatProD} />
+            <Route path="/adminUser" component = {MaintainUser} />
 
             {
               isLoggedIn &&
