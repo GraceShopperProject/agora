@@ -26,7 +26,8 @@ const createOrder = ({user_request, itemsList}) => ({ type: CREATE_ORDER_AND_PRO
 export const fetchOrders = () => {
   return (dispatch) => {
     axios.get('/api/orders')
-      .then(res => {
+      .then(res => res.data) 
+      .then(() => {
         dispatch(getOrders(res.data || defaultOrders));
       })
       .catch(err => console.log(err));
@@ -42,46 +43,6 @@ export const fetchUserOrders = (userId) => {
       .catch(err => console.log(err));
   }
 }
-
-// TODO How to also build Product associations passed in?
-export const buildOrder = ( user_request, product_list, total_price, ) =>
-  dispatch =>
-    axios.post(`/api/orders`, { user_request, })
-      .then(res => res.data)
-      .then( newOrder => { // TODO ** 
-        console.log("NewOrder is ", newOrder);
-        const orderId = newOrder.id;
-        const totalPrice = 0;
-        product_list.map( product => {
-          console.log("Product: ", product); 
-          axios.post('/api/orderproducts', { 
-            orderId: orderId, 
-            productId: product.id,
-            quantity: product.quantity, 
-            product_price: product.price, 
-            })
-          .then(res => res.data)
-          .then(addedProductToOrder => {
-            console.log("added Product to Order ", addedProductToOrder);
-          })
-          //newOrder.addProduct(product, {through: })});
-          // create entry in orders-product
-          // { quantity: product.quantity, product_price: product.price, productId: product.id, orderId: orderId }
-          // totalPrice = totalPrice + (product.quantity * product.price);
-        })
-      }).then(() => {
-        localStorage.removeItem('Cart');
-        //generate unique string of chars to represent the order number for unauthenticated users? and just an order
-        console.log("the local storage is now ", localStorage.getItem('Cart'));
-        history.push('/confirmation');
-      })
-        // axios.put(`/api/orders/${newOrder.id}`) 
-        // dispatch(createOrder(res.data));
-        // history.push('/confirmation'); // TODO where to go after order created
-      .catch(err => {
-        console.log(err);
-        history.push('/error');
-      });
 
 /**
  * REDUCER

@@ -27,6 +27,10 @@ const Order = db.define('order', {
       return this.getDataValue('total_price') / 100;
     },
   },
+  confirmation_email: {
+    type: Sequelize.STRING
+  }
+  // *** TODO *** address stuff here
 });
 
 // DEFAULT SCOPE: set in models/index.js

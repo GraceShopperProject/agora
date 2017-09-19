@@ -65,3 +65,17 @@ order : {
     ...
   }]
 }
+
+shoppingCart : {
+  total_price: 
+  products: [{
+    productId:
+    product_price:
+    quantity: 
+    name: 
+    
+  },
+  {
+    ...
+  }]
+}
