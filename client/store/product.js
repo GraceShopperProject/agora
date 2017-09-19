@@ -14,31 +14,29 @@ const defaultState = [];
  * ACTION CREATORS
  */
 
-const getAllProducts = (products) => ({ type: GET_ALL_PRODUCTS, products })
+const getAllProducts = products => ({ type: GET_ALL_PRODUCTS, products });
 /**
  * THUNK CREATORS
  */
 
 
-export const fetchProducts = () => {
-    return (dispatch) => {
-        axios.get(`/api/products/`)
-            .then(res => res.data)
-            .then(allProducts => {
-                dispatch(getAllProducts(allProducts));
-            })
-            .catch(err => console.log(err));
-    }
-}
+export const fetchProducts = () => (dispatch) => {
+  axios.get('/api/products/')
+    .then(res => res.data)
+    .then((allProducts) => {
+      dispatch(getAllProducts(allProducts));
+    })
+    .catch(err => console.log(err));
+};
 
 /**
  * REDUCER
  */
 export default function (state = defaultState, action) {
-    switch (action.type) {
-        case GET_ALL_PRODUCTS:
-            return action.products;
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case GET_ALL_PRODUCTS:
+      return action.products;
+    default:
+      return state;
+  }
 }
