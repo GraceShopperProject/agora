@@ -21,6 +21,7 @@ const getAllProducts = products => ({ type: GET_ALL_PRODUCTS, products });
 
 
 export const fetchProducts = () => (dispatch) => {
+  console.log('requesting products');
   axios.get('/api/products/')
     .then(res => res.data)
     .then((allProducts) => {

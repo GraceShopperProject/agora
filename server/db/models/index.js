@@ -3,7 +3,7 @@ const Order = require('./order');
 const Category = require('./category');
 const Product = require('./product');
 const Review = require('./review');
-const Order_Product = require('./order_products');
+const Order_Products = require('./order_products');
 
 /**
  * Table Associations
@@ -11,8 +11,8 @@ const Order_Product = require('./order_products');
 User.Orders = User.hasMany(Order);
 Order.User = Order.belongsTo(User);
 
-Order.Products = Order.belongsToMany(Product, { through: 'order_products' });
-Product.Orders = Product.belongsToMany(Order, { through: 'order_products' });
+Order.Products = Order.belongsToMany(Product, { through: Order_Products });
+Product.Orders = Product.belongsToMany(Order, { through: Order_Products });
 
 
 Order.addScope('defaultScope', {
@@ -40,7 +40,7 @@ Review.User = Review.belongsTo(User);
 User.Reviews = User.hasMany(Review);
 
 Product.addScope('defaultScope', {
-  include: [Category]
+  include: [Category],
 }, {
   override: true,
 });
@@ -57,5 +57,5 @@ module.exports = {
   Product,
   Category,
   Review,
-  Order_Product,
+  Order_Products,
 };

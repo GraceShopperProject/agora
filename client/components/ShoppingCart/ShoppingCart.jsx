@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-// import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import store, {
   me,
   removeProduct,
@@ -25,7 +25,8 @@ import store, {
 // Window.onBeforeUnload()
 
 
-function ShoppingCart ({
+function ShoppingCart({
+  history,
   cart,
   products,
   handleAdd,
@@ -88,7 +89,12 @@ function ShoppingCart ({
         </tbody>
       </table>
 
-      <form onSubmit={handleAdd}>
+      <form onSubmit={(evt) => {
+        evt.preventDefault();
+        handleAdd(products.find(aProduct => aProduct.id === +evt.target.product.value));
+      }}
+
+      >
         <div className="form-group">
           <label
             htmlFor="product-options"
@@ -105,7 +111,7 @@ function ShoppingCart ({
               {
                 products && products.map(product => (
                   <option
-                    value={product}
+                    value={product.id}
                     key={product.id}
                   >
                     {product.name}
@@ -115,39 +121,28 @@ function ShoppingCart ({
             </select>
 
           </div>
-          <button className="btn btn-default col-sm-1 col-lg-1 col-md-1" type="submit">+</button>
+          <button className="btn btn-default" type="submit">+</button>
         </div>
         <div className="form-group">
-
+          {cart.length &&
+            <Link to="/checkout">
+              <button className="btn">
+                Checkout
+              </button>
+            </Link>
+          }
           <input onClick={evt => handleCheckOut(evt)} type="button" value="Check Out" />
 
           <input onClick={evt => handleCleanCart(evt)} type="button" value="Clean Cart" />
 
         </div>
       </form>
-    </div>
+    </div >
 
   );
 }
 
 // ------------------- HELPERS ---------------------------
-
-
-const handleAdd = (evt) => {
-  evt.preventDefault();
-};
-
-const handleRemove = (productId) => {
-
-};
-
-const handleIncrease = (productId) => {
-
-};
-
-const handleDecrease = (productId) => {
-
-};
 
 const handleCheckOut = (evt) => {
   // STEPS
@@ -159,7 +154,6 @@ const handleCheckOut = (evt) => {
   //
 
   evt.preventDefault();
-
   history.push('/checkoutform');
 };
 
@@ -176,10 +170,23 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  handleAdd,
-  handleRemove,
-  handleIncrease,
-  handleDecrease,
+
+  handleAdd: (product) => {
+    dispatch(addProduct(product));
+  },
+
+  handleRemove: (product) => {
+    dispatch(removeProduct(product));
+  },
+
+  handleIncrease: (product) => {
+    dispatch(increaseQuantity(product));
+  },
+
+  handleDecrease: (product) => {
+    dispatch(decreaseQuantity(product));
+  },
+
   handleCheckOut,
   handleCleanCart,
 });

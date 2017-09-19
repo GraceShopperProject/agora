@@ -27,7 +27,7 @@ import {
 
 import {
   me,
-  getshoppingcart,
+  fetchCartFromLocalStorage,
   fetchOrders,
   fetchCategories,
   fetchProducts,
@@ -53,14 +53,12 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/orders" component={OrdersList} />
-            <Route path="/shoppingcart" component={ShoppingCart} />
-            <Route path="/checkoutform" component={CheckoutForm} />
-
-
             <Route path="/category/:categoryId" component={ProductList} />
             <Route exact path="/category" component={Category} />
             <Route path="/products/:productId" component={ProductDetail} />
             <Route path="/products" component={ProductList} />
+            <Route path="/shoppingcart" component={ShoppingCart} />
+            <Route path="/checkout" component={CheckoutForm} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
             <Route path="/adminProduct" component={MaintainCatProD} />
@@ -90,12 +88,12 @@ const mapState = state => ({
   // Otherwise, state.user will be an empty object, and state.user.id will be falsey
   isLoggedIn: !!state.user.id,
 });
-
+console.log(fetchProducts);
 const mapDispatch = dispatch => ({
   loadInitialData() {
     dispatch(fetchOrders());
     dispatch(fetchCategories());
-    dispatch(getshoppingcart());
+    dispatch(fetchCartFromLocalStorage());
     dispatch(fetchProducts());
     dispatch(me());
   },

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import store from '../store';
 
 
 // *** TODO ***
@@ -24,7 +25,7 @@ const RESET_CART = 'RESET_CART';
 /**
  * ACTION CREATORS
  */
-const getCartFromLocalStorage = shoppingCart => ({
+const getCart = shoppingCart => ({
   type: GET_CART,
   shoppingCart,
 });
@@ -57,21 +58,25 @@ export const resetCart = () => ({ type: RESET_CART });
 
 export const fetchCartFromLocalStorage = () =>
   (dispatch) => {
-    console.log('redux get localstorage', localStorage.getItem('Cart'));
     let productsInCart = [];
-    if (localStorage.getItem('Cart') !== null) { productsInCart = JSON.parse(localStorage.getItem('Cart')); }
-
+    if (localStorage.getItem('Cart') !== null) {
+      productsInCart = JSON.parse(localStorage.getItem('Cart'));
+    }
     dispatch(getCart(productsInCart));
   };
 
 
-export const submitOrder = (orderData, products) => (dispatch) => {
+export const submitOrder = orderData => (dispatch) => {
   // *** TODO: ***
   // total_price += loop through products
   // orderData.total_price = total_price;
   // orderData.products = this.state.products;
+  console.log(orderData);
+  const total_price = orderData.products
+    .reduce((total, { price, quantity }) => total + (price * quantity), 0);
 
-  axios.post('/api/orders', orderData)
+
+  axios.post('/api/orders', { ...orderData, total_price })
     .then(res => res.data)
     .then(() => {
       dispatch(resetCart());
@@ -87,9 +92,9 @@ export const submitOrder = (orderData, products) => (dispatch) => {
 
 const addOrIncreaseProduct = (cart, productToAdd) => {
   const productInCart = cart.find(product => product.id === productToAdd.id);
-  if (productInCart !== -1) product.quantity++;
+  if (productInCart) productInCart.quantity += 1;
   else {
-    productToAdd.quantitiy = 1;
+    productToAdd.quantity = 1;
     cart.push(productToAdd);
   }
   return cart;

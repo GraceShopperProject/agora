@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, } from 'react-redux';
+import { connect } from 'react-redux';
 import { submitOrder } from '../../store';
 
 // TODO Form Authentication
@@ -8,12 +8,19 @@ import { submitOrder } from '../../store';
  * COMPONENT
  */
 class CheckoutForm extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
-
+    const { user, shoppingCart } = props;
     this.state = {
-      ...this.props,
+      userId: user.id,
+      products: shoppingCart, // productsInsideShoppingCart
+      // name: user.name,
+      // street_address_1: user.street_address_1,
+      // street_address_2: user.street_address_2,
+      // city: user.city,
+      // state: user.state,
+      // zip: user.zip,
+      confirmation_email: user.email,
       user_request: '',
     };
 
@@ -21,28 +28,18 @@ class CheckoutForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount () {
-    this.props.getCurUser();
-  }
-
-  handleChange (evt) {
+  handleChange(evt) {
     evt.preventDefault();
-    const name = evt.target.name
+    const name = evt.target.name;
     const value = evt.target.value;
     this.setState({
       [name]: value,
     });
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault();
-
-    this.props.dispatch(submitOrder(this.state));
-  }
-
   fillInDummyData(evt) {
     evt.preventDefault();
-    console.log("dummy data");
+    console.log('dummy data');
     this.setState({
       name: 'hi',
       street_address_1: 'hi',
@@ -55,11 +52,18 @@ class CheckoutForm extends React.Component {
     });
   }
 
-  render () {
+  render() {
+    const {
+      handleCheckout,
+    } = this.props;
     return (
       <div>
         <h2>Checkout</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={(evt) => {
+          evt.preventDefault();
+          handleCheckout(this.state);
+        }}
+        >
           <div>
             <label htmlFor="name"><small>Name</small></label>
             <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
@@ -92,32 +96,25 @@ class CheckoutForm extends React.Component {
             <button type="submit">Submit</button>
             <button onClick={this.fillInDummyData}>Quick Fill in Data</button>
           </div>
-          {error && error.response && <div> {error.response.data} </div>}
         </form>
       </div>
     );
   }
-};
+}
 
 /**
  * CONTAINER
  */
 
-const mapState = state => {
-  const curUser = state.user
-  ? state.user
-  : null;
+const mapState = ({ user, shoppingCart }) => ({
+  user,
+  shoppingCart,
+});
 
-  return {
-    products: state.shoppingcart, // productsInsideShoppingCart
-    name: curUser && curUser.name ? curUser.name : '',
-    street_address_1: curUser.street_address_1 || '',
-    street_address_2: curUser.street_address_2 || '',
-    city: curUser.city || '',
-    state: curUser.state || '',
-    zip: curUser.zip || '',
-    email: curUser.email || '',
-  }
-}
+const mapDispatch = dispatch => ({
+  handleCheckout: (orderData) => {
+    dispatch(submitOrder(orderData));
+  },
+});
 
-export default connect(mapState)(CheckoutForm);
+export default connect(mapState, mapDispatch)(CheckoutForm);

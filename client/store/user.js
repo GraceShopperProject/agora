@@ -10,13 +10,22 @@ const REMOVE_USER = 'REMOVE_USER';
 /**
  * INITIAL STATE
  */
-const defaultUser = {};
+const defaultUser = {
+  id: '',
+  name: '',
+  street_address_1: '',
+  street_address_2: '',
+  city: '',
+  state: '',
+  zip: '',
+  email: '',
+};
 
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({ type: GET_USER, user, });
-const removeUser = () => ({ type: REMOVE_USER, });
+const getUser = user => ({ type: GET_USER, user });
+const removeUser = () => ({ type: REMOVE_USER });
 
 /**
  * THUNK CREATORS
@@ -36,7 +45,7 @@ export const auth = (email, password, name, method) =>
         history.push('/home');
       })
       .catch(error =>
-        dispatch(getUser({ error, })));
+        dispatch(getUser({ error })));
 
 export const logout = () =>
   dispatch =>
