@@ -1,10 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import AddProduct from './AddProduct';
-import EidtCategory from './EditCategory';
+import EditUser from './EditUser';
+import EditOrder from './EditOrder';
 
-
-export default class MaintainCatProD extends React.Component {
+export default class MaintainUser extends React.Component {
 
     render() {
 
@@ -14,10 +13,10 @@ export default class MaintainCatProD extends React.Component {
                 </div>
                 <div className="row">
                     <div className = "col-xs-6 col-md-6 col-lg-6">
-                        <AddProduct />
+                        <EditOrder />
                     </div>
                     <div className = "col-xs-6 col-md-6 col-lg-6">
-                        <EidtCategory />
+                        <EditUser />
                     </div>
                 </div>
             </div>

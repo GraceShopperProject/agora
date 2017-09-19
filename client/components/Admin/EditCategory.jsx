@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {deleteCategory} from '../store';
+import {deleteCategory} from '../../store';
+import { connect } from 'react-redux';
 import NewCategory from './NewCategory';
 
-const EditCategory = (props) => {
-    const categories = this.props.categories;
+function EditCategory (props) {
+    const categories = props.categories;
+    console.log(categories);
         return (
             <div className="container content">
                 <h3>Category List</h3>
@@ -16,16 +18,16 @@ const EditCategory = (props) => {
                                     <Link value={category.id} to={`/category/${category.id}`}>{category.name} </Link>
                                 </li>
                             </div>
-                            <input className="col-cm-1" onClick={()=> this.props.handleRemove(category.id)} type='button' value='x'/>
+                            <input className="col-cm-1" onClick={()=> props.handleRemove(category.id)} type='button' value='x'/>
                         </div>
                     ))
                 }
                 <div>
                     <NewCategory />
                 </div>
-            </div>
-        )
-    }
+        </div>
+    )
+}
 
 const mapState = state => ({
     categories: state.categories,
@@ -34,7 +36,7 @@ const mapState = state => ({
 const mapDispatch = (dispatch, ownProps) => ({
 
     handleRemove(categoryId) {
-        console.log('courseId pass to the store', courseId);
+        console.log('categoryId pass to the store', categoryId);
         dispatch(deleteCategory(categoryId));
     }
 });

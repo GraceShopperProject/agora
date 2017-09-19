@@ -33,7 +33,9 @@ export {
   ProductDetail,
 } from './Product';
 
-export MaintainCatProD from './MaintainCatProD';
-export MaintainUser from './MaintainUser';
+export {
+    MaintainCatProD,
+    MaintainUser,
+} from './Admin';
 
 

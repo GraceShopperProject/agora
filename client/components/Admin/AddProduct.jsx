@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import store, {fetchCategories} from '../store';
+import store, {fetchCategories} from '../../store/index';
 
 export default class AddProduct extends React.Component {
     constructor() {
