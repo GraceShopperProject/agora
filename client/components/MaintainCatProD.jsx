@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import AddProduct from './AddProduct';
+import EidtCategory from './EidtCategory';
 
 
 export default class MaintainCatProD extends React.Component {
@@ -10,9 +11,15 @@ export default class MaintainCatProD extends React.Component {
         return (
             <div className="container content">
                 <div className="col-xs-12">
-                    <h1>Admin Product / Category</h1>
                 </div>
-                <AddProduct />
+                <div className="row">
+                    <div className = "col-xs-6 col-md-6 col-lg-6">
+                        <AddProduct />
+                    </div>
+                    <div className = "col-xs-6 col-md-6 col-lg-6">
+                        <EidtCategory />
+                    </div>
+                </div>
             </div>
         )
     }
