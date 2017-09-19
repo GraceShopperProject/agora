@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import EditUser from './EditUser';
-import EidtOrder from './EidtOrder';
+import EidtOrder from './EditOrder';
 
 export default class MaintainUser extends React.Component {
 

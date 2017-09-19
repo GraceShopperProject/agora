@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import AddProduct from './AddProduct';
-import EidtCategory from './EidtCategory';
+import EidtCategory from './EditCategory';
 
 
 export default class MaintainCatProD extends React.Component {
