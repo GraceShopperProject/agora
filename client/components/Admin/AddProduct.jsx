@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import store, {fetchCategories} from '../../store/index';
+import store, {fetchCategories,fetchProducts } from '../../store/index';
 
 export default class AddProduct extends React.Component {
     constructor() {
@@ -55,6 +55,7 @@ export default class AddProduct extends React.Component {
             remaining_inventory: 1,
             categoryId : '',
         });
+        store.dispatch(fetchProducts());
     }
 
     render() {
