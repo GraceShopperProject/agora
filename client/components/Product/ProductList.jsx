@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import store, { fetchCategoryProducts } from '../../store';
+import store, { fetchCategoryProducts, } from '../../store';
 import UpdateInventory from '../Admin/UpdateInventory'
 // import Sidebar from '../Layout'; 				<Sidebar />
 import { connect } from 'react-redux';

@@ -77,11 +77,14 @@ export const submitOrder = (orderData, productsInCart) => (dispatch) => {
 
 // ------------------------ UTILS ---------------------------
 
-const addOrIncreaseProduct = (cart, productToAdd) => {
+const addOrIncreaseProduct = (cart, productToAdd, quantity) => {
+  console.log("prod to add:", productToAdd);
+  const quantityToAdd = quantity ? +quantity : 1;
+  console.log(quantity);
   const productInCart = cart.find(product => product.id === productToAdd.id);
-  if (productInCart) productInCart.quantity += 1;
+  if (productInCart) productInCart.quantity += quantityToAdd;
   else {
-    productToAdd.quantity = 1;
+    productToAdd.quantity = quantityToAdd;
     cart.push(productToAdd);
   }
   return cart;
@@ -114,7 +117,7 @@ export default function (shoppingCart = [], action) {
     case DECREASE_QUANTITY:
       return removeOrDecreaseProduct([...shoppingCart], action.product);
     case SET_QUANTITY:
-      return;
+      return addOrIncreaseProduct([...shoppingCart], action.product, action.quantity);
     case RESET_CART:
       return [];
     default:
