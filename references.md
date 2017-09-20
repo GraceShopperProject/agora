@@ -1,7 +1,7 @@
 
 MODELS
 
-User 'user' 
+User 'user'
   email: STRING,
   password: STRING,
   salt: STRING,
@@ -21,10 +21,10 @@ User 'user'
     name(),
   see model definition for password crypto
 
-Review 'review' 
+Review 'review'
   rating: INTEGER,
   text: TEXT
- 
+
 Product 'product'
   name: STRING,
   price: INTEGER,
@@ -55,27 +55,21 @@ order : {
   user_request:
   total_price: null
   userId: req.session.userId ? req.session.userId : null
+  address:
   products: [{
     productId:
     product_price:
-    quantity: 
-    
+    quantity:
+
   },
   {
     ...
   }]
 }
 
-shoppingCart : {
-  total_price: 
-  products: [{
+shoppingCart : [{
     productId:
     product_price:
-    quantity: 
-    name: 
-    
-  },
-  {
-    ...
-  }]
-}
+    quantity:
+    name:
+}]
