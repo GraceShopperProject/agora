@@ -71,12 +71,28 @@ export const submitOrder = orderData => (dispatch) => {
   // total_price += loop through products
   // orderData.total_price = total_price;
   // orderData.products = this.state.products;
+
+  // ORDER SHOULD LOOK LIKE:
+  // order: {
+  //   user_request:
+  //   total_price: null
+  //   userId: req.session.userId ? req.session.userId : null
+  //   address:
+  //   products: [{
+  //     productId:
+  //     product_price:
+  //     quantity:
+
+  // }
+
   console.log(orderData);
+
   const total_price = orderData.products
     .reduce((total, { price, quantity }) => total + (price * quantity), 0);
 
+  orderData.order.total_price = total_price;
 
-  axios.post('/api/orders', { ...orderData, total_price })
+  axios.post('/api/orders', orderData)
     .then(res => res.data)
     .then(() => {
       dispatch(resetCart());

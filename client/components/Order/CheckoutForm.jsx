@@ -12,16 +12,18 @@ class CheckoutForm extends React.Component {
     super(props);
     const { user, shoppingCart } = props;
     this.state = {
-      userId: user.id,
       products: shoppingCart, // productsInsideShoppingCart
-      // name: user.name,
-      // street_address_1: user.street_address_1,
-      // street_address_2: user.street_address_2,
-      // city: user.city,
-      // state: user.state,
-      // zip: user.zip,
-      confirmation_email: user.email,
-      user_request: '',
+      order: {
+        userId: user.id,
+        // name: user.name,
+        // street_address_1: user.street_address_1,
+        // street_address_2: user.street_address_2,
+        // city: user.city,
+        // state: user.state,
+        // zip: user.zip,
+        confirmation_email: user.email,
+        user_request: '',
+      },
     };
 
     this.fillInDummyData = this.fillInDummyData.bind(this);

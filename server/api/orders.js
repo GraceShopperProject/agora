@@ -1,5 +1,5 @@
 const orderRouter = require('express').Router();
-const { Order, Product, Order_Product } = require('../db/models');
+const { Order, Product, Order_Products } = require('../db/models');
 
 orderRouter.param('id', (req, res, next, id) => {
   Order.findOne({ where: { id } })
@@ -18,12 +18,9 @@ orderRouter.route('/')
 
   // user_request, total_price, productsList -> all products in the cart
   .post((req, res, next) => {
-    Order.create(req.body, {
-      include: [{
-        association: Product,
-        through: Order_Product,
-      }],
-    })
+    return Order.create(req.body.order)
+      .then(newOrder => newOrder.setProducts(req.body.products))
+      // .then(newOrderWithProducts => newOrderWithProducts.save())
       .then((newOrder) => {
         res.status(201).send(newOrder);
       })
