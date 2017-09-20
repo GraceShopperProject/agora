@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateInventory } from '../../store';
+import store, { updateInventory, fetchProducts } from '../../store';
 
 class UpdateInventroy extends React.Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class UpdateInventroy extends React.Component {
     }
 
     componentDidMount() {
+        store.dispatch (fetchProducts());
         this.setState({
             Quantity: this.state.product.product.remaining_inventory,
             Price: this.state.product.product.price,
@@ -77,6 +78,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
             item.new_inventory = +evt.target.Quantity.value;
             console.log('need to update the product',item);
             dispatch (updateInventory(item));
+
         }
     };
 };

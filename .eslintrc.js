@@ -6,6 +6,7 @@ module.exports = {
             "error", "always-multiline", {
                 "functions": "ignore"
             }],
-        "camelcase": 0
+        "camelcase": 0,
+        "arrow-body-style": 0,
     },
 };

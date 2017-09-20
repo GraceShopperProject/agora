@@ -12,7 +12,16 @@ const GET_ALLUSERS = 'GET_ALLUSERS';
 /**
  * INITIAL STATE
  */
-const defaultUser = {};
+const defaultUser = {
+  id: '',
+  name: '',
+  street_address_1: '',
+  street_address_2: '',
+  city: '',
+  state: '',
+  zip: '',
+  email: '',
+};
 
 /**
  * ACTION CREATORS
@@ -40,7 +49,7 @@ export const auth = (email, password, name, method) =>
         history.push('/home');
       })
       .catch(error =>
-        dispatch(getUser({ error, })));
+        dispatch(getUser({ error })));
 
 export const logout = () =>
   dispatch =>

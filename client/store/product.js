@@ -22,15 +22,13 @@ const updateProduct = () => ({ type: UPDATE_INVENTORY })
  */
 
 
-export const fetchProducts = () => {
-    return (dispatch) => {
-        axios.get(`/api/products/`)
-            .then(res => res.data)
-            .then(allProducts => {
-                dispatch(getAllProducts(allProducts));
-            })
-            .catch(err => console.log(err));
-    }
+export const fetchProducts = () => (dispatch) => {
+  axios.get('/api/products/')
+    .then(res => res.data)
+    .then((allProducts) => {
+      dispatch(getAllProducts(allProducts));
+    })
+    .catch(err => console.log(err))
 }
 
 export const updateInventory = (product) => {

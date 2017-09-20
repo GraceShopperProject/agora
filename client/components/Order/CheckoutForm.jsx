@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect, } from 'react-redux';
-import { submitOrder } from '../../store';
+import { connect } from 'react-redux';
+import { submitOrder, me } from '../../store';
 
 // TODO Form Authentication
 
@@ -8,116 +8,129 @@ import { submitOrder } from '../../store';
  * COMPONENT
  */
 class CheckoutForm extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
-
+    const { user, shoppingCart } = props;
+    console.log("ROBIN USER IS: ", user);
     this.state = {
-      ...this.props,
-      user_request: '',
+      products: shoppingCart,
+      order: {
+        userId: user.id,
+        name: user.name,
+        street_address_1: user.street_address_1 || '',
+        street_address_2: user.street_address_2,
+        city: user.city,
+        state: user.state,
+        zip: user.zip,
+        confirmation_email: user.email,
+        user_request: '',
+      },
     };
 
     this.fillInDummyData = this.fillInDummyData.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount () {
-    this.props.getCurUser();
-  }
-
-  handleChange (evt) {
+  handleChange(evt) {
     evt.preventDefault();
-    const name = evt.target.name
+    const name = evt.target.name;
     const value = evt.target.value;
-    this.setState({
+    this.setState(
+      { order: {
       [name]: value,
+      }
     });
-  }
-
-  handleSubmit(evt) {
-    evt.preventDefault();
-
-    this.props.dispatch(submitOrder(this.state));
   }
 
   fillInDummyData(evt) {
     evt.preventDefault();
-    console.log("dummy data");
+    const userId = this.state.userId;
     this.setState({
-      name: 'hi',
-      street_address_1: 'hi',
-      street_address_2: 'hi',
-      city: 'hi',
-      state: 'hi',
-      zip: '11111',
-      email: 'hi@hi.hi',
-      user_request: 'hi hi hi',
+      order: {
+        userId,
+        name: 'hi',
+        street_address_1: 'hi',
+        street_address_2: 'hi',
+        city: 'hi',
+        state: 'hi',
+        zip: '11111',
+        confirmation_email: 'hi@hi.hi',
+        user_request: 'hi hi hi',
+      }
     });
   }
 
-  render () {
+  render() {
+    const {
+      handleCheckout,
+    } = this.props;
     return (
       <div>
         <h2>Checkout</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={(evt) => {
+          evt.preventDefault();
+          handleCheckout(this.state.order, this.state.products);
+        }}
+        >
           <div>
             <label htmlFor="name"><small>Name</small></label>
-            <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
+            <input name="name" type="text" value={this.state.order.name} onChange={this.handleChange} />
+          </div>
+          <div>
+            <label htmlFor="confirmation_email"><small>Email</small></label>
+            <input name="confirmation_email" type="text" value={this.state.order.confirmation_email} onChange={this.handleChange} />
           </div>
           <div>
             <label htmlFor="street_address_1"><small>Street Address 1:</small></label>
-            <input name="street_address_1" type="text" onChange={this.handleChange} value={this.state.street_address_1} />
+            <input name="street_address_1" type="text" onChange={this.handleChange} value={this.state.order.street_address_1} />
           </div>
           <div>
             <label htmlFor="street_address_2"><small>Street Address 2:</small></label>
-            <input name="street_address_2" type="text" onChange={this.handleChange} value={this.state.street_address_2} />
+            <input name="street_address_2" type="text" onChange={this.handleChange} value={this.state.order.street_address_2} />
           </div>
           <div>
             <label htmlFor="city"><small>City:</small></label>
-            <input name="city" type="text" onChange={this.handleChange} value={this.state.city} />
+            <input name="city" type="text" onChange={this.handleChange} value={this.state.order.city} />
           </div>
           <div>
             <label htmlFor="state"><small>State:</small></label>
-            <input name="state" type="text" onChange={this.handleChange} value={this.state.state} />
+            <input name="state" type="text" onChange={this.handleChange} value={this.state.order.state} />
           </div>
           <div>
             <label htmlFor="zip"><small>Zip Code:</small></label>
-            <input name="zip" type="text" onChange={this.handleChange} value={this.state.zip} />
+            <input name="zip" type="text" onChange={this.handleChange} value={this.state.order.zip} />
           </div>
           <div>
             <label htmlFor="user_request"><small>Special instructions:</small></label>
-            <input name="user_request" type="text" onChange={this.handleChange} value={this.state.user_request} />
+            <input name="user_request" type="text" onChange={this.handleChange} value={this.state.order.user_request} />
           </div>
           <div>
             <button type="submit">Submit</button>
             <button onClick={this.fillInDummyData}>Quick Fill in Data</button>
           </div>
-          {error && error.response && <div> {error.response.data} </div>}
         </form>
       </div>
     );
   }
-};
+}
 
 /**
  * CONTAINER
  */
 
-const mapState = state => {
-  const curUser = state.user
-  ? state.user
-  : null;
+const mapState = ({ user, shoppingCart }) => ({
+  user,
+  shoppingCart,
+});
 
-  return {
-    products: state.shoppingcart, // productsInsideShoppingCart
-    name: curUser && curUser.name ? curUser.name : '',
-    street_address_1: curUser.street_address_1 || '',
-    street_address_2: curUser.street_address_2 || '',
-    city: curUser.city || '',
-    state: curUser.state || '',
-    zip: curUser.zip || '',
-    email: curUser.email || '',
+const mapDispatch = dispatch => ({
+  handleCheckout: (orderData, productsInShoppingCart) => {
+    orderData.products = productsInShoppingCart;
+    dispatch(submitOrder(orderData));
+  },
+  getUserInfo: () => {
+    dispatch(me());
   }
-}
+});
 
-export default connect(mapState)(CheckoutForm);
+export default connect(mapState, mapDispatch)(CheckoutForm);

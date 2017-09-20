@@ -19,6 +19,11 @@ class EditUsers extends React.Component {
             .then((res) => {
                 this.setState({users: res.data})
             })
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
     }
 
 

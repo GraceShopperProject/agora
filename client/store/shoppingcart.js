@@ -1,13 +1,6 @@
 import axios from 'axios';
 import history from '../history';
-
-
-// *** TODO *** 
-// Add and remove products
-// increase decrease quanity 
-
-// finish submitOrder
-
+import store from '../store';
 
 
 /**
@@ -19,84 +12,113 @@ const ADD_ITEM = 'ADD_ITEM';
 const RESET_CART = 'RESET_CART';
 
 /**
- * INITIAL STATE
- */
-const defaultCart = [];
-//     products: [],
-// };
-
-/**
  * ACTION CREATORS
  */
-const getCartFromLocalStorage = productsInCart => ({ type: GET_CART, shoppingCart: productsInCart, });
-const removeProduct = product => ({ type: REMOVE_ITEM, product, });
-const addProduct = product => ({ type: ADD_ITEM, product, });
-const resetCart = () => ({ type: RESET_CART })
+const getCart = shoppingCart => ({
+  type: GET_CART,
+  shoppingCart,
+});
+export const removeProduct = product => ({
+  type: REMOVE_PRODUCT,
+  product,
+});
+export const addProduct = product => ({
+  type: ADD_PRODUCT,
+  product,
+});
+export const increaseQuantity = product => ({
+  type: INCREASE_QUANTITY,
+  product,
+});
+export const decreaseQuantity = product => ({
+  type: DECREASE_QUANTITY,
+  product,
+});
+export const setQuantity = (product, quantity) => ({
+  type: SET_QUANTITY,
+  product,
+  quantity,
+});
+export const resetCart = () => ({ type: RESET_CART });
 
 /**
  * THUNK CREATORS
  */
 
 export const fetchCartFromLocalStorage = () =>
-    dispatch => {
-        console.log('redux get localstorage',localStorage.getItem("Cart"));
-        let productsInCart = [];
-        if (localStorage.getItem("Cart") !== null)
-            productsInCart = JSON.parse(localStorage.getItem("Cart"));
-        
-        dispatch(getCart(productsInCart));
+  (dispatch) => {
+    let productsInCart = [];
+    if (localStorage.getItem('Cart') !== null) {
+      productsInCart = JSON.parse(localStorage.getItem('Cart'));
     }
+    dispatch(getCart(productsInCart));
+  };
 
 
-export const addToCart = (product) =>
-    dispatch =>
-    {
-        dispatch(addItem(item));
-        // const items = state.items;  ????
-        // localStorage.removeItem("Cart");
-        // localStorage.setItem("Cart",JSON.stringify(items));
-    }
-export const removeFromCart = (product) =>
-    dispatch =>
-    {
-        // dispatch(removeItem(itemId));
+export const submitOrder = (orderData, productsInCart) => (dispatch) => {
 
-    }
-export const submitOrder = (orderData, products) =>
-    dispatch =>
-    {
+  const total_price = orderData.products
+    .reduce((total, { price, quantity }) => total + (price * quantity), 0);
 
-			//total_price += loop through products
-			// orderData.total_price = total_price;
-			// orderData.products = this.state.products;
 
-			axios.post(`/api/orders`, { user_request, total_price, products: shoppingCart})
-			.then(res => res.data)
-			.then(() => {
-				dispatch(resetCart());
-				console.log("created order and associated products"); 
-				history.push('/confirmation');
-			})
-			.catch(err => {
-				history.push('/error');
-			});
-		}
+  axios.post('/api/orders', {...orderData, total_price, productsInCart})
+    .then(res => res.data)
+    .then(() => {
+      dispatch(resetCart());
+      console.log('created order and associated products');
+      history.push('/confirmation');
+    })
+    .catch((err) => {
+      history.push('/error');
+    });
+};
+
+// ------------------------ UTILS ---------------------------
+
+const addOrIncreaseProduct = (cart, productToAdd, quantity) => {
+  console.log("prod to add:", productToAdd);
+  const quantityToAdd = quantity ? +quantity : 1;
+  console.log(quantity);
+  const productInCart = cart.find(product => product.id === productToAdd.id);
+  if (productInCart) productInCart.quantity += quantityToAdd;
+  else {
+    productToAdd.quantity = quantityToAdd;
+    cart.push(productToAdd);
+  }
+  return cart;
+};
+
+const removeOrDecreaseProduct = (cart, productToRemove) => {
+  const productInCart = cart.find(product => product.id === productToRemove.id);
+  if (productInCart !== -1 && productInCart.quantity > 1) {
+    productInCart.quantity -= 1;
+    return cart;
+  }
+  const cartWithProductRemoved = cart.filter(product => product.id !== productToRemove.id);
+
+  return cartWithProductRemoved;
+};
 
 /**
  * REDUCER
  */
-export default function (state = defaultCart, action) {
-    console.log('current state', state);
-    switch (action.type) {
-        case GET_CART:
-            return Object.assign({}, state, {items: action.items});
-        case REMOVE_ITEM:
-            return Object.assign({}, state, {items: state.items.filter(item=> item.id !== action.itemId)});
-        case ADD_ITEM:
-            return Object.assign({}, state, {items: state.items.concat(action.item)});
-        case RESET_CART:
-            return [];
-        default:
-            return state;
-    }
+export default function (shoppingCart = [], action) {
+  switch (action.type) {
+    case GET_CART:
+      return action.shoppingCart;
+    case REMOVE_PRODUCT:
+      return shoppingCart.filter(product => product.id !== action.product.id);
+    case ADD_PRODUCT:
+      return addOrIncreaseProduct([...shoppingCart], action.product);
+    case INCREASE_QUANTITY:
+      return addOrIncreaseProduct([...shoppingCart], action.product);
+    case DECREASE_QUANTITY:
+      return removeOrDecreaseProduct([...shoppingCart], action.product);
+    case SET_QUANTITY:
+      return addOrIncreaseProduct([...shoppingCart], action.product, action.quantity);
+    case RESET_CART:
+      return [];
+    default:
+      return shoppingCart;
+  }
 }
