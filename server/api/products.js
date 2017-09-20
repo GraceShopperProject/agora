@@ -35,33 +35,23 @@ productRouter.route('/')
                   res.json(newProduct)
               })
               .catch(next)
-
-    //
-    // const maybeNewProduct = Product.build(req.body).get({ plain: true });
-    // delete maybeNewProduct.id;
-    // Product.findOrCreate({ where: maybeNewProduct })
-    //   .then(([product, wasCreated]) => {
-    //     if (wasCreated) return res.status(201).json(product);
-    //     return res.sendStatus(204);
-    //   })
-    //   .catch(next);
   });
 
 
-productRouter.route('/:id')
-  .get((req, res) => res.json(req.product))
-  .put((req, res, next) => {
-    req.product.update(req.body, { returning: true })
-      .then((updatedProduct) => {
-        res.status(201).json(updatedProduct);
-      })
-      .catch(next);
-  })
-  .delete((req, res, next) => {
-    req.product.destroy()
-      .then(() => res.sendStatus(204))
-      .catch(next);
-  });
+// productRouter.route('/:id')
+//   .get((req, res) => res.json(req.product))
+//   .put((req, res, next) => {
+//     req.product.update(req.body, { returning: true })
+//       .then((updatedProduct) => {
+//         res.status(201).json(updatedProduct);
+//       })
+//       .catch(next);
+//   })
+//   .delete((req, res, next) => {
+//     req.product.destroy()
+//       .then(() => res.sendStatus(204))
+//       .catch(next);
+//   });
 
 
 productRouter.route('/category/:categoryId')
@@ -96,6 +86,24 @@ productRouter.route('/orderUpdate')
                 console.error('Issues with updating inventory', err, err.stack)
             });
     });
+
+productRouter.route('/inventory/:productId/update')
+    .post((req, res, next) => {
+            console.log('backend recieve',req.body, req.params.productId);
+            Product.findOne({ where: { id: +req.params.productId} })
+                .then((product) => {
+                    return product.update({
+                        'remaining_inventory': req.body.new_inventory,
+                        'price': req.body.price,
+                    },{ returning: true})
+                })
+                .then(() => {
+                res.send(' inventory changed');
+            }).catch( err => {
+                console.error('Issues with updating inventory', err, err.stack)
+            });
+        }
+    )
 
 
 module.exports = productRouter;

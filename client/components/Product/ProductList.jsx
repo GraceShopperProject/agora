@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 import store, { fetchCategoryProducts } from '../../store';
+import UpdateInventory from '../Admin/UpdateInventory'
 // import Sidebar from '../Layout'; 				<Sidebar />
 import { connect } from 'react-redux';
 
@@ -13,6 +15,7 @@ function ProductList({
 
 }) {
   let productsToRender = products;
+  const isAdmin =  this.props.isAdmin;
   if (match.params.categoryId) {
     productsToRender = productsToRender
       .filter(product => product.categories
@@ -39,7 +42,7 @@ function ProductList({
                       </Link>
                       <tr>
                         {
-                          isAdmin ? product.remaining_inventory : null
+                          isAdmin ? <UpdateInventory product = {product} /> :null
                         }
                       </tr>
                     </li>
