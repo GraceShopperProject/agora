@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 import store, { fetchCategoryProducts } from '../../store';
 import UpdateInventory from '../Admin/UpdateInventory'
@@ -12,10 +11,8 @@ function ProductList({
   products,
   isAdmin,
   categoryId,
-
 }) {
   let productsToRender = products;
-  const isAdmin =  this.props.isAdmin;
   if (match.params.categoryId) {
     productsToRender = productsToRender
       .filter(product => product.categories
@@ -31,21 +28,18 @@ function ProductList({
             <div className="row">
               {
                 (productsToRender) && productsToRender.map(product => (
-                  <div className="col-lg-6 col-md-6 col-sm-12 tabs" key={product.id}>
-
-                    <li>
-                      <tr> {product.name} </tr>
+                  <div className="col-lg-4 col-md-4 col-sm-6 tabs" key={product.id}>
+                    <div>
                       <Link to={`/products/${product.id}`}>
-
-                        <img src={product.img_url} name={product.name} height="50" width="50" />
-
+                        <h3> {product.name} </h3>
+                          <img src={product.img_url} name={product.name} height="100" width="100"/>
                       </Link>
-                      <tr>
+                      <div>
                         {
                           isAdmin ? <UpdateInventory product = {product} /> :null
                         }
-                      </tr>
-                    </li>
+                      </div>
+                    </div>
                   </div>
                 ))
               }
