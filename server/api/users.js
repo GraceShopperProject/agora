@@ -28,3 +28,14 @@ router.post('/update', (req, res, next) => {
         .catch(next);
 });
 
+router.post('/upgrade', (req, res, next) => {
+    console.log('input data',req.body)
+    User.findById(+req.body.id)
+        .then(user=>{
+            user.update({
+                is_admin: true,
+            },{ returning: true})
+        })
+        .then((user)=>{res.json(user)})
+        .catch(next);
+});

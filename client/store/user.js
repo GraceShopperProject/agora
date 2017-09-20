@@ -7,6 +7,7 @@ import history from '../history';
 const GET_USER = 'GET_USER';
 const REMOVE_USER = 'REMOVE_USER';
 const UPDATE_USER = 'UPDATE_USER';
+const GET_ALLUSERS = 'GET_ALLUSERS';
 
 /**
  * INITIAL STATE
@@ -19,6 +20,7 @@ const defaultUser = {};
 const getUser = user => ({ type: GET_USER, user, });
 const removeUser = () => ({ type: REMOVE_USER, });
 const editUser = user => ({type: UPDATE_USER,  user, })
+const getAllUsers = users => ({ type: GET_ALLUSERS, users, })
 
 /**
  * THUNK CREATORS
@@ -57,9 +59,26 @@ export const updateUser = (user) =>
                 dispatch(editUser(res.config.data));
             })
             .catch(err => console.log(err));
-
     }
 
+export const upgradeUser = (userId) =>
+    dispatch => {
+        const user = {id:userId }
+        axios.post('/api/users/upgrade', user)
+            .then((res) => {
+                console.log('user upgrade to Admin')
+            })
+            .catch(err => console.log(err));
+    }
+
+export const getUsers = (userId) =>
+    dispatch => {
+        axios.get('/api/users/')
+            .then((res) => {
+                dispatch(getAllUsers(res.data || defaultUser))
+            })
+            .catch(err => console.log(err));
+    }
 /**
  * REDUCER
  */
@@ -71,6 +90,8 @@ export default function (state = defaultUser, action) {
       return defaultUser;
     case UPDATE_USER:
       return action.user;
+    case GET_ALLUSERS:
+      return Object.assign({}, state, {users: action.users});
     default:
       return state;
   }
