@@ -38,7 +38,10 @@ categoryRouter.route('/:id')
   })
   .delete((req, res, next) => {
     req.category.destroy()
-      .then(() => res.sendStatus(204))
+      .then(() => {
+        // res.send('recorde deleted');
+        res.sendStatus(204)
+      })
       .catch(next);
   });
 
@@ -52,6 +55,22 @@ categoryRouter.route('/products/:productId')
             .then((category)=>{
                 res.json({category})
             })
+            .catch(next);
+    });
+
+categoryRouter.route('/:categoryId/delete')
+    .delete((req, res, next) => {
+        Category.destroy({
+            where: {
+                id: +req.params.categoryId
+            }
+        })
+            .then((rowDeleted) => {
+                if(rowDeleted === 1){
+                console.log('Deleted successfully');
+                res.sendStatus(204)
+                }
+        })
             .catch(next);
     });
 

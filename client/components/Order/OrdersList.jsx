@@ -16,7 +16,7 @@ const OrdersList = (props) => {
         console.log('user orders are:', props.orders);
         return (
             <div className="container">
-                <h3>Work in Progress Orders List</h3>
+                <h3>Orders List</h3>
                 <table className='table'>
                     <thead>
                     <tr>
