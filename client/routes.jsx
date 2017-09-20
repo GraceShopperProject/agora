@@ -90,7 +90,7 @@ const mapState = state => ({
   // Otherwise, state.user will be an empty object, and state.user.id will be falsey
   isLoggedIn: !!state.user.id,
 });
-console.log(fetchProducts);
+// console.log(fetchProducts);
 const mapDispatch = dispatch => ({
   loadInitialData() {
     dispatch(fetchOrders());

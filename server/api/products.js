@@ -31,7 +31,7 @@ productRouter.route('/')
           var newProduct = Product.build(product);
           newProduct.save()
               .then(()=> {
-                  newProduct.addCategory(req.body.category);
+                  newProduct.addCategory(+req.body.category);
                   res.json(newProduct)
               })
               .catch(next)
