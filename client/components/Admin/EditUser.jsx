@@ -23,7 +23,7 @@ class EditUsers extends React.Component {
 
 
     render() {
-        const users = this.state.users;
+        const users = this.state.users.filter(user => user.is_admin === false);
         console.log('who are those users',users);
         return (
             <div className="container content">

@@ -43,7 +43,7 @@ export const addCategory = (category) => (dispatch) => {
     axios.post(`/api/category/`, category)
         .then((res) => {
             console.log('add category done');
-            dispatch(addOneCategory(category));
+            dispatch(addOneCategory(res.data));
         })
         .catch(err => console.log(err));
 }

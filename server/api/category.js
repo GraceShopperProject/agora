@@ -22,7 +22,7 @@ categoryRouter.route('/')
     Category.findOrCreate({ where: maybeNewCategory })
       .then(([category, wasCreated]) => {
         if (wasCreated) return res.status(201).json(category);
-        return res.sendStatus(204);
+        return res.json(category);
       })
       .catch(next);
   });
