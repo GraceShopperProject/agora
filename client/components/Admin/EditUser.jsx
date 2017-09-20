@@ -19,11 +19,16 @@ class EditUsers extends React.Component {
             .then((res) => {
                 this.setState({users: res.data})
             })
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
     }
 
 
     render() {
-        const users = this.state.users.filter(user => user.is_admin === false);
+        const users = this.state.users;
         console.log('who are those users',users);
         return (
             <div className="container content">
