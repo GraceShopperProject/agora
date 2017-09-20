@@ -11,7 +11,7 @@ const Order_Products = require('./order_products');
 User.Orders = User.hasMany(Order);
 Order.User = Order.belongsTo(User);
 
-Order.Products = Order.belongsToMany(Product, { through: Order_Products });
+Order.Products = Order.belongsToMany(Product, { through: {model: Order_Products, unique:false}, constraints: false});
 Product.Orders = Product.belongsToMany(Order, { through: Order_Products });
 
 

@@ -11,10 +11,11 @@ import store, {
   setQuantity,
   resetCart,
 } from '../../store';
+import history from '../../history';
+
 //
 /**
- * COMP
- * ON,
+ * COMPONENT
  *
  */
 
@@ -159,6 +160,8 @@ const handleCheckOut = (evt) => {
 
 const handleCleanCart = (evt) => {
   evt.preventDefault();
+
+  localStorage.removeItem("Cart");
 };
 
 

@@ -2,14 +2,6 @@ import axios from 'axios';
 import history from '../history';
 import store from '../store';
 
-
-// *** TODO ***
-// Add and remove products
-// increase decrease quanity
-
-// finish submitOrder
-
-
 /**
  * ACTION TYPES
  */
@@ -20,7 +12,6 @@ const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
 const SET_QUANTITY = 'SET_QUANTITY';
 const RESET_CART = 'RESET_CART';
-
 
 /**
  * ACTION CREATORS
@@ -66,33 +57,13 @@ export const fetchCartFromLocalStorage = () =>
   };
 
 
-export const submitOrder = orderData => (dispatch) => {
-  // *** TODO: ***
-  // total_price += loop through products
-  // orderData.total_price = total_price;
-  // orderData.products = this.state.products;
-
-  // ORDER SHOULD LOOK LIKE:
-  // order: {
-  //   user_request:
-  //   total_price: null
-  //   userId: req.session.userId ? req.session.userId : null
-  //   address:
-  //   products: [{
-  //     productId:
-  //     product_price:
-  //     quantity:
-
-  // }
-
-  console.log(orderData);
+export const submitOrder = (orderData, productsInCart) => (dispatch) => {
 
   const total_price = orderData.products
     .reduce((total, { price, quantity }) => total + (price * quantity), 0);
 
-  orderData.order.total_price = total_price;
 
-  axios.post('/api/orders', orderData)
+  axios.post('/api/orders', {...orderData, total_price, productsInCart})
     .then(res => res.data)
     .then(() => {
       dispatch(resetCart());

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addshoppingcart } from '../../store';
+import { addProduct } from '../../store';
 
 function AddToCart(props) {
   return (
@@ -23,7 +23,7 @@ function AddToCart(props) {
 
 const mapStateToProps = function (state, ownProps) {
   return {
-    items: state.shoppingCart.items,
+    items: state.shoppingCart,
   };
 };
 
@@ -35,7 +35,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
       const item = ownProps.product;
       item.quantity = Quantity;
       console.log('need to add item', item);
-      dispatch(addshoppingcart(item));
+      dispatch(addProduct(item));
       // localStorage.setItem("Cart",JSON.stringify(this.state.items));
     },
   };

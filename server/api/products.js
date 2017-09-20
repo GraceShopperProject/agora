@@ -3,9 +3,6 @@ const Product = require('../db/models').Product;
 const Category = require('../db/models').Category;
 var Promise = require('bluebird');
 
-// For any variable attached after /products/:XX 
-// Looks up XX product and attaches product to req.product for future routes
-
 productRouter.param('id', (req, res, next, id) => {
   Product.findOne({ where: { id } })
     .then((product) => {
