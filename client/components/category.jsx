@@ -31,7 +31,6 @@ const Category = (props) => {
                 />
               </Link>
             </div>
-
           )
           )
         }

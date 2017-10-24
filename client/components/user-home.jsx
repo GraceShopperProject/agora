@@ -11,7 +11,7 @@ export const UserHome = (props) => {
     const { name, } = props;
   return (
     <div>
-      <h3>Welcome, {name}</h3>
+      <h1>Welcome, {name}</h1>
     </div>
   );
 };
