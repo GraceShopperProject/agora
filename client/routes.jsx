@@ -18,7 +18,7 @@ import {
   ProductDetail,
   CheckoutForm,
   ErrorPage,
-  OrderConfirmation,
+  Confirmation,
   MaintainCatProD,
   MaintainUser,
   UserAccount,
@@ -59,7 +59,7 @@ class Routes extends Component {
             <Route path="/products" component={ProductList} />
             <Route path="/shoppingcart" component={ShoppingCart} />
             <Route path="/checkout" component={CheckoutForm} />
-            <Route path="/confirmation" component={OrderConfirmation} />
+            <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
             <Route path="/adminProduct" component = {MaintainCatProD} />
             <Route path="/adminUser" component = {MaintainUser} />

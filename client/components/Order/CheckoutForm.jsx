@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { submitOrder, me } from '../../store';
+import { FormItem } from './FormItem';
 
 // TODO Form Authentication
 
@@ -35,10 +36,11 @@ class CheckoutForm extends React.Component {
     const name = evt.target.name;
     const value = evt.target.value;
     this.setState(
-      { order: {
-      [name]: value,
-      }
-    });
+      {
+        order: {
+          [name]: value,
+        }
+      });
   }
 
   fillInDummyData(evt) {
@@ -61,46 +63,24 @@ class CheckoutForm extends React.Component {
 
   render() {
     const { handleCheckout, } = this.props;
+    const { order } = this.state;
     return (
       <div>
         <h2>Checkout</h2>
         <form onSubmit={(evt) => {
           evt.preventDefault();
-          handleCheckout(this.state.order, this.state.products);
+          handleCheckout(order, this.state.products);
         }}
         >
-          <div>
-            <label htmlFor="name"><small>Name</small></label>
-            <input name="name" type="text" value={this.state.order.name} onChange={this.handleChange} />
-          </div>
-          <div>
-            <label htmlFor="confirmation_email"><small>Email</small></label>
-            <input name="confirmation_email" type="text" value={this.state.order.confirmation_email} onChange={this.handleChange} />
-          </div>
-          <div>
-            <label htmlFor="street_address_1"><small>Street Address 1:</small></label>
-            <input name="street_address_1" type="text" onChange={this.handleChange} value={this.state.order.street_address_1} />
-          </div>
-          <div>
-            <label htmlFor="street_address_2"><small>Street Address 2:</small></label>
-            <input name="street_address_2" type="text" onChange={this.handleChange} value={this.state.order.street_address_2} />
-          </div>
-          <div>
-            <label htmlFor="city"><small>City:</small></label>
-            <input name="city" type="text" onChange={this.handleChange} value={this.state.order.city} />
-          </div>
-          <div>
-            <label htmlFor="state"><small>State:</small></label>
-            <input name="state" type="text" onChange={this.handleChange} value={this.state.order.state} />
-          </div>
-          <div>
-            <label htmlFor="zip"><small>Zip Code:</small></label>
-            <input name="zip" type="text" onChange={this.handleChange} value={this.state.order.zip} />
-          </div>
-          <div>
-            <label htmlFor="user_request"><small>Special instructions:</small></label>
-            <input name="user_request" type="text" onChange={this.handleChange} value={this.state.order.user_request} />
-          </div>
+          <FormItem handleChange={this.handleChange} itemName={"name"} orderInfo={order} text={"Name:"} />
+          <FormItem handleChange={this.handleChange} itemName={"confirmation_email"} orderInfo={order} text={"Email:"} />
+          <FormItem handleChange={this.handleChange} itemName={"street_address_1"} orderInfo={order} text={"Street Address 2"} />
+          <FormItem handleChange={this.handleChange} itemName={"street_address_2"} orderInfo={order} text={"Street Address 2:"} />
+          <FormItem handleChange={this.handleChange} itemName={"city"} orderInfo={order} text={"City:"} />
+          <FormItem handleChange={this.handleChange} itemName={"state"} orderInfo={order} text={"State:"} />
+          <FormItem handleChange={this.handleChange} itemName={"zip"} orderInfo={order} text={"Zip Code:"} />
+          <FormItem handleChange={this.handleChange} itemName={"user_request"} orderInfo={order} text={"Special instructions:"} />
+
           <div>
             <button type="submit">Submit</button>
             <button onClick={this.fillInDummyData}>Quick Fill in Data</button>

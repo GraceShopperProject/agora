@@ -14,9 +14,8 @@ export {
   TopNavBar,
   Footer
 } from './Navigation';
-export {default as Category} from './category';
-export {Login, Signup, } from './Authorize/auth-form';
-export {default as UserHome, } from './user-home';
+export { default as Category } from './category';
+export { Login, Signup, } from './Authorize/auth-form';
 
 export {
   ShoppingCart
@@ -34,12 +33,12 @@ export {
 } from './Product';
 
 export {
-    MaintainCatProD,
-    MaintainUser,
+  MaintainCatProD,
+  MaintainUser,
 } from './Admin';
 
 export {
-    UserAccount,
-    UserOrder,
+  UserAccount,
+  UserOrder,
 } from './UserAccount';
 
