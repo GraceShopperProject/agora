@@ -1,12 +1,12 @@
 import React from 'react';
 
 export default function FormItem(props) {
-  const { handleChange, itemName, orderInfo, text} = props
+  const { handleChange, name, value } = props;
+  const text = name.split('_').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ') + ':';
   return (
     <div>
-      <h3>RobinsThing</h3>
-      <label htmlFor={`${itemName}`}><small>{text}</small></label>
-      <input name={`${itemName}`} type="text" value={`${orderInfo[itemName]}`} onChange={props.handleChange} />
+      <label htmlFor={`${name}`}><small>{text}</small></label>
+      <input name={`${name}`} type="text" value={`${value}`} onChange={handleChange} />
     </div>
   )
 }

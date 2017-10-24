@@ -155,7 +155,7 @@ const handleCheckOut = (evt) => {
   //
 
   evt.preventDefault();
-  history.push('/checkoutform');
+  history.push('/checkout');
 };
 
 const handleCleanCart = (evt) => {

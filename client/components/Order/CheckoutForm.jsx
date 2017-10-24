@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { submitOrder, me } from '../../store';
-import { FormItem } from './FormItem';
+import FormItem from './FormItem';
 
 // TODO Form Authentication
 
@@ -11,76 +11,70 @@ import { FormItem } from './FormItem';
 class CheckoutForm extends React.Component {
   constructor(props) {
     super(props);
-    const { user, shoppingCart } = props;
+    const { user } = props;
     this.state = {
-      products: shoppingCart,
-      order: {
-        userId: user.id,
-        name: user.name,
-        street_address_1: user.street_address_1 || '',
-        street_address_2: user.street_address_2,
-        city: user.city,
-        state: user.state,
-        zip: user.zip,
-        confirmation_email: user.email,
-        user_request: '',
-      },
+      name: user.name,
+      street_address_1: user.street_address_1 || '',
+      street_address_2: user.street_address_2,
+      city: user.city,
+      state: user.state,
+      zip: user.zip,
+      confirmation_email: user.email,
+      special_instructions: '',
     };
 
     this.fillInDummyData = this.fillInDummyData.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.submitCart = this.submitCart.bind(this);
+    this.renderFormItems = this.renderFormItems.bind(this);
   }
 
   handleChange(evt) {
     evt.preventDefault();
     const name = evt.target.name;
     const value = evt.target.value;
-    this.setState(
-      {
-        order: {
-          [name]: value,
-        }
-      });
+    this.setState({ [name]: value, });
   }
 
   fillInDummyData(evt) {
     evt.preventDefault();
-    const userId = this.state.userId;
     this.setState({
-      order: {
-        userId,
-        name: 'hi',
-        street_address_1: 'hi',
-        street_address_2: 'hi',
-        city: 'hi',
-        state: 'hi',
-        zip: '11111',
-        confirmation_email: 'hi@hi.hi',
-        user_request: 'hi hi hi',
-      }
+      name: 'hi',
+      street_address_1: 'hi',
+      street_address_2: 'hi',
+      city: 'hi',
+      state: 'hi',
+      zip: '11111',
+      confirmation_email: 'hi@hi.hi',
+      special_instructions: 'hi hi hi',
     });
   }
 
+  submitCart(order) {
+    this.props.handleCheckout(order, this.props.shoppingCart);
+  }
+
+  renderFormItems() {
+    const keys = Object.keys(this.state);
+    return keys.map((key, idx) => (
+      <FormItem key={idx} handleChange={this.handleChange} name={key} value={this.state[key]} />
+    ));
+  }
+
   render() {
-    const { handleCheckout, } = this.props;
-    const { order } = this.state;
+    const { name, street_address_1, street_address_2, city, state, zip, confirmation_email, special_instructions } = this.state;
+
     return (
       <div>
         <h2>Checkout</h2>
         <form onSubmit={(evt) => {
           evt.preventDefault();
-          handleCheckout(order, this.state.products);
-        }}
-        >
-          <FormItem handleChange={this.handleChange} itemName={"name"} orderInfo={order} text={"Name:"} />
-          <FormItem handleChange={this.handleChange} itemName={"confirmation_email"} orderInfo={order} text={"Email:"} />
-          <FormItem handleChange={this.handleChange} itemName={"street_address_1"} orderInfo={order} text={"Street Address 2"} />
-          <FormItem handleChange={this.handleChange} itemName={"street_address_2"} orderInfo={order} text={"Street Address 2:"} />
-          <FormItem handleChange={this.handleChange} itemName={"city"} orderInfo={order} text={"City:"} />
-          <FormItem handleChange={this.handleChange} itemName={"state"} orderInfo={order} text={"State:"} />
-          <FormItem handleChange={this.handleChange} itemName={"zip"} orderInfo={order} text={"Zip Code:"} />
-          <FormItem handleChange={this.handleChange} itemName={"user_request"} orderInfo={order} text={"Special instructions:"} />
-
+          const order = { name, street_address_1, street_address_2, city, state, zip, confirmation_email, user_request: special_instructions }
+          this.submitCart(order)
+        }}>
+          {
+            this.renderFormItems()
+          }
           <div>
             <button type="submit">Submit</button>
             <button onClick={this.fillInDummyData}>Quick Fill in Data</button>
@@ -101,9 +95,10 @@ const mapState = ({ user, shoppingCart }) => ({
 });
 
 const mapDispatch = dispatch => ({
-  handleCheckout: (orderData, productsInShoppingCart) => {
-    orderData.products = productsInShoppingCart;
-    dispatch(submitOrder(orderData));
+  handleCheckout: (orderData, shoppingCartProducts) => {
+    orderData.products = shoppingCartProducts;
+    console.log('Order data is: ', orderData, "products are :", shoppingCartProducts)
+    dispatch(submitOrder(orderData, shoppingCartProducts));
   },
   getUserInfo: () => {
     dispatch(me());
