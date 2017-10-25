@@ -66,31 +66,28 @@ const makeUser = () => {
 };
 
 const users = makeNThings(10, makeUser, ['email']);
-users.push({
-  name: 'rw',
-  email: 'rw@rw.rw',
+users.push({ name: "rw",
+  email: "rw@rw.rw",
   is_admin: false,
-  password: 'rw',
-  phone: '(555) 555-5555',
-  street_address_1: '111 RW St',
-  street_address_2: 'Apt RW',
-  city: 'RW City',
-  state: 'RW State',
-  zip: 'RW Zip',
-});
+  password: "rw",
+  phone: "(555) 555-5555",
+  street_address_1: "111 RW St",
+  street_address_2: "Apt RW",
+  city: "RW City",
+  state: "RW State",
+  zip: "RW Zip",})
 
-users.push({
-  name: 'jj',
-  email: 'jj@jj.jj',
-  is_admin: true,
-  password: 'jj',
-  phone: '(555) 555-5555',
-  street_address_1: '111 jj St',
-  street_address_2: 'Apt jj',
-  city: 'jj City',
-  state: 'jj State',
-  zip: 'jj Zip',
-});
+  users.push({ 
+    name: "jj",
+    email: "jj@jj.jj",
+    is_admin: true,
+    password: "jj",
+    phone: "(555) 555-5555",
+    street_address_1: "111 jj St",
+    street_address_2: "Apt jj",
+    city: "jj City",
+    state: "jj State",
+    zip: "jj Zip",})
 
 const makeOrder = () => ({
   status: [

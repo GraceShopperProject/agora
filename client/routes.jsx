@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Router } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Router} from 'react-router';
+import {Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
@@ -23,7 +23,6 @@ import {
   MaintainUser,
   UserAccount,
 } from './components';
-
 import {
   me,
   fetchCartFromLocalStorage,
@@ -37,7 +36,7 @@ import {
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadInitialData();
   }
 
@@ -90,7 +89,7 @@ const mapState = state => ({
 });
 // console.log(fetchProducts);
 const mapDispatch = dispatch => ({
-  loadInitialData() {
+  loadInitialData () {
     dispatch(fetchOrders());
     dispatch(fetchCategories());
     dispatch(fetchCartFromLocalStorage());

@@ -19,7 +19,8 @@ import history from '../../history';
  *
  */
 
-// TODO change variable names "products" to products in cart
+// TODO change variable names "items" to products in cart
+
 
 
 // *** TODO *** Render shopping cart from the redux shopping cart store
@@ -138,8 +139,7 @@ function ShoppingCart({
 
         </div>
       </form>
-    </div >
-
+    </div>
   );
 }
 

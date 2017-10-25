@@ -28,8 +28,8 @@ const Order = db.define('order', {
     },
   },
   confirmation_email: {
-    type: Sequelize.STRING,
-  },
+    type: Sequelize.STRING
+  }
   // *** TODO *** address stuff here
 });
 
