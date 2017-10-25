@@ -10,7 +10,6 @@ import {
   Home,
   Login,
   Signup,
-  UserHome,
   ShoppingCart,
   OrdersList,
   Category,
@@ -23,7 +22,6 @@ import {
   MaintainCatProD,
   MaintainUser,
   UserAccount,
-
 } from './components';
 
 import {
@@ -45,7 +43,8 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-
+    console.log("is user logged in?", isLoggedIn);
+    console.log({ Home });
     return (
       <Router history={history}>
         <NavFooterWrapper>
@@ -65,12 +64,11 @@ class Routes extends Component {
             <Route path="/adminProduct" component = {MaintainCatProD} />
             <Route path="/adminUser" component = {MaintainUser} />
             <Route path="/account" component = {UserAccount} />
-
             {
               isLoggedIn &&
               <Switch>
                 {/* Routes placed here are only available after logging in */}
-                <Route path="/home" component={UserHome} />
+                <Route component={Home} />
               </Switch>
             }
             {/* Displays our Login component as a fallback */}
