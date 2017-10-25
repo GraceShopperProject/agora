@@ -78,7 +78,6 @@ const mapState = ({ user, shoppingCart }) => ({
 const mapDispatch = dispatch => ({
   handleCheckout: (orderData, shoppingCartProducts) => {
     orderData.products = shoppingCartProducts;
-    console.log('Order data is: ', orderData, "products are :", shoppingCartProducts)
     dispatch(submitOrder(orderData, shoppingCartProducts));
   },
   getUserInfo: () => {
