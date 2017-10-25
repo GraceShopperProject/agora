@@ -18,7 +18,7 @@ import {
   ProductDetail,
   CheckoutForm,
   ErrorPage,
-  OrderConfirmation,
+  Confirmation,
   MaintainCatProD,
   MaintainUser,
   UserAccount,
@@ -43,7 +43,7 @@ class Routes extends Component {
   render() {
     const { isLoggedIn } = this.props;
     console.log("is user logged in?", isLoggedIn);
-    console.log({ Home });
+    console.log(CheckoutForm);
     return (
       <Router history={history}>
         <NavFooterWrapper>
@@ -58,7 +58,7 @@ class Routes extends Component {
             <Route path="/products" component={ProductList} />
             <Route path="/shoppingcart" component={ShoppingCart} />
             <Route path="/checkout" component={CheckoutForm} />
-            <Route path="/confirmation" component={OrderConfirmation} />
+            <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
             <Route path="/adminProduct" component = {MaintainCatProD} />
             <Route path="/adminUser" component = {MaintainUser} />

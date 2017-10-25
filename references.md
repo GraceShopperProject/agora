@@ -36,7 +36,7 @@ Product 'product'
 
 Order 'order'
   // DEFAULT SCOPE: Will have User and Products returned
-  user_request: TEXT,
+  special_instructions: TEXT,
   status: ENUM(['Created', 'Processing', 'Cancelled', 'Completed']),
     defaultValue: 'Created',
   total_price: INTEGER,
@@ -52,7 +52,7 @@ Category 'category'
 
 
 order : {
-  user_request:
+  special_instructions:
   total_price: null
   userId: req.session.userId ? req.session.userId : null
   products: [{

@@ -3,7 +3,7 @@ import {
   TopNavBar,
   CategoryNav,
   Footer,
-} from '../Navigation';
+} from '../navigation';
 
 export default function NavFooterWrapper({ children }) {
   return (

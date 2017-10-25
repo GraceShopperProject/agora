@@ -59,11 +59,8 @@ export const fetchCartFromLocalStorage = () =>
 
 
 export const submitOrder = (orderData, productsInCart) => (dispatch) => {
-
-  const total_price = orderData.products
+  const total_price = productsInCart
     .reduce((total, { price, quantity }) => total + (price * quantity), 0);
-
-
   axios.post('/api/orders', {...orderData, total_price, productsInCart})
     .then(res => res.data)
     .then(() => {

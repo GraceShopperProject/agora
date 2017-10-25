@@ -1,2 +1,2 @@
-export { Login, Signup } from './auth-form';
+export { Login, Signup } from './AuthForm';
 

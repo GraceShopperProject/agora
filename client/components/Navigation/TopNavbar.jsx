@@ -6,7 +6,7 @@ import {
   LoggedInNavButtons,
   LoggedOutNavButtons,
   AdminLoggedInNavButtons,
-} from '../Navigation';
+} from '../navigation';
 
 function TopNavbar ({children, isLoggedIn, isAdmin, }) {
 

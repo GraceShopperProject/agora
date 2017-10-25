@@ -18,7 +18,7 @@ const defaultOrders = [];
  */
 const getOrders = orders => ({ type: GET_ORDERS, orders });
 const getUserOrders = userOrders => ({ type: GET_USER_ORDERS, userOrders });
-const createOrder = ({ user_request, itemsList }) => ({ type: CREATE_ORDER_AND_PRODUCTS, user_request, items_list }); // TODO ** ensure this pulls the correct user_request and total price
+const createOrder = ({ special_instructions, itemsList }) => ({ type: CREATE_ORDER_AND_PRODUCTS, special_instructions, items_list }); // TODO ** ensure this pulls the correct special_instructions and total price
 
 /**
  * THUNK CREATORS
