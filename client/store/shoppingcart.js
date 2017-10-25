@@ -80,26 +80,23 @@ export const submitOrder = (orderData, productsInCart) => (dispatch) => {
 
 const addOrIncreaseProduct = (cart, productToAdd, quantity) => {
   console.log("prod to add:", productToAdd);
-  const quantityToAdd = quantity ? +quantity : 1;
   console.log(quantity);
+  const quantityToAdd = quantity ? +quantity : 1;
   const productInCart = cart.find(product => product.id === productToAdd.id);
   if (productInCart) productInCart.quantity += quantityToAdd;
   else {
-    productToAdd.quantity = quantityToAdd;
-    cart.push(productToAdd);
+    cart.push({...productToAdd, quantity: quantityToAdd});
   }
   return cart;
 };
 
-const removeOrDecreaseProduct = (cart, productToRemove) => {
-  const productInCart = cart.find(product => product.id === productToRemove.id);
+const removeOrDecreaseProduct = (cart, toRemove) => {
+  const productInCart = cart.find(product => product.id === toRemove.id);
   if (productInCart !== -1 && productInCart.quantity > 1) {
     productInCart.quantity -= 1;
-    return cart;
+    return [...cart];
   }
-  const cartWithProductRemoved = cart.filter(product => product.id !== productToRemove.id);
-
-  return cartWithProductRemoved;
+  return cart.filter(product => product.id !== toRemove.id);
 };
 
 /**

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addProduct, setQuantity, } from '../../store';
+import { addProduct, setQuantity } from '../../store';
 
 function AddToCart(props) {
   return (
@@ -32,9 +32,9 @@ const mapDispatchToProps = function (dispatch, ownProps) {
     handleSubmit(evt) {
       evt.preventDefault();
       const quantity = +evt.target.quantity.value;
-      const item = ownProps.product; 
-      console.log("ROBIN SENDS YOIU THIS", item, quantity);
-      //item.quantity = Quantity;
+      const item = ownProps.product;
+      console.log('ROBIN SENDS YOIU THIS', item, quantity);
+      // item.quantity = Quantity;
       console.log('need to add item', item);
       dispatch(setQuantity(item, quantity));
       evt.target.quantity.value = '';
