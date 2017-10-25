@@ -1,3 +1,4 @@
+
 html {
   height: 100vh;
   body {
@@ -8,6 +9,16 @@ html {
     position: relative;
     label {
       display: block;
+    }
+
+    .btn-primary {
+      background-color: #874C62;
+      border_color: #874C62;
+    }
+
+    .btn-primary:hover {
+      background-color: rgba(148, 63, 97, 0.774);
+      border-color: rgba(148, 63, 96, 0.774);
     }
   }
 }
