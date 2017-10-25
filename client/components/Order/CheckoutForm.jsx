@@ -51,7 +51,9 @@ class CheckoutForm extends React.Component {
 
   submitCart(evt) {
     evt.preventDefault();
-    this.props.handleCheckout(this.state, this.props.shoppingCart);
+    console.log("userId is ", this.props.user.id, " user is :", this.props.user);
+    const order = {...this.state, userId: this.props.user.id};
+    this.props.handleCheckout(order, this.props.shoppingCart);
   }
 
   render() {

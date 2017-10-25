@@ -18,13 +18,16 @@ orderRouter.route('/')
 
   // special_instructions, total_price, productsList -> all products in the cart
   .post((req, res, next) => {
-    const userId = req.body.userId === "" ? -1 : req.body.userId;
-    const {special_instructions, total_price, confirmation_email, products, } = req.body;
-    console.log("userReq:", special_instructions, "price:", total_price, "confemail", confirmation_email);
-    Order.create({special_instructions, total_price, confirmation_email, })
+    const userId = req.body.userId === "" ? null : req.body.userId;
+    const { special_instructions, total_price, confirmation_email, products, } = req.body;
+    Order.create({special_instructions, total_price, confirmation_email, userId, })
       .then((newOrder) => {
         let productAssociationsArray = products.map(product => {
-             return Order_Products.create({ orderId: newOrder.id, productId: product.id, quantity: product.quantity, product_price: product.price});
+             return Order_Products.create({ 
+               orderId: newOrder.id, 
+               productId: product.id, 
+               quantity: product.quantity, 
+               product_price: product.price});
         })
         Promise.all(productAssociationsArray)
         .then((arr) => {
