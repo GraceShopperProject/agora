@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { submitOrder, me } from '../../store';
-import Form from './Form';
+import { Form } from '../common';
 
 // TODO Form Authentication
 

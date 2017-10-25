@@ -4,13 +4,11 @@ import FormItem from './FormItem';
 
 // TODO Form Authentication
 
-/**
- * COMPONENT
- */
 export default function Form (props) {
 
   const { title, submitText, handleChange, onSubmit, formItems } = props;
   const keys = Object.keys(formItems);
+  
   return (
     <div>
       <h2>{title}</h2>
