@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import store, { fetchCategories, fetchProducts, addNewProduct } from '../../store/index';
+import store, { fetchCategories, fetchProducts, addNewProductToStore } from '../../store/index';
 import { connect } from 'react-redux';
+import { Form } from '../common';
 
 class AddProduct extends React.Component {
 	constructor(props) {
@@ -33,8 +34,8 @@ class AddProduct extends React.Component {
 	handleSubmit(evt) {
 		evt.preventDefault();
 		const newProduct = {...this.state};
-		console.log('newProduct in AddProduct', inputbody);
-		this.props.addNewProduct(newProduct);
+		console.log('newProduct in AddProduct', newProduct);
+		this.props.addNewProductToStore(newProduct);
 		this.setState({
 			name: '',
 			price: 0,
@@ -50,8 +51,35 @@ class AddProduct extends React.Component {
 		console.log('listed category', categories);
 		return (
 			<div className="container">
-				
-				<h3>Add a product</h3>
+				<Form title="Add a Product" submitText="Submit" handleChange={this.handleChange} onSubmit={(evt) => this.handleSubmit(evt)} formItems={this.state} />
+			</div>
+		)
+	}
+}
+
+const mapState = state => {
+	return {
+		categories: state.categories,
+	}
+}
+
+const mapDispatch = dispatch => {
+	return {
+		loadInitialState: () => {
+			dispatch(fetchCategories());
+		},
+		// updateProducts: () => {
+		// 	dispatch(fetchProducts()); 
+		// },
+		addNewProductToStore: (newProduct) => {
+			dispatch(addNewProductToStore(newProduct));
+		}
+	}
+}
+
+export default connect(mapState, mapDispatch)(AddProduct);
+
+{/* <h3>Add a product</h3>
 				<form onSubmit={this.handleSubmit}>
 					<section>
 						<div className="form-group">
@@ -102,30 +130,4 @@ class AddProduct extends React.Component {
 						</div>
 					</section>
 
-				</form>
-			</div>
-		)
-	}
-}
-
-const mapState = state => {
-	return {
-		categories: state.categories,
-	}
-}
-
-const mapDispatch = dispatch => {
-	return {
-		loadInitialState: () => {
-			dispatch(fetchCategories());
-		},
-		// updateProducts: () => {
-		// 	dispatch(fetchProducts()); 
-		// },
-		addNewProduct: (newProduct) => {
-			dispatch(addNewProduct(newProduct));
-		}
-	}
-}
-
-export default connect(mapState, mapDispatch)(AddProduct);
+				</form> */}
