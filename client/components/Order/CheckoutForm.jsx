@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { submitOrder, me } from '../../store';
-import FormItem from './FormItem';
+import Form from './Form';
 
 // TODO Form Authentication
 
@@ -14,7 +14,7 @@ class CheckoutForm extends React.Component {
     const { user } = props;
     this.state = {
       name: user.name,
-      street_address_1: user.street_address_1 || '',
+      street_address_1: user.street_address_1,
       street_address_2: user.street_address_2,
       city: user.city,
       state: user.state,
@@ -26,7 +26,6 @@ class CheckoutForm extends React.Component {
     this.fillInDummyData = this.fillInDummyData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.submitCart = this.submitCart.bind(this);
-    this.renderFormItems = this.renderFormItems.bind(this);
   }
 
   handleChange(evt) {
@@ -50,36 +49,17 @@ class CheckoutForm extends React.Component {
     });
   }
 
-  submitCart(order) {
-    this.props.handleCheckout(order, this.props.shoppingCart);
-  }
-
-  renderFormItems() {
-    const keys = Object.keys(this.state);
-    return keys.map((key, idx) => (
-      <FormItem key={idx} handleChange={this.handleChange} name={key} value={this.state[key]} />
-    ));
+  submitCart(evt) {
+    evt.preventDefault();
+    //const order = { name, street_address_1, street_address_2, city, state, zip, confirmation_email, special_instructions }
+    this.props.handleCheckout(this.state, this.props.shoppingCart);
   }
 
   render() {
-    const { name, street_address_1, street_address_2, city, state, zip, confirmation_email, special_instructions } = this.state;
-
     return (
       <div>
-        <h2>Checkout</h2>
-        <form onSubmit={(evt) => {
-          evt.preventDefault();
-          const order = { name, street_address_1, street_address_2, city, state, zip, confirmation_email, user_request: special_instructions }
-          this.submitCart(order)
-        }}>
-          {
-            this.renderFormItems()
-          }
-          <div>
-            <button type="submit">Submit</button>
-            <button onClick={this.fillInDummyData}>Quick Fill in Data</button>
-          </div>
-        </form>
+        <Form title={'Checkout'} submitText={'Submit'} handleChange={this.handleChange} onSubmit={(evt) => this.submitCart(evt)} formItems={this.state} />
+        <button onClick={this.fillInDummyData}>Quick Fill in Data</button>
       </div>
     );
   }

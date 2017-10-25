@@ -4,7 +4,7 @@ const db = require('../db');
 
 const Order = db.define('order', {
 
-  user_request: {
+  special_instructions: {
     type: Sequelize.TEXT,
     allowNull: true,
   },
