@@ -11,7 +11,6 @@ class CheckoutForm extends React.Component {
   constructor(props) {
     super(props);
     const { user, shoppingCart } = props;
-    console.log("ROBIN USER IS: ", user);
     this.state = {
       products: shoppingCart,
       order: {
@@ -61,9 +60,7 @@ class CheckoutForm extends React.Component {
   }
 
   render() {
-    const {
-      handleCheckout,
-    } = this.props;
+    const { handleCheckout, } = this.props;
     return (
       <div>
         <h2>Checkout</h2>

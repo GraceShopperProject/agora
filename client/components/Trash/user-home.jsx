@@ -8,10 +8,10 @@ import { connect, } from 'react-redux';
 export const UserHome = (props) => {
   // const { email, } = props;
 
-    const { name, } = props;
+  const { name, } = props;
   return (
     <div>
-      <h3>Welcome, {name}</h3>
+      <h1>Welcome, {name}</h1>
     </div>
   );
 };

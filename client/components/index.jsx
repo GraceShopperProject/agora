@@ -18,8 +18,6 @@ export {default as Category} from './category';
 
 export * from './Authorize/auth-form';
 
-export {default as UserHome} from './user-home';
-
 export * from './ShoppingCart';
 
 export * from './Order';
