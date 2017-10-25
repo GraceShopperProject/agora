@@ -60,8 +60,8 @@ class Routes extends Component {
             <Route path="/checkout" component={CheckoutForm} />
             <Route path="/confirmation" component={OrderConfirmation} />
             <Route path="/error" component={ErrorPage} />
-            <Route path="/adminProduct" component = {MaintainCatProD} />
-            <Route path="/adminUser" component = {MaintainUser} />
+            <Route path="/admin-products" component = {MaintainCatProD} />
+            <Route path="/admin-users" component = {MaintainUser} />
             <Route path="/account" component = {UserAccount} />
             {
               isLoggedIn &&

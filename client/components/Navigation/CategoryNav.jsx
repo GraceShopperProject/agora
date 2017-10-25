@@ -12,11 +12,11 @@ function CategoryNav (props) {
         borderBottom: '1px solid #999',
       }}
     >
-    
+
       <div className="container">
-        <ul className="nav justify-content-center">
+        <ul className="nav nav-justified">
           <li className="nav-item" key="all-products">
-            <Link className="nav-link" to={`/products/`}>All Products</Link>
+            <Link className="nav-link" to={'/products'}>All</Link>
           </li>
           {
           categories && categories.map(category =>

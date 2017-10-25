@@ -6,21 +6,13 @@ import Col from 'react-bootstrap/lib/Col';
 const TileGridFeed = (props) => {
   const { children } = props;
 
-  const arrayify = chitlens => Children.toArray(chitlens);
-
-  const putInColumns = childrenArr => childrenArr.map(child => (
-    <Col sm={6} md={4} lg={3}>
-      {child}
-    </Col>
-  ));
-
   const renderTiles = () => {
-    return putInColumns(arrayify(children));
+    return Children.map(children, child => (
+      <Col sm={6} md={4} lg={3}>
+        {child}
+      </Col>
+    ));
   };
-
-  // const renderRows = () => {
-  //   Children.
-  // }
 
   return (
     <Grid>
