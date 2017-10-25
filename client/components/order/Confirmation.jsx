@@ -7,7 +7,7 @@ import { me, buildOrder } from '../../store';
 /**
  * COMPONENT
  */
-class OrderConfirmation extends React.Component {
+class Confirmation extends React.Component {
   constructor(props) {
     super(props);
 
@@ -45,7 +45,7 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(OrderConfirmation);
+export default connect(mapState)(Confirmation);
 
 /**
  * PROP TYPES

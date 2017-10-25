@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import UpdateInventory from '../Admin/UpdateInventory';
-import TileGridFeed from '../Common/TileGridFeed';
+import UpdateInventory from '../admin/UpdateInventory';
+import TileGridFeed from '../common/TileGridFeed';
 import ProductCard from './ProductCard';
 
 const ProductCardsFeed = ({products}) => {

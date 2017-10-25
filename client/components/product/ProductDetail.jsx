@@ -1,5 +1,5 @@
 import React from 'react';
-import AddToCart from '../Order/AddToCart';
+import AddToCart from '../order/AddToCart';
 import store, { fetchProductCategory } from '../../store';
 import { connect } from 'react-redux';
 

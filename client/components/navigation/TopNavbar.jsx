@@ -12,7 +12,7 @@ import Badge from 'react-bootstrap/lib/Badge';
 import Col from 'react-bootstrap/lib/Col';
 import history from '../../history';
 
-import {LoggedInNavButtons} from '../Navigation';
+import {LoggedInNavButtons} from '../navigation';
 
 function TopNavbar({isLoggedIn, isAdmin, numItemsInCart}) {
   return (

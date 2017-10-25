@@ -60,8 +60,7 @@ class OrdersList extends React.Component {
                       <th>{order.user.name}</th>
                     </tr>
                   )
-                }
-                )
+                })
             }
           </tbody>
         </table>

@@ -21,7 +21,7 @@ describe('Order model', () => {
       .then (user => {
         curUser = user
         return Order.create({
-          user_request: "I have this order",
+          special_instructions: "I have this order",
           status: 'Created',
           price: 1,
         })

@@ -96,8 +96,9 @@ const makeOrder = () => ({
     'Cancelled',
     'Completed',
   ][floor(random() * 4)],
-  user_request: dummy.lorem.paragraph(),
+  special_instructions: dummy.lorem.paragraph(),
   total_price: 100, // TODO: need to make a beforeValidate hook to set this
+  confirmation_email: 'me@you.com',
 });
 
 const createNOrders = (n) => {
