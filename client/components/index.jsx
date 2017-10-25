@@ -16,7 +16,7 @@ export * from './shoppingCart';
 
 export * from './order';
 
-export * from './Product';
+export * from './product';
 
 export * from './admin';
 
