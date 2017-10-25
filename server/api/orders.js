@@ -16,12 +16,12 @@ orderRouter.route('/')
       .catch(next);
   })
 
-  // user_request, total_price, productsList -> all products in the cart
+  // special_instructions, total_price, productsList -> all products in the cart
   .post((req, res, next) => {
     const userId = req.body.userId === "" ? -1 : req.body.userId;
-    const {user_request, total_price, confirmation_email, products, } = req.body;
-    console.log("userReq:", user_request, "price:", total_price, "confemail", confirmation_email);
-    Order.create({user_request, total_price, confirmation_email, })
+    const {special_instructions, total_price, confirmation_email, products, } = req.body;
+    console.log("userReq:", special_instructions, "price:", total_price, "confemail", confirmation_email);
+    Order.create({special_instructions, total_price, confirmation_email, })
       .then((newOrder) => {
         let productAssociationsArray = products.map(product => {
              return Order_Products.create({ orderId: newOrder.id, productId: product.id, quantity: product.quantity, product_price: product.price});

@@ -150,7 +150,7 @@ const handleCheckOut = (evt) => {
   // Next page collect user information
   // Submits
   //		Sends order to database =>
-  //			- Creates Order puts in totalPrice, user_requestText in order
+  //			- Creates Order puts in totalPrice, special_instructions in order
   //			- Creates Order-Product associations productId, orderId, price, quantity
   //
 

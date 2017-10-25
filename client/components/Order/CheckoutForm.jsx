@@ -51,7 +51,6 @@ class CheckoutForm extends React.Component {
 
   submitCart(evt) {
     evt.preventDefault();
-    //const order = { name, street_address_1, street_address_2, city, state, zip, confirmation_email, special_instructions }
     this.props.handleCheckout(this.state, this.props.shoppingCart);
   }
 
