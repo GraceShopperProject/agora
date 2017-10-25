@@ -33,7 +33,6 @@ const mapDispatchToProps = function (dispatch, ownProps) {
       evt.preventDefault();
       const quantity = +evt.target.quantity.value;
       const item = ownProps.product;
-      console.log('ROBIN SENDS YOIU THIS', item, quantity);
       // item.quantity = Quantity;
       console.log('need to add item', item);
       dispatch(setQuantity(item, quantity));
