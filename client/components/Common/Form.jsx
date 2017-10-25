@@ -15,7 +15,9 @@ export default function Form (props) {
       <form onSubmit={(evt) => { onSubmit(evt) }}>
         {
           keys.map((key, idx) => (
-            <FormItem key={idx} handleChange={handleChange} name={key} value={formItems[key]} />
+            typeof formItems[key] === 'array'
+            ? <FormItem key={idx} handleChange={handleChange} name={key} value={key} options={formItems[key]} />
+            : <FormItem key={idx} handleChange={handleChange} name={key} value={formItems[key]} />
           ))
         }
         <div>

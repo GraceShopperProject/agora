@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import store, { fetchCategories, fetchProducts } from '../../store/index';
+import store, { fetchCategories, fetchProducts, addNewProduct } from '../../store/index';
+import { connect } from 'react-redux';
 
-export default class AddProduct extends React.Component {
-	constructor() {
-		super();
+class AddProduct extends React.Component {
+	constructor(props) {
+		super(props);
 		this.state = {
 			name: '',
 			price: 0,
@@ -19,33 +20,21 @@ export default class AddProduct extends React.Component {
 	}
 
 	componentDidMount() {
-		store.dispatch(fetchCategories());
-		this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-	}
-
-	componentWillUnmount() {
-		this.unsubscribe();
+		this.props.loadInitialState();
 	}
 
 	handleChange(evt) {
-		const value = evt.target.value;
-		console.log(value)
-		this.setState({
-			[evt.target.name]: value
-		});
+    evt.preventDefault();
+    const name = evt.target.name;
+    const value = evt.target.value;
+    this.setState({ [name]: value, });
 	}
 
 	handleSubmit(evt) {
 		evt.preventDefault();
-		const inputbody = this.state;
-		console.log('inputdata', inputbody)
-		axios.post(`/api/products/`, inputbody)
-			.then(res => res.data)
-			.then(data => {
-				this.setState({
-					product: data.product
-				})
-			});
+		const newProduct = {...this.state};
+		console.log('newProduct in AddProduct', inputbody);
+		this.props.addNewProduct(newProduct);
 		this.setState({
 			name: '',
 			price: 0,
@@ -54,7 +43,6 @@ export default class AddProduct extends React.Component {
 			remaining_inventory: 1,
 			categoryId: '',
 		});
-		store.dispatch(fetchProducts());
 	}
 
 	render() {
@@ -62,6 +50,7 @@ export default class AddProduct extends React.Component {
 		console.log('listed category', categories);
 		return (
 			<div className="container">
+				
 				<h3>Add a product</h3>
 				<form onSubmit={this.handleSubmit}>
 					<section>
@@ -118,3 +107,25 @@ export default class AddProduct extends React.Component {
 		)
 	}
 }
+
+const mapState = state => {
+	return {
+		categories: state.categories,
+	}
+}
+
+const mapDispatch = dispatch => {
+	return {
+		loadInitialState: () => {
+			dispatch(fetchCategories());
+		},
+		// updateProducts: () => {
+		// 	dispatch(fetchProducts()); 
+		// },
+		addNewProduct: (newProduct) => {
+			dispatch(addNewProduct(newProduct));
+		}
+	}
+}
+
+export default connect(mapState, mapDispatch)(AddProduct);
