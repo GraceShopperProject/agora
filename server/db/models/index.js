@@ -11,7 +11,7 @@ const Order_Products = require('./order_products');
 User.Orders = User.hasMany(Order);
 Order.User = Order.belongsTo(User);
 
-Order.Products = Order.belongsToMany(Product, { through: {model: Order_Products, unique:false}, constraints: false});
+Order.Products = Order.belongsToMany(Product, { through: {model: Order_Products, unique: false }, constraints: false });
 Product.Orders = Product.belongsToMany(Order, { through: Order_Products });
 
 
@@ -29,9 +29,9 @@ Category.Subcategories = Category.belongsToMany(Category, {
   through: 'category_subcategory',
 });
 
-Category.Products = Category.belongsToMany(Product, { through: 'products_categories' });
+Category.Product = Category.belongsToMany(Product, { through: 'products_categories', constraints: false });
 
-Product.Categories = Product.belongsToMany(Category, { through: 'products_categories' });
+Product.Category = Product.belongsToMany(Category, { through: 'products_categories', constraints: false });
 
 Product.Reviews = Product.hasMany(Review);
 Review.Product = Review.belongsTo(Product);

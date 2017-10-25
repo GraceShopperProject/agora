@@ -7,27 +7,36 @@ import { Form } from '../common';
 class AddProduct extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			name: '',
 			price: 0,
 			description: '',
 			img_url: '',
 			remaining_inventory: 1,
-			categoryId: '',
-			categories: [],
+			categoryId: -1,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	componentDidMount() {
-		this.props.loadInitialState();
+		console.log("categories from store are: ", this.props.categories)
+		//this.props.loadInitialState();
+		// this.setState({
+		// 	categories: this.props.categories
+		// })
 	}
 
 	handleChange(evt) {
     evt.preventDefault();
-    const name = evt.target.name;
-    const value = evt.target.value;
+    let name = evt.target.name;
+		const value = evt.target.value;
+		console.log(name, value);
+		if (name === 'category') {
+			console.log("category is", value);
+			name = 'categoryId'
+		}
     this.setState({ [name]: value, });
 	}
 
@@ -42,22 +51,24 @@ class AddProduct extends React.Component {
 			description: '',
 			img_url: '',
 			remaining_inventory: 1,
-			categoryId: '',
+			categoryId: -1,
 		});
 	}
 
 	render() {
-		const categories = this.state.categories;
-		console.log('listed category', categories);
+		const formItems = {...this.state, category: this.props.categories};
+		delete formItems['categoryId'];
+		console.log("AddProduct formItemsAre:", formItems);
 		return (
 			<div className="container">
-				<Form title="Add a Product" submitText="Submit" handleChange={this.handleChange} onSubmit={(evt) => this.handleSubmit(evt)} formItems={this.state} />
+				<Form title="Add a Product" submitText="Submit" handleChange={this.handleChange} onSubmit={(evt) => this.handleSubmit(evt)} formItems={formItems} />
 			</div>
 		)
 	}
 }
 
 const mapState = state => {
+	console.log(state);
 	return {
 		categories: state.categories,
 	}

@@ -18,24 +18,35 @@ productRouter.route('/')
 			.catch(next);
 	})
 	.post((req, res, next) => {
-		product = {
-			name: req.body.name,
-			price: req.body.price,
-			img_url: req.body.img_url,
-			description: req.body.description,
-			remaining_inventory: req.body.remaining_inventory
-		};
-		console.log(product);
-
-		var newProduct = Product.build(product);
-		newProduct.save()
-			.then(() => {
-				newProduct.addCategory(+req.body.category);
-				res.json(newProduct)
+		console.log("REQ> BODAYYY IS :", req.body);
+		const { name, price, img_url, description, remaining_inventory, categoryId } = req.body;
+		console.log("CAT ID IS :", categoryId);
+		Product.create({name, price, img_url, description, remaining_inventory})
+		.then((newProduct) => {
+			Category.findOne({ where: {id: categoryId} })
+			.then(category => {
+				console.log("found this category:", category);
+				newProduct.setCategories(category)
 			})
+			console.log(+categoryId, " catId is this. new product is :", newProduct);
+		})
+		// product = {
+		// 	name: req.body.name,
+		// 	price: req.body.price,
+		// 	img_url: req.body.img_url,
+		// 	description: req.body.description,
+		// 	remaining_inventory: req.body.remaining_inventory
+		// };
+		// console.log(product);
+
+		// var newProduct = Product.build(product);
+		// newProduct.save()
+		// 	.then(() => {
+		// 		newProduct.addCategory(+req.body.categoryId);
+		// 		res.json(newProduct)
+		// 	})
 			.catch(next)
 	});
-
 
 // productRouter.route('/:id')
 //   .get((req, res) => res.json(req.product))
@@ -51,7 +62,6 @@ productRouter.route('/')
 //       .then(() => res.sendStatus(204))
 //       .catch(next);
 //   });
-
 
 productRouter.route('/category/:categoryId')
 	.get((req, res, next) => {

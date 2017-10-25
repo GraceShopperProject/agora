@@ -57,7 +57,6 @@ export const addNewProductToStore = (newProduct) => {
 	}
 }
 
-
 /**
  * REDUCER
  */
