@@ -14,7 +14,7 @@ export default function Footer() {
       }}
     >
       <div className="container">
-        <h3>I'm a footer!</h3>
+        <h3>{"I'm a footer!"}</h3>
       </div>
     </div>
   );
