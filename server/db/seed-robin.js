@@ -1,5 +1,7 @@
 const staticImages = '../../public/static_assets';
 const fs = require('fs');
+const dummy = require('faker');
+const { floor, random } = Math;
 
 const db = require('../db');
 const {
@@ -10,9 +12,6 @@ const {
   Category,
 } = require('./models');
 
-const dummy = require('faker');
-
-const { floor, random } = Math;
 
 const makeNThings = (n, creator) => {
   const things = [];
@@ -33,15 +32,6 @@ const categories = [
   //{name: "Whimsy"},
 ];
 
-// used with generating Products
-const categoryLookup = {
-  elegant: 0,
-  delectable: 1,
-  active: 2,
-  youthful: 3,
-  wild: 4,
-};
-
 const randomDescriptions = [
   'This picture of a chair is a chair picture. The only truth in this store.',
   "It's a great chair! Buy it.",
@@ -53,45 +43,46 @@ const randomDescriptions = [
   'You can sit in it! So can your friends!'
 ]
 
+// used with generating Products
+const categoryLookup = {
+  elegant: 1,
+  delectable: 2,
+  active: 3,
+  youthful: 4,
+  wild: 5,
+};
+
+/*
+  Generates Product array utilizing the public/static_assets folder
+  Any image file that has the category name as the first word will be used
+  
+  'delectable_dining_chair_six.jpeg' will be given:
+    name: "Dining Chair Six"
+    category: "Delectable"
+    img_url: 'delectable_dining_chair_six.jpeg'
+
+  'agora_chair.jpg' will be ignored; it does not pass the valid category in categoryLookup
+*/
 const products = [];
-const generateProducts = fs.readdirSync('./public/static_assets').forEach(file => {
-  const arr = file.split('_');
-
-  // first element is category name
-  if ( categoryLookup([arr[0]]) !== undefined ){
-    const name = arr.map((word) => word[0].toUpperCase() + word.slice(1))
-
-    
-    name.split('_').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ') + ':';
-
+fs.readdirSync('./public/static_assets').forEach(file => {
+  const fileWords = file.split('_');
+  if (categoryLookup[fileWords[0]] !== undefined) { // first element is category name
+    const name = fileWords.slice(1).map((word, index) => {
+      //if (index > 0) { // not the category name
+        const cleanWord = word.split('.')[0]; // deletes any .jpg or .jpeg
+        return (cleanWord[0].toUpperCase() + cleanWord.slice(1)); // Sets product name to capital case
+      //}
+    }).join(' ');
+    products.push({
+      name,
+      img_url: file,
+      description: randomDescriptions[floor(random() * randomDescriptions.length)],
+      price: Number(dummy.finance.amount(0, 1000, 2)),
+      remaining_inventory: 100,
+      categoryId: categoryLookup[fileWords[0]],
+    })
   }
 });
-
-
-//   {
-//     name: 'White Elegant Chair',
-//     img_url: 'white_elegant_chair.jpg',
-//     description: randomDescriptions[floor(random() * randomDescriptions.length)],
-//     price: Number(dummy.finance.amount(0, 1000, 2)),
-//     remaining_inventory: 100,
-//     categoryId: ,
-//   }
-// ]
-const makeProduct = () => ({
-  name: dummy.commerce.product(),
-  img_url: dummy.image.technics(),
-  description: dummy.lorem.paragraphs(),
-  price: Number(dummy.finance.amount(0, 1000, 2)),
-  remaining_inventory: 100,
-  categories: [categories[floor(random() * categories.length)]],
-});
-
-//const products = makeNThings(10, makeProduct);
-
-// const createReview = () => Review.create({
-//   text: dummy.lorem.paragraphs(),
-//   rating: floor(random() * 5) + 1,
-// });
 
 const makeUser = () => {
   const name = dummy.name.firstName();
@@ -147,7 +138,7 @@ const makeOrder = () => ({
     'Completed',
   ][floor(random() * 4)],
   special_instructions: dummy.lorem.paragraph(),
-  total_price: 100, // TODO: need to make a beforeValidate hook to set this
+  total_price: 100,
   confirmation_email: 'me@you.com',
 });
 
@@ -179,65 +170,72 @@ const associateRandomProductsToEachOrder = (allProducts, allOrders) =>
     return Promise.all(randProducts.map(product =>
       order.addProduct(product, {
         through: { quantity: 1, product_price: product.price },
-      })));
+      }))); // TODO doesnt work currently
   }));
 
-const createReviewForEveryPurchase = () =>
-  Order.findAll()
-    .then((orders) => {
-      const promisedSetOfReviewPerOrder = orders.map((order) => {
-        const { user, products } = order;
-        const promisedReviews = products.map((product) => {
-          const creatingReview = Review.create({
-            text: dummy.lorem.paragraphs(),
-            rating: floor(random() * 5) + 1,
-            user,
-            products,
-          }, {
-              returning: true,
-            });
-          return creatingReview
-            .then(createdReview => createdReview.setUser(user))
-            .then(reviewWithUser => reviewWithUser.setProduct(product));
-        });
-        return Promise.all(promisedReviews);
-      });
-      return Promise.all(promisedSetOfReviewPerOrder);
-    });
+// const createReviewForEveryPurchase = () =>
+//   Order.findAll()
+//     .then((orders) => {
+//       const promisedSetOfReviewPerOrder = orders.map((order) => {
+//         const { user, products } = order;
+//         const promisedReviews = products.map((product) => {
+//           const creatingReview = Review.create({
+//             text: dummy.lorem.paragraphs(),
+//             rating: floor(random() * 5) + 1,
+//             user,
+//             products,
+//           }, {
+//               returning: true,
+//             });
+//           return creatingReview
+//             .then(createdReview => createdReview.setUser(user))
+//             .then(reviewWithUser => reviewWithUser.setProduct(product));
+//         });
+//         return Promise.all(promisedReviews);
+//       });
+//       return Promise.all(promisedSetOfReviewPerOrder);
+//     });
 
 db.sync({ force: true })
   .then(() => console.log('Dropping tables'))
   .then(() => console.log('Seeding Database'))
 
-  // CREATE PRODUCTS WITH CATEGORIES
+  // CREATE CATEGORIES
+  .then(() => Promise.all(categories.map(category => Category.create(category))))
+  // CREATE PRODUCTS
   .then(() => Promise.all(products.map(product => Product.create(product, {
     returning: true,
     // include: [Category],
-  }))))
+  }).then(newProduct => {
+    Category.findOne({ where: { id: product.categoryId } })
+      .then(category => {
+        newProduct.setCategories(category)
+      })
+    return newProduct;
+  })))
+    // CREATE USERS
+    .then((allProducts) => {
+      console.log(allProducts);
+      const promiseForAllUsers = Promise.all(users.map(user => User.create(user, {
+        returning: true,
+      })));
+      return Promise.all([allProducts, promiseForAllUsers]);
+    })
 
-  // CREATE USERS
-  .then((allProducts) => {
-    const promiseForAllUsers = Promise.all(users.map(user => User.create(user, {
-      returning: true,
-    })));
-    return Promise.all([allProducts, promiseForAllUsers]);
-  })
+    // CREATE ORDERS
+    .then(([allProducts, allUsers]) => {
+      const promiseForAllOrders = createNOrders(10);
+      return Promise.all([allProducts, allUsers, promiseForAllOrders]);
+    })
 
-  // CREATE ORDERS
-  .then(([allProducts, allUsers]) => {
-    const promiseForAllOrders = createNOrders(10);
-    return Promise.all([allProducts, allUsers, promiseForAllOrders]);
-  })
-
-  // SET ASSOCIATIONS BETWEEN INSTANCES
-  .then(([allProducts, allUsers, allOrders]) =>
-    associateEveryOrderToAUser(allOrders, allUsers)
-      .then(allOrdersWithUser =>
-        associateRandomProductsToEachOrder(allProducts, allOrdersWithUser)
-      )
-  )
-  .then(() => createReviewForEveryPurchase())
-  .then(() => console.log('Database successfully seed!'))
-  .then(() => db.close())
-  .then(() => console.log('Database connection closed'))
-  .catch(err => console.error('UNSUCCESSFUL: ', err));
+    // SET ASSOCIATIONS BETWEEN INSTANCES
+    .then(([allProducts, allUsers, allOrders]) =>
+      associateEveryOrderToAUser(allOrders, allUsers)
+        .then(allOrdersWithUser =>
+          associateRandomProductsToEachOrder(allProducts, allOrdersWithUser)
+        )
+    )
+    .then(() => console.log('Database successfully seed!'))
+    .then(() => db.close())
+    .then(() => console.log('Database connection closed'))
+    .catch(err => console.error('UNSUCCESSFUL: ', err)));
