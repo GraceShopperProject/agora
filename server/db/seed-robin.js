@@ -1,4 +1,5 @@
-
+const staticImages = '../../public/static_assets';
+const fs = require('fs');
 
 const db = require('../db');
 const {
@@ -23,13 +24,59 @@ const makeNThings = (n, creator) => {
   return things;
 };
 
-const makeCategory = () => ({
-  name: dummy.commerce.productMaterial(),
+const categories = [
+  { name: 'Elegant' },
+  { name: 'Delectable' },
+  { name: 'Active' },
+  { name: 'Youthful' },
+  { name: 'Wild' },
+  //{name: "Whimsy"},
+];
+
+// used with generating Products
+const categoryLookup = {
+  elegant: 0,
+  delectable: 1,
+  active: 2,
+  youthful: 3,
+  wild: 4,
+};
+
+const randomDescriptions = [
+  'This picture of a chair is a chair picture. The only truth in this store.',
+  "It's a great chair! Buy it.",
+  'Amazing high quality chair should really be purchased by you, a very real and genuine buyer.',
+  "Let me tell you about this chair. It's a chair with upholstery.",
+  "Chair.",
+  '"A chair is a piece of furniture with a raised surface supported by legs, commonly used to seat a single person. Chairs are supported most often by four legs and have a back; however, a chair can have three legs or can have a different shape." - Wikipedia',
+  'Functional chair.',
+  'You can sit in it! So can your friends!'
+]
+
+const products = [];
+const generateProducts = fs.readdirSync('./public/static_assets').forEach(file => {
+  const arr = file.split('_');
+
+  // first element is category name
+  if ( categoryLookup([arr[0]]) !== undefined ){
+    const name = arr.map((word) => word[0].toUpperCase() + word.slice(1))
+
+    
+    name.split('_').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ') + ':';
+
+  }
 });
 
-const categories = makeNThings(10, makeCategory);
 
-
+//   {
+//     name: 'White Elegant Chair',
+//     img_url: 'white_elegant_chair.jpg',
+//     description: randomDescriptions[floor(random() * randomDescriptions.length)],
+//     price: Number(dummy.finance.amount(0, 1000, 2)),
+//     remaining_inventory: 100,
+//     categoryId: ,
+//   }
+// ]
 const makeProduct = () => ({
   name: dummy.commerce.product(),
   img_url: dummy.image.technics(),
@@ -39,7 +86,7 @@ const makeProduct = () => ({
   categories: [categories[floor(random() * categories.length)]],
 });
 
-const products = makeNThings(10, makeProduct);
+//const products = makeNThings(10, makeProduct);
 
 // const createReview = () => Review.create({
 //   text: dummy.lorem.paragraphs(),
@@ -65,7 +112,9 @@ const makeUser = () => {
 };
 
 const users = makeNThings(10, makeUser, ['email']);
-users.push({ name: "rw",
+
+users.push({
+  name: "rw",
   email: "rw@rw.rw",
   is_admin: false,
   password: "rw",
@@ -74,19 +123,21 @@ users.push({ name: "rw",
   street_address_2: "Apt RW",
   city: "RW City",
   state: "RW State",
-  zip: "RW Zip",})
+  zip: "RW Zip",
+})
 
-  users.push({ 
-    name: "jj",
-    email: "jj@jj.jj",
-    is_admin: true,
-    password: "jj",
-    phone: "(555) 555-5555",
-    street_address_1: "111 jj St",
-    street_address_2: "Apt jj",
-    city: "jj City",
-    state: "jj State",
-    zip: "jj Zip",})
+users.push({
+  name: "jj",
+  email: "jj@jj.jj",
+  is_admin: true,
+  password: "jj",
+  phone: "(555) 555-5555",
+  street_address_1: "111 jj St",
+  street_address_2: "Apt jj",
+  city: "jj City",
+  state: "jj State",
+  zip: "jj Zip",
+})
 
 const makeOrder = () => ({
   status: [
@@ -143,8 +194,8 @@ const createReviewForEveryPurchase = () =>
             user,
             products,
           }, {
-            returning: true,
-          });
+              returning: true,
+            });
           return creatingReview
             .then(createdReview => createdReview.setUser(user))
             .then(reviewWithUser => reviewWithUser.setProduct(product));
@@ -161,7 +212,7 @@ db.sync({ force: true })
   // CREATE PRODUCTS WITH CATEGORIES
   .then(() => Promise.all(products.map(product => Product.create(product, {
     returning: true,
-    include: [Category],
+    // include: [Category],
   }))))
 
   // CREATE USERS

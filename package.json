@@ -17,7 +17,7 @@
     "test-models": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/agora_test' mocha -w ./server/db/models/*.spec.js --compilers js:babel-register",
     "test-api": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/agora_test' mocha -w ./server/api/*.spec.js --compilers js:babel-register",
     "lint-fix": "eslint --fix -c .eslintrc.js .",
-    "seed": "node ./server/db/seed-derrick.js"
+    "seed": "node ./server/db/seed-robin.js"
   },
   "author": "",
   "license": "ISC",
