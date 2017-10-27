@@ -64,7 +64,7 @@ const categoryLookup = {
   'agora_chair.jpg' will be ignored; it does not pass the valid category in categoryLookup
 */
 const products = [];
-fs.readdirSync('./public/static_assets').forEach(file => {
+fs.readdirSync('./public/images').forEach(file => {
   const fileWords = file.split('_');
   if (categoryLookup[fileWords[0]] !== undefined) { // first element is category name
     const name = fileWords.slice(1).map((word, index) => {
