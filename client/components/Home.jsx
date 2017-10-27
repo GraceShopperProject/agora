@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, } from 'react-redux';
 import { me } from '../store';
+import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 class Home extends React.Component {
   
@@ -20,11 +21,13 @@ class Home extends React.Component {
     console.log(this.props);
     return (
       <div>
-      {
-        (name)
-          ? (<h1>Welcome, {name}</h1>)
-          : (<h1>Welcome to Agora!</h1>)
-      }
+        <Jumbotron>
+        {
+          (name)
+            ? (<h1>Welcome, {name}</h1>)
+            : (<h1>Welcome to Agora!</h1>)
+        }
+        </Jumbotron>
       </div>
     );
   }
