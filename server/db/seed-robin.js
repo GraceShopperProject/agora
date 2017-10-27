@@ -1,4 +1,4 @@
-const staticImages = '../../public/static_assets';
+const staticImages = '../../public/images';
 const fs = require('fs');
 const dummy = require('faker');
 const { floor, random } = Math;
