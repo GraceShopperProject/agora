@@ -25,7 +25,6 @@ class Home extends React.Component {
           ? (<h1>Welcome, {name}</h1>)
           : (<h1>Welcome to Agora!</h1>)
       }
-      <h2> Wahhh </h2>
       </div>
     );
   }

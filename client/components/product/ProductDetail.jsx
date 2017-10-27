@@ -2,6 +2,8 @@ import React from 'react';
 import AddToCart from '../order/AddToCart';
 import store, { fetchProductCategory } from '../../store';
 import { connect } from 'react-redux';
+import Image from 'react-bootstrap/lib/Image';
+import Thumbnail from 'react-bootstrap/lib/Thumbnail';
 
 const ProductDetailPage = (props) => {
   const products = props.products;
@@ -12,7 +14,7 @@ const ProductDetailPage = (props) => {
       <div className="row">
         {product && (
           <div className="col-lg-6 col-md-6 col-sm-12" key={product.id}>
-            <img src={product.img_url} name={product.name} height="50" width="50" />
+              <Image src={`/images/${product.img_url}`} name={product.name} height="200" width="200" />
             <li>Price: {product.price}</li>
             <li>Description: {product.description}</li>
             {/* <li>Category: {productCategory.name}</li>*/}

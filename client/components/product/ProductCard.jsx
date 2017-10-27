@@ -18,7 +18,7 @@ const ProductListItem = ({product}) => {
   return (
     <Thumbnail>
       <Link to={`/products/${id}`}>
-        <Image src={img_url} alt={name} responsive />
+        <Image src={`/images/${img_url}`} alt={name} responsive />
       </Link>
 
       <Grid fluid>

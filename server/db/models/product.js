@@ -39,9 +39,6 @@ const Product = db.define('product', {
   img_url: {
     type: Sequelize.STRING,
     allowNull: false,
-    validate: {
-      isUrl: true,
-    },
   },
 
   remaining_inventory: {
