@@ -1,29 +1,45 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Col from 'react-bootstrap/lib/Col';
+import Button from 'react-bootstrap/lib/Button';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Row from 'react-bootstrap/lib/Row';
 import { addProduct, setQuantity } from '../../store';
 
 function AddToCart(props) {
+  const product = props.product;
   return (
-    <form id="new-message-form" onSubmit={props.handleSubmit}>
+    <Col sm={12} md={9} lg={9}>
+      <p><strong>Price: </strong> {`$${product.price}`}</p>
+      <p><strong>Description: </strong>{product.description}</p>
+      <form id="new-message-form" onSubmit={props.handleSubmit}>
 
-      <div className="form-group">
-        <label className="col-sm-2 control-label">Add to Cart</label>
-        <div className="col-sm-9">
-          <div>
-            <label htmlFor="quantity"><small>Quantity</small></label>
+        <Row className="form-group">
+          <Col sm={12} md={4} lg={4}>
+            <label htmlFor="quantity">Quantity: </label>
             <input name="quantity" type="text" />
-          </div>
-
-        </div>
-        <button className="btn btn-default col-sm-1" type="submit">+</button>
-      </div>
-    </form>
+          </Col>
+          <Col sm={12} md={2} lg={2}>
+            <Button
+              bsStyle="primary"
+              style={{}}
+              type="submit"
+              block
+            >
+              <Glyphicon glyph="plus" />
+              <Glyphicon glyph="shopping-cart" />
+            </Button>
+          </Col>
+        </Row>
+      </form>
+    </Col>
   );
 }
 
 const mapStateToProps = function (state, ownProps) {
   return {
     items: state.shoppingCart,
+    products: state.products,
   };
 };
 

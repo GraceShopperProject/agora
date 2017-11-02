@@ -62,9 +62,9 @@ class Routes extends Component {
             <Route path="/checkout" component={CheckoutForm} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
-            <Route path="/admin-products" component = {MaintainCatProD} />
-            <Route path="/admin-users" component = {MaintainUser} />
-            <Route path="/account" component = {UserAccount} />
+            <Route path="/admin-products" component={MaintainCatProD} />
+            <Route path="/admin-users" component={MaintainUser} />
+            <Route path="/account" component={UserAccount} />
             {
               isLoggedIn &&
               <Switch>

@@ -147,5 +147,12 @@ html {
     text-align: center;
   }
 
+  .form-group label {
+    float: left;
+  }
+  .form-group input {
+    float: right;
+  }
+
   }
 }
