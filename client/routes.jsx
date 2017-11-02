@@ -45,7 +45,6 @@ class Routes extends Component {
   render() {
     const { isLoggedIn } = this.props;
     console.log("is user logged in?", isLoggedIn);
-    console.log(CheckoutForm);
     return (
       <Router history={history}>
         <NavFooterWrapper>
