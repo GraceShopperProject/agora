@@ -19,20 +19,28 @@ class Home extends React.Component {
     return (
       <div>
         <section>
-          <Jumbotron>
-            <Image src="/images/agora_logo2.svg" />
-            <p>The real you needs comfort.</p>
-            <p>The real you needs class.</p>
-            <p>The real you needs Agora.</p>
-            <p>We have chairs.</p>
+
+          <Jumbotron className="jumbotron-billboard">
+            <div className="img"></div>
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12">
+                  <Image src="/images/agora_logo2.svg" />
+                  <p>The real you needs comfort.</p>
+                  <p>The real you needs class.</p>
+                  <p>The real you needs Agora.</p>
+                  <p>We have chairs.</p>
+                </div>
+              </div>
+            </div>
           </Jumbotron>
         </section>
         <section>
-          <h4>About</h4>
+          <h2>About</h2>
           <p>Agora was created for a E-Commerce website project for Fullstack Academy's remote immersive program. It integrates React, Node, Express, Socket.io, and a PostGres database. We hope you enjoy exploring!</p>
         </section>
-        <section styles={{ backgroundColor: 'black' }}>
-          <h4>Testimonies</h4>
+        <section>
+          <h2>Testimonies</h2>
           <p>"Classy."</p>
           <p>"How so classy."</p>
           <p>"Wow! They really have chairs!"</p>

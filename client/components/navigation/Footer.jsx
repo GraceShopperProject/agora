@@ -5,7 +5,7 @@ export default function Footer() {
 
     <div className="container">
       <div className="footer">
-        ** Not really a chair selling website **
+        <p>** Not really an ecommerce website. We don't have chairs.**</p>
         <div>
           Created by:
           <ul>

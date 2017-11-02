@@ -98,24 +98,50 @@ html {
       color: $darkGray;
     }
 
-    .jumbotron {
+    // .jumbotron {
+    //   margin-bottom: 0px;
+    //   opacity: 0.5;
+    //   color: #fff;
+    //   background: url("/images/living-room-chairs.jpg");
+    //   width: 100%;
+    //   height: 100%;
+    //   background-size: cover;
+    //   overflow: hidden;
+    // }
+    // .jumbotron img,p {
+    //   opacity: 1.0;
+    //   color: $darkGray;
+    // }
+
+    // .container .jumbotron {
+    //   border-radius: 0px;
+    // }
+
+
+    .jumbotron-billboard .img {
       margin-bottom: 0px;
-      opacity: 0.5;
-      color: #fff;
-      background: url("/images/living-room-chairs.jpg");
+      opacity: 0.2;
+      background: #000 url("/images/living-room-chairs.jpg") center center;
       width: 100%;
       height: 100%;
       background-size: cover;
       overflow: hidden;
-    }
-    .jumbotron img,p {
-      opacity: 1.0;
-      color: $darkGray;
-    }
 
-    .container .jumbotron {
-      border-radius: 0px;
-    }
+    position:absolute;
+    top:0;left:0;
+    z-index:1;
+  }
+  .jumbotron {
+    position:relative;
+    padding:50px;
+
+  }
+  .jumbotron .container {
+    z-index:2;
+    position:relative;
+    z-index:2;
+    border-radius: 0px;
+  }
 
   //   position:absolute;
   //   top:0;left:0;
