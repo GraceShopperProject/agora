@@ -1,4 +1,4 @@
-# Agora:The Best Way to Sell Your Products Online
+# Agora: We have chairs!
 
 ## DESIGN NOTES:
 

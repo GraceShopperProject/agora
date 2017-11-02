@@ -2,16 +2,10 @@ import React from 'react';
 import { connect, } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-function CategoryNav (props) {
+function CategoryNav(props) {
   const categories = props.categories
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-light"
-      style={{
-        backgroundColor: '#fff',
-        borderBottom: '1px solid #999',
-      }}
-    >
+    <nav className="navbar navbar-expand-lg navbar-light">
 
       <div className="container">
         <ul className="nav nav-justified">
@@ -19,12 +13,12 @@ function CategoryNav (props) {
             <Link className="nav-link" to={'/products'}>All</Link>
           </li>
           {
-          categories && categories.map(category =>
-            (
-              <li className="nav-item" key={category.id}>
-                <Link className="nav-link" to={`/category/${category.id}`}>{category.name}</Link>
-              </li>
-            ))
+            categories && categories.map(category =>
+              (
+                <li className="nav-item" key={category.id}>
+                  <Link className="nav-link" to={`/category/${category.id}`}>{category.name}</Link>
+                </li>
+              ))
           }
         </ul>
 
@@ -36,7 +30,8 @@ function CategoryNav (props) {
 const mapState = state => {
   return ({
     categories: state.categories,
-  })};
+  })
+};
 
 export default connect(mapState)(CategoryNav);
 

@@ -8,6 +8,7 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Image from 'react-bootstrap/lib/Image';
 import Badge from 'react-bootstrap/lib/Badge';
 import Col from 'react-bootstrap/lib/Col';
 import history from '../../history';
@@ -19,7 +20,7 @@ function TopNavbar({isLoggedIn, isAdmin, numItemsInCart}) {
     <Navbar collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
-          <Link to="/">Agora!</Link>
+          <Link to="/"><Image style={{height: '50px', width: 'inherit'}}src="/images/agora_logo2.svg" /></Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
@@ -29,7 +30,7 @@ function TopNavbar({isLoggedIn, isAdmin, numItemsInCart}) {
         <Col xsHidden>
           <Navbar.Form pullLeft>
             <FormGroup>
-              <FormControl type="text" placeholder="Magic happens here" />
+              <FormControl type="text" placeholder="We have chairs..." />
               {' '}
               <Button>Search</Button>
             </FormGroup>

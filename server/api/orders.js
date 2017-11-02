@@ -20,19 +20,20 @@ orderRouter.route('/')
   .post((req, res, next) => {
     const userId = req.body.userId === "" ? null : req.body.userId;
     const { special_instructions, total_price, confirmation_email, products, } = req.body;
-    Order.create({special_instructions, total_price, confirmation_email, userId, })
+    Order.create({ special_instructions, total_price, confirmation_email, userId, })
       .then((newOrder) => {
         let productAssociationsArray = products.map(product => {
-             return Order_Products.create({ 
-               orderId: newOrder.id, 
-               productId: product.id, 
-               quantity: product.quantity, 
-               product_price: product.price});
+          return Order_Products.create({
+            orderId: newOrder.id,
+            productId: product.id,
+            quantity: product.quantity,
+            product_price: product.price
+          });
         })
         Promise.all(productAssociationsArray)
-        .then((arr) => {
-        })
-        .catch(err => console.log(err));
+          .then((arr) => {
+          })
+          .catch(err => console.log(err));
         res.status(201).send(newOrder);
       })
       .catch(next);

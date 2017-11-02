@@ -5,6 +5,8 @@ import {Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
+import './Sass/index.scss';
+
 import {
   NavFooterWrapper,
   Home,

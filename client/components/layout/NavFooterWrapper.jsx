@@ -14,7 +14,7 @@ export default function NavFooterWrapper({ children }) {
       <TopNavBar />
       <CategoryNav />
       <div
-        className="container"
+        className="container dark-gray-background"
         style={{
           paddingTop: '20px',
           paddingBottom: '20px',

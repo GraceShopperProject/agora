@@ -1,24 +1,75 @@
 
+$backgroundColor: #d3d3d3;
+
 html {
   height: 100vh;
   body {
     // background-color: #fff;
-    background-color: #874C62;
+    background-color: $backgroundColor;
     height: 100vh;
     margin: 0;
     position: relative;
+    border-radius: 0px;
+    font-family: 'Optima, sans-serif';
+    letter-spacing: 1px;
+
     label {
       display: block;
     }
 
-    .btn-primary {
-      background-color: #874C62;
-      border_color: #874C62;
+    img{
+      float: left;
+      background-color: $backgroundColor;
+    }
+    .dark-gray-background{
+      background-color: #d3d3d3;
+    }
+    .navbar-brand {
+      background-color: $backgroundColor;
+      margin: 0px;
+      padding: 0px;
+      margin: 10px;
+    }
+    .btn {
+      border-radius: 0px;
+    }
+    .form-control {
+      border-radius: 0px;
     }
 
+    .footer {
+      background-color: #000;
+    }
+    .navbar-default .navbar-nav>li>a { // Login / ShoppingCart buttons
+      color: #000;
+    }
+    .navbar {
+      color: #000;
+      background-color: $backgroundColor;
+      border-radius: 0px;
+      margin-bottom: 0px;
+      border-width: 0px;
+      border-bottom: 2px;
+      border-color: white;
+    }
+    .btn-primary {
+      background-color: #FFFFFF;
+    }
+    .nav-link {
+      background-color: $backgroundColor;
+    }
     .btn-primary:hover {
       background-color: rgba(148, 63, 97, 0.774);
       border-color: rgba(148, 63, 96, 0.774);
+    }
+
+    .footer {
+        background-color: '#000000';
+        color: '#fff';
+        left: 0;
+        padding: '20px 0';
+        position: 'relative';
+        width: '100vw';
     }
   }
 }
