@@ -53,10 +53,12 @@ html {
       border-radius: 0px;
       margin-bottom: 0px;
       border-width: 0px;
-
     }
     .btn-primary {
       background-color: #FFFFFF;
+      border-width: 1px solid #ccc;
+      border-color: #d3d3d3;
+      color: $darkGray;
     }
 
     .categories {
@@ -77,6 +79,25 @@ html {
 
     .footer {
       border-top: 2px solid $darkGray;
+    }
+
+    .thumbnail {
+      border-radius: 0px;
+      //height: 420px;
+    }
+
+    .img-container {
+      height: 200px;
+    }
+    .thumbnail .caption img { //thumbnail images
+      vertical-align: middle;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .thumbnail .caption h4 a{
+      color: $darkGray;
     }
   }
 }
