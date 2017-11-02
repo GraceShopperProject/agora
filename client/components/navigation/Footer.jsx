@@ -5,7 +5,15 @@ export default function Footer() {
 
     <div className="container">
       <div className="footer">
-        <h3>{"I'm a footer!"}</h3>
+        ** Not really a chair selling website **
+        <div>
+          Created by:
+          <ul>
+            <li>@DerrickBeining</li>
+            <li>@RobinWilson</li>
+            <li>@JingJia</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

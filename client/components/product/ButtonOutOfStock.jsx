@@ -21,7 +21,6 @@ const ButtonOutOfStock = props => {
       <span>
         <Button
           bsStyle="default"
-          bsSize="large"
           block
         >
           Sold Out

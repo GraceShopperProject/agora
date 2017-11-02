@@ -23,11 +23,11 @@ const ProductListItem = ({product}) => {
 
       <Grid fluid>
 
-        <h3>
+        <h4>
           <Link to={`products/${id}`}>
             {name}
           </Link>
-        </h3>
+        </h4>
 
         <p><strong>Price:</strong> {`$${price}`}</p>
 
@@ -37,7 +37,7 @@ const ProductListItem = ({product}) => {
 
           <Col xs={6}>
             <Link to={`/products/${id}`}>
-              <Button bsSize="large" block>Details</Button>
+              <Button block>Details</Button>
             </Link>
           </Col>
 

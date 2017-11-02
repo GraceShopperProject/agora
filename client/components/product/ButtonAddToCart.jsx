@@ -9,7 +9,6 @@ const ButtonAddToCart = ({addToCart, product}) => {
   return (
     <Button
       bsStyle="primary"
-      bsSize="large"
       onClick={() => addToCart(product)}
       block
     >
