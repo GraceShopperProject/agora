@@ -1,34 +1,40 @@
 
-$backgroundColor: #d3d3d3;
+$darkGray: #3d3d3d;
 
 html {
-  height: 100vh;
+  //height: 100vh;
   body {
     // background-color: #fff;
-    background-color: $backgroundColor;
+    //background-color: $backgroundColor;
     height: 100vh;
     margin: 0;
     position: relative;
     border-radius: 0px;
     font-family: 'Optima, sans-serif';
     letter-spacing: 1px;
+    color: $darkGray;
 
     label {
       display: block;
     }
 
-    img{
-      float: left;
-      background-color: $backgroundColor;
+    .navbar-default {
+      background-color: #FFF;
+      border-width: 0px;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
+
     .dark-gray-background{
       background-color: #d3d3d3;
     }
     .navbar-brand {
-      background-color: $backgroundColor;
-      margin: 0px;
-      padding: 0px;
-      margin: 10px;
+      //background-color: $backgroundColor;
+      //padding: 15px;
+      vertical-align: middle;
+      width: auto;
+      float: none;
+      //margin: 10px;
     }
     .btn {
       border-radius: 0px;
@@ -37,26 +43,32 @@ html {
       border-radius: 0px;
     }
 
-    .footer {
-      background-color: #000;
-    }
     .navbar-default .navbar-nav>li>a { // Login / ShoppingCart buttons
-      color: #000;
+      color: $darkGray;
+      font-size: 16px;
     }
     .navbar {
       color: #000;
-      background-color: $backgroundColor;
+      //background-color: $backgroundColor;
       border-radius: 0px;
       margin-bottom: 0px;
       border-width: 0px;
-      border-bottom: 2px;
-      border-color: white;
+
     }
     .btn-primary {
       background-color: #FFFFFF;
     }
+
+    .categories {
+      border-width: 0px;
+      border-bottom: 2px solid $darkGray;
+      font-size: 16px;
+    }
+    .nav>li>a {
+      color: $darkGray;
+    }
     .nav-link {
-      background-color: $backgroundColor;
+      //background-color: $backgroundColor;
     }
     .btn-primary:hover {
       background-color: rgba(148, 63, 97, 0.774);
@@ -64,12 +76,7 @@ html {
     }
 
     .footer {
-        background-color: '#000000';
-        color: '#fff';
-        left: 0;
-        padding: '20px 0';
-        position: 'relative';
-        width: '100vw';
+      border-top: 2px solid $darkGray;
     }
   }
 }

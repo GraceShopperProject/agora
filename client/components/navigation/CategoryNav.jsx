@@ -8,20 +8,21 @@ function CategoryNav(props) {
     <nav className="navbar navbar-expand-lg navbar-light">
 
       <div className="container">
-        <ul className="nav nav-justified">
-          <li className="nav-item" key="all-products">
-            <Link className="nav-link" to={'/products'}>All</Link>
-          </li>
-          {
-            categories && categories.map(category =>
-              (
-                <li className="nav-item" key={category.id}>
-                  <Link className="nav-link" to={`/category/${category.id}`}>{category.name}</Link>
-                </li>
-              ))
-          }
-        </ul>
-
+        <div className="categories">
+          <ul className="nav nav-justified">
+            <li className="nav-item" key="all-products">
+              <Link className="nav-link" to={'/products'}>All</Link>
+            </li>
+            {
+              categories && categories.map(category =>
+                (
+                  <li className="nav-item" key={category.id}>
+                    <Link className="nav-link" to={`/category/${category.id}`}>{category.name}</Link>
+                  </li>
+                ))
+            }
+          </ul>
+        </div>
       </div>
     </nav>
   );

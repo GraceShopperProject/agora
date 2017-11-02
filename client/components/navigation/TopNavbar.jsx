@@ -20,7 +20,7 @@ function TopNavbar({isLoggedIn, isAdmin, numItemsInCart}) {
     <Navbar collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
-          <Link to="/"><Image style={{height: '50px', width: 'inherit'}}src="/images/agora_logo2.svg" /></Link>
+          <Link to="/"><Image style={{height: '60px'}} src="/images/agora_logo2.svg" /></Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
