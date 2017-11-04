@@ -82,7 +82,7 @@ function ShoppingCart({
                   <input onClick={() => handleRemove(product)} type="button" value="x" />
                 </td>
                 <td>
-                  <span>{product.quantity * product.price}</span>
+                  <span>{(product.quantity * product.price).toFixed(2)}</span>
                 </td>
               </tr>
             ))
