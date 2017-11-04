@@ -55,7 +55,7 @@ const categoryLookup = {
 /*
   Generates Product array utilizing the public/static_assets folder
   Any image file that has the category name as the first word will be used
-  
+
   'delectable_dining_chair_six.jpeg' will be given:
     name: "Dining Chair Six"
     category: "Delectable"
@@ -209,8 +209,8 @@ db.sync({ force: true })
   }).then(newProduct => {
     Category.findOne({ where: { id: product.categoryId } })
       .then(category => {
-        newProduct.setCategories(category)
-      })
+        newProduct.setCategories(category);
+      });
     return newProduct;
   })))
     // CREATE USERS
