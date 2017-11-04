@@ -5,6 +5,8 @@ import {Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 
+import './Sass/index.scss';
+
 import {
   NavFooterWrapper,
   Home,
@@ -43,7 +45,6 @@ class Routes extends Component {
   render() {
     const { isLoggedIn } = this.props;
     console.log("is user logged in?", isLoggedIn);
-    console.log(CheckoutForm);
     return (
       <Router history={history}>
         <NavFooterWrapper>
@@ -60,9 +61,9 @@ class Routes extends Component {
             <Route path="/checkout" component={CheckoutForm} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/error" component={ErrorPage} />
-            <Route path="/admin-products" component = {MaintainCatProD} />
-            <Route path="/admin-users" component = {MaintainUser} />
-            <Route path="/account" component = {UserAccount} />
+            <Route path="/admin-products" component={MaintainCatProD} />
+            <Route path="/admin-users" component={MaintainUser} />
+            <Route path="/account" component={UserAccount} />
             {
               isLoggedIn &&
               <Switch>

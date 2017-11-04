@@ -2,19 +2,18 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <div
-      style={{
-        backgroundColor: '#874C62',
-        bottom: 0,
-        color: '#fff',
-        left: 0,
-        padding: '20px 0',
-        position: 'relative',
-        width: '100vw',
-      }}
-    >
-      <div className="container">
-        <h3>{"I'm a footer!"}</h3>
+
+    <div className="container">
+      <div className="footer">
+        <p>** Not really an ecommerce website. We don't have chairs.**</p>
+        <div>
+          Created by:
+          <ul>
+            <li>@DerrickBeining</li>
+            <li>@RobinWilson</li>
+            <li>@JingJia</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

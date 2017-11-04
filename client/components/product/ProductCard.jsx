@@ -10,34 +10,35 @@ import ButtonAddToCart from './ButtonAddToCart';
 import ButtonOutOfStock from './ButtonOutOfStock';
 import history from '../../history';
 
-const ProductListItem = ({product}) => {
-  const {id, name, price, description, img_url, remaining_inventory, restockDate} = product;
+const ProductListItem = ({ product }) => {
+  const { id, name, price, description, img_url, remaining_inventory, restockDate } = product;
   const shortDescription = `${description.slice(0, 90)}...`;
   const isSoldOut = remaining_inventory === 0;
 
   return (
     <Thumbnail>
-      <Link to={`/products/${id}`}>
-        <Image src={`/images/${img_url}`} alt={name} responsive />
-      </Link>
-
+      <div className="img-container">
+        <Link to={`/products/${id}`}>
+          <Image src={`/images/${img_url}`} alt={name} responsive />
+        </Link>
+      </div>
       <Grid fluid>
 
-        <h3>
+        <h4>
           <Link to={`products/${id}`}>
             {name}
           </Link>
-        </h3>
+        </h4>
 
         <p><strong>Price:</strong> {`$${price}`}</p>
 
-        <p>{shortDescription}</p>
+        {/* <p>{shortDescription}</p> */}
 
         <Row>
 
           <Col xs={6}>
             <Link to={`/products/${id}`}>
-              <Button bsSize="large" block>Details</Button>
+              <Button block>Details</Button>
             </Link>
           </Col>
 
