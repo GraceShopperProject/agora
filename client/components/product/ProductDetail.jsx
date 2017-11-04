@@ -21,7 +21,7 @@ const ProductDetail = (props) => {
             product && (
               <Col sm={12} md={3} lg={3} key={product.id}>
                 <div style={{ width: '100%' }}>
-                  <Image src={`/images/${product.img_url}`} name={product.name} maxHeight="100%" width="100%" />
+                  <Image src={`/images/${product.img_url}`} name={product.name} width="100%" />
                 </div>
               </Col>
             )}
