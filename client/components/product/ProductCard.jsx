@@ -25,12 +25,12 @@ const ProductListItem = ({ product }) => {
       <Grid fluid>
 
         <h4>
-          <Link to={`products/${id}`}>
+          <Link to={`/products/${id}`}>
             {name}
           </Link>
         </h4>
 
-        <p><strong>Price:</strong> {`$${price}`}</p>
+        <p><strong>Price:</strong> {`$${price.toFixed(2)}`}</p>
 
         {/* <p>{shortDescription}</p> */}
 
