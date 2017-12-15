@@ -10,18 +10,16 @@ function EditCategory(props) {
 	return (
 		<div className="container content">
 			<h3>Category List</h3>
-			{
-				categories && categories.map(category => (
-					<div key={category.id} >
-						<div className="col-sm-6 col-md-6 col-lg-6">
-							<li >
-								<Link value={category.id} to={`/category/${category.id}`}>{category.name} </Link>
-								<input className="col-cm-1" onClick={() => props.handleRemove(category.id)} type='button' value='x' />
-							</li>
-						</div>
-					</div>
-				))
-			}
+			<div className="col-sm-6 col-md-6 col-lg-6">
+				{
+					categories && categories.map(category => (
+						<li key={category.id}>
+							<Link value={category.id} to={`/category/${category.id}`}>{category.name} </Link>
+							<input className="col-cm-1" onClick={() => props.handleRemove(category.id)} type='button' value='x' />
+						</li>
+					))
+				}
+			</div>
 			<div>
 				<NewCategory />
 			</div>

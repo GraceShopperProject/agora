@@ -26,16 +26,10 @@ class NewCategory extends React.Component {
 			<form id="new-message-form" onSubmit={this.props.handleSubmit}>
 
 				<div className="form-group">
-					<label className="col-sm-4 control-label">Add Category Name</label>
-					<div className="col-sm-8">
-						<div>
-							<label htmlFor="Name">
-								<small></small>
-							</label>
-							<input name="name" type="text" />
-
-							<button className="btn btn-default col-sm-1" type="submit">+</button>
-						</div>
+					<label className="col-sm-4 control-label">Add Category</label>
+					<div className="col-sm-2">
+						<input name="name" type="text" />
+						<button className="btn btn-default" type="submit">+</button>
 					</div>
 				</div>
 			</form>
