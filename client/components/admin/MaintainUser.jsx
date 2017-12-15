@@ -8,9 +8,7 @@ export default class MaintainUser extends React.Component {
 	render() {
 
 		return (
-			<div className="container content">
-				<div className="col-xs-12">
-				</div>
+			<div className="content">
 				<div className="row">
 					<div className="col-xs-6 col-md-6 col-lg-6">
 						<EditOrder />
