@@ -4,7 +4,7 @@
 
 Agora, a satirical and functional Ecommerce website, was built to incorporate the full stack technologies learned at Fullstack Academy remote immersive program. Technology utilized includes: React.js, Redux, Bootstrap, Node.js, Express, and a PostGres database.
 
-The project has the completed functionality listed.
+The project has the completed functionality listed below.
 
 Project screenshots are located at the end of the README for UI/UX.
 
